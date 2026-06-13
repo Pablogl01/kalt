@@ -1,0 +1,27 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('food_substitutes', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->foreignUuid('food_id')->constrained('foods')->cascadeOnDelete();
+            $table->foreignUuid('substitute_food_id')->constrained('foods')->cascadeOnDelete();
+            $table->decimal('similitud_macros', 5, 2)->default(0);
+            $table->timestamps();
+
+            // Index required by §3.6 — consulted in every substitution operation
+            $table->index('food_id');
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('food_substitutes');
+    }
+};

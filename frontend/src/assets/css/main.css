@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+/* ============================================================
+   KALT Design System — Tokens
+   Reference: DESIGN.md (v2) + KALT_Manuscrito.md §9
+   Typography: Plus Jakarta Sans (confirmed)
+   ============================================================ */
+
+@theme {
+  /* ── Typography ─────────────────────────────────────────── */
+  --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+
+  /* ── Base palette ────────────────────────────────────────── */
+  --color-bg: #FDF6F0;
+  --color-surface: #FFFFFF;
+  --color-surface-dark: #1F1B16;  /* Sidebar, dark-contrast cards */
+  --color-text: #1F1B16;
+  --color-text-muted: #8A8178;
+  --color-accent: #A8E063;        /* General UI accent: CTAs, active nav, positive badges */
+  --color-accent-dark: #7CC242;   /* Hover / active variant of accent */
+  --color-border: #E8DDD4;
+  --color-border-dark: #2D2720;
+
+  /* ── Semantic macro tokens ───────────────────────────────── */
+  --color-protein: #16A34A;
+  --color-carbs: #EA580C;         /* EXCLUSIVE USE: carbohydrates only. Never in CTAs/nav */
+  --color-fat: #CA8A04;
+  --color-calories: #2563EB;
+  --color-goal: #64748B;
+  --color-success-adherence: #15803D;  /* Heatmap — full adherence */
+  --color-partial-adherence: #86EFAC;  /* Heatmap — partial adherence */
+
+  /* ── Feedback colors ─────────────────────────────────────── */
+  --color-positive-badge: var(--color-accent);
+  --color-negative-badge: #F87171;
+
+  /* ── Layout ──────────────────────────────────────────────── */
+  --sidebar-width: 240px;
+  --bottom-bar-height: 64px;
+}
+
+/* ── Global reset & base ─────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: var(--font-sans);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+}
+
+#app {
+  min-height: 100dvh;
+}
+
+/* ── Scrollbar (webkit) ──────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
