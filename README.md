@@ -68,3 +68,37 @@ Clone your local working tree, open the root workspace directory, and duplicate 
 ```bash
 cp backend/.env.example backend/.env
 ```
+
+### 2. Bootstrapping Containers
+Spin up the Docker architecture. This command will pull necessary images and start all 5 services:
+```bash
+docker compose up -d
+```
+
+### 3. Backend Initialization
+Install PHP dependencies, generate the application key, and migrate the database schema:
+```bash
+docker compose exec app composer install
+docker compose exec app php artisan key:generate
+docker compose exec app php artisan migrate
+```
+
+### 4. Frontend Initialization
+Install Node modules and spin up the Vite development server (which is already configured to run inside the container, but you can also run it locally if preferred):
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+### 5. Running the Test Suite
+Ensure the platform integrity is maintained by executing the Pest test suite:
+```bash
+docker compose exec app php artisan test
+```
+
+---
+
+## 🎨 Design System
+
+Please refer to the `DESIGN.md` file for full documentation regarding the typographical hierarchy, macro-specific color palette, and layout constraints.
