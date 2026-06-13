@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # KALT — Automated Sports Nutrition Platform
 
 KALT is a high-performance, deterministic automated sports nutrition web application designed to act as an automated digital nutritionist. It generates customized weekly meal plans tailored to specific fitness goals (definition, maintenance, hypertrophy/volume), monitors daily macronutrient compliance, and dynamically recalculates targets in real-time when facing daily anomalies like skipped meals or extra workouts.
