@@ -68,16 +68,16 @@ Implementar los tokens definidos en `DESIGN.md`:
 
 ## Criterios de aceptación
 
-- [ ] Estructura de carpetas backend y frontend creada según manuscrito.
-- [ ] Store de navegación compartido creado y conectado a sidebar/bottom bar placeholder.
-- [ ] Todas las migraciones de las secciones 3.1–3.5 creadas, con índices de la sección 3.6 incluidos.
-- [ ] Sanctum configurado en modo SPA cookie, verificable con un endpoint de prueba autenticado.
-- [ ] Las 4 Policies creadas y registradas, con test de feature que confirme HTTP 403 al acceder a un recurso ajeno (puede ser con modelos de prueba/dummy).
-- [ ] Rate limiting configurado y verificable (test o prueba manual con curl/Postman).
-- [ ] `tailwind.config.js` con paleta base + 7 tokens de macros, según `DESIGN.md`.
-- [ ] Sidebar (desktop) y bottom bar (mobile) placeholder funcionando en ambos breakpoints, sin solapamientos visuales.
-- [ ] Docker levanta los 4 servicios (Laravel, Postgres, Redis, Vite) sin errores.
-- [ ] Pest configurado y ejecuta correctamente un test trivial.
+- [x] Estructura de carpetas backend y frontend creada según manuscrito.
+- [x] Store de navegación compartido creado y conectado a sidebar/bottom bar placeholder.
+- [x] Todas las migraciones de las secciones 3.1–3.5 creadas, con índices de la sección 3.6 incluidos.
+- [x] Sanctum configurado en modo SPA cookie, verificable con un endpoint de prueba autenticado.
+- [x] Las 4 Policies creadas y registradas, con test de feature que confirme HTTP 403 al acceder a un recurso ajeno (puede ser con modelos de prueba/dummy).
+- [x] Rate limiting configurado y verificable (test o prueba manual con curl/Postman).
+- [x] `tailwind.config.js` con paleta base + 7 tokens de macros, según `DESIGN.md`.
+- [x] Sidebar (desktop) y bottom bar (mobile) placeholder funcionando en ambos breakpoints, sin solapamientos visuales.
+- [x] Docker levanta los 4 servicios (Laravel, Postgres, Redis, Vite) sin errores.
+- [x] Pest configurado y ejecuta correctamente un test trivial.
 
 ## Notas
 

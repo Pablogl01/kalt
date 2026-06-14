@@ -1,12 +1,15 @@
 <script setup>
-import { onMounted } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useNavStore } from '@/stores/navStore'
 import SidebarNav from '@/components/layout/SidebarNav.vue'
 import BottomTabBar from '@/components/layout/BottomTabBar.vue'
 
-const route = useRoute()
+const route    = useRoute()
 const navStore = useNavStore()
+
+// Navigation chrome is only shown on authenticated (app) routes
+const showNav = computed(() => route.meta.requiresAuth === true)
 
 onMounted(() => {
   if (route.name) {
@@ -16,17 +19,19 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="kalt-layout">
-    <!-- Desktop sidebar — visible ≥1024px -->
-    <SidebarNav class="kalt-sidebar" />
+  <div class="kalt-layout" :class="{ 'kalt-layout--auth': !showNav }">
+
+    <!-- Desktop sidebar — visible ≥1024px, auth routes only -->
+    <SidebarNav v-if="showNav" class="kalt-sidebar" />
 
     <!-- Main content area -->
     <main class="kalt-main">
       <RouterView />
     </main>
 
-    <!-- Mobile bottom tab bar — visible <1024px -->
-    <BottomTabBar class="kalt-bottom-bar" />
+    <!-- Mobile bottom tab bar — visible <1024px, auth routes only -->
+    <BottomTabBar v-if="showNav" class="kalt-bottom-bar" />
+
   </div>
 </template>
 
@@ -35,6 +40,11 @@ onMounted(() => {
   display: flex;
   min-height: 100dvh;
   background-color: var(--color-bg);
+}
+
+/* Auth layout: full-screen, no chrome */
+.kalt-layout--auth {
+  align-items: stretch;
 }
 
 /* Sidebar: desktop only */
@@ -58,8 +68,8 @@ onMounted(() => {
 .kalt-main {
   flex: 1;
   overflow-y: auto;
-  /* Reserve space for bottom bar on mobile */
-  padding-bottom: var(--bottom-bar-height);
+  /* Reserve space for bottom bar on mobile (only when nav is shown) */
+  padding-bottom: v-bind("showNav ? 'var(--bottom-bar-height)' : '0'");
 }
 
 /* Bottom bar: mobile only */
