@@ -52,13 +52,18 @@ export const useUserStore = defineStore('user', () => {
     await fetchProfile()
   }
 
-  /**
-   * Destroy the authenticated session and clear local state.
-   */
   async function logout() {
-    await api.post('/logout')
+    // Optimistic clear: reset local state instantly
     user.value   = null
     macros.value = null
+    
+    try {
+      // Dispatch server request asynchronously in background
+      await api.post('/logout')
+    } catch (err) {
+      // Silent catch: even if request fails or cookie expired, local session is already cleared
+      console.warn('Backend logout call failed, session was already destroyed locally.', err)
+    }
   }
 
   // ── Profile actions ───────────────────────────────────────
