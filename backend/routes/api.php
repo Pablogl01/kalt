@@ -31,6 +31,21 @@ Route::middleware(['auth:sanctum', 'throttle:api'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'show']);
     Route::put('/profile', [ProfileController::class, 'update']);
 
+    // Foods
+    Route::get('/foods', function () {
+        return \App\Models\Food::orderBy('nombre')->get();
+    });
+
+
+    // Onboarding
+    Route::post('/onboarding/step1', [\App\Http\Controllers\OnboardingController::class, 'step1']);
+    Route::post('/onboarding/step2', [\App\Http\Controllers\OnboardingController::class, 'step2']);
+    Route::post('/onboarding/step3', [\App\Http\Controllers\OnboardingController::class, 'step3']);
+
+    // Daily Logs
+    Route::get('/daily-logs/{fecha}', [\App\Http\Controllers\DailyLogController::class, 'show']);
+    Route::patch('/daily-logs/{dailyLog}/training', [\App\Http\Controllers\DailyLogController::class, 'updateTraining']);
+
     // Diet plans — generation throttled separately
     Route::middleware('throttle:plan-generation')->group(function () {
         Route::post('/plans/generate', [DietController::class, 'generate']);
@@ -40,6 +55,9 @@ Route::middleware(['auth:sanctum', 'throttle:api'])->group(function () {
     Route::get('/plans/{weeklyPlan}/status', [DietController::class, 'status']);
 
     // Meal logs
+    Route::patch('/meal-logs/{mealLog}/complete', [MealLogController::class, 'complete']);
+    Route::patch('/meal-logs/{mealLog}/skip', [MealLogController::class, 'skip']);
+    Route::post('/meal-logs/{dailyLog}/extra', [MealLogController::class, 'extra']);
     Route::apiResource('meal-logs', MealLogController::class);
 
     // Shopping
@@ -50,3 +68,4 @@ Route::middleware(['auth:sanctum', 'throttle:api'])->group(function () {
     Route::get('/stats', [StatsController::class, 'index']);
     Route::post('/weight-logs', [StatsController::class, 'storeWeight']);
 });
+
