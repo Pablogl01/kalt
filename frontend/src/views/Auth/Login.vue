@@ -98,7 +98,7 @@ async function handleLogin() {
 
   try {
     await userStore.login(form.email, form.password)
-    const redirect = route.query.redirect || '/profile'
+    const redirect = route.query.redirect || (userStore.hasCompleteProfile ? '/' : '/onboarding')
     router.push(redirect)
   } catch (err) {
     if (err.response?.status === 422) {

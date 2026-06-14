@@ -138,8 +138,8 @@ async function handleRegister() {
       form.password,
       form.passwordConfirmation,
     )
-    // Registration auto-logs the user in → go to profile
-    router.push('/profile')
+    // Registration auto-logs the user in → go to onboarding wizard
+    router.push('/onboarding')
   } catch (err) {
     if (err.response?.status === 422) {
       const errors = err.response.data?.errors ?? {}
