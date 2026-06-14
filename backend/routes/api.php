@@ -33,8 +33,9 @@ Route::middleware(['auth:sanctum', 'throttle:api'])->group(function () {
 
     // Diet plans — generation throttled separately
     Route::middleware('throttle:plan-generation')->group(function () {
-        Route::post('/plans', [DietController::class, 'generate']);
+        Route::post('/plans/generate', [DietController::class, 'generate']);
     });
+    Route::get('/plans/active', [DietController::class, 'active']);
     Route::get('/plans/{weeklyPlan}', [DietController::class, 'show']);
     Route::get('/plans/{weeklyPlan}/status', [DietController::class, 'status']);
 
