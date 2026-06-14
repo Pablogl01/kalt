@@ -115,7 +115,7 @@ Números grandes y bold (patrón de la referencia visual). Este bloque es la pri
 - [x] Vista de perfil muestra bloque de macros con tokens de color correctos y tipografía Plus Jakarta Sans.
 - [x] Store de usuario gestiona sesión correctamente.
 - [x] Rutas autenticadas protegidas con guard de Vue Router.
-- [ ] Tests manuales 1-10 superados.
+- [x] Tests manuales 1-10 superados.
 
 ## Notas
 
