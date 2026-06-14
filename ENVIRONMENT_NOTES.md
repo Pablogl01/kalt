@@ -101,4 +101,28 @@ docker compose logs -f app   # follow
 
 ---
 
-*Actualizado: Ticket 00 — Fundación*
+*Actualizado: Ticket 01 — Auth + Perfil*
+
+---
+
+## Notas adicionales de red (Docker)
+
+### 5. Proxy de Vite: usar hostname interno Docker, no localhost
+
+**Síntoma:** El frontend en el container Vite no puede alcanzar el backend con `target: 'http://localhost:8000'`. El login/registro devuelve "Error de conexión".
+
+**Causa:** Dentro del container Docker, `localhost` apunta al propio container Vite, no al host del sistema. El nginx es accesible dentro de la red Docker por su nombre de servicio.
+
+**Fix en `vite.config.js`:**
+```js
+// ❌ Falla desde dentro del container Docker
+proxy: { '/api': { target: 'http://localhost:8000' } }
+
+// ✅ Correcto — usa el hostname interno de Docker Compose
+proxy: { '/api': { target: 'http://nginx' } }
+```
+
+**Nota:** Cada vez que se modifica `vite.config.js`, hay que reiniciar el container Vite:
+```powershell
+docker compose restart vite
+```

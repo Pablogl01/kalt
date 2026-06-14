@@ -25,7 +25,8 @@ let csrfInitialised = false
 
 async function ensureCsrf() {
   if (!csrfInitialised) {
-    await api.get('/sanctum/csrf-cookie')
+    // Sanctum's CSRF cookie route is at /sanctum/csrf-cookie (not under /api)
+    await axios.get('/sanctum/csrf-cookie', { withCredentials: true })
     csrfInitialised = true
   }
 }

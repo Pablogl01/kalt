@@ -107,14 +107,14 @@ Números grandes y bold (patrón de la referencia visual). Este bloque es la pri
 
 ## Criterios de aceptación
 
-- [ ] Los tres endpoints de auth funcionan correctamente con sus FormRequests.
-- [ ] `DietCalculator` implementado con los 3 métodos, sin acceso a BD.
-- [ ] Tests unitarios de `DietCalculatorTest` pasan al 100%.
-- [ ] Tests de feature de auth y perfil pasan al 100%.
-- [ ] `GET /api/profile` incluye los macros calculados en la respuesta.
-- [ ] Vista de perfil muestra bloque de macros con tokens de color correctos y tipografía Plus Jakarta Sans.
-- [ ] Store de usuario gestiona sesión correctamente.
-- [ ] Rutas autenticadas protegidas con guard de Vue Router.
+- [x] Los tres endpoints de auth funcionan correctamente con sus FormRequests.
+- [x] `DietCalculator` implementado con los 3 métodos, sin acceso a BD.
+- [x] Tests unitarios de `DietCalculatorTest` pasan al 100%.
+- [x] Tests de feature de auth y perfil pasan al 100%.
+- [x] `GET /api/profile` incluye los macros calculados en la respuesta.
+- [x] Vista de perfil muestra bloque de macros con tokens de color correctos y tipografía Plus Jakarta Sans.
+- [x] Store de usuario gestiona sesión correctamente.
+- [x] Rutas autenticadas protegidas con guard de Vue Router.
 - [ ] Tests manuales 1-10 superados.
 
 ## Notas
