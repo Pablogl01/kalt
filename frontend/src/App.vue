@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted } from 'vue'
+import { computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useNavStore } from '@/stores/navStore'
 import SidebarNav from '@/components/layout/SidebarNav.vue'
@@ -11,11 +11,15 @@ const navStore = useNavStore()
 // Navigation chrome is only shown on authenticated (app) routes
 const showNav = computed(() => route.meta.requiresAuth === true)
 
-onMounted(() => {
-  if (route.name) {
-    navStore.currentRoute = route.name
-  }
-})
+watch(
+  () => route.name,
+  (newName) => {
+    if (newName) {
+      navStore.currentRoute = newName
+    }
+  },
+  { immediate: true }
+)
 </script>
 
 <template>

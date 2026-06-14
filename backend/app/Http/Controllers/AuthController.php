@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Models\User;
+use App\Services\DietCalculator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,6 +14,7 @@ use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
+    public function __construct(private readonly DietCalculator $calculator) {}
     /**
      * Register a new user.
      *
@@ -50,7 +52,15 @@ class AuthController extends Controller
 
         $request->session()->regenerate();
 
-        return response()->json(['user' => $request->user()]);
+        $user = $request->user();
+        $macros = $this->calculator->userHasCompleteProfile($user)
+            ? $this->calculator->calculate($user)
+            : null;
+
+        return response()->json([
+            'user'   => $user,
+            'macros' => $macros,
+        ]);
     }
 
     /**

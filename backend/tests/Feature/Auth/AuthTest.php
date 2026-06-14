@@ -62,7 +62,10 @@ it('returns HTTP 200 and user data on successful login', function () {
     ]);
 
     $response->assertStatus(200)
-        ->assertJsonStructure(['user' => ['id', 'name', 'email']]);
+        ->assertJsonStructure([
+            'user' => ['id', 'name', 'email'],
+            'macros',
+        ]);
 });
 
 it('returns HTTP 422 on incorrect credentials', function () {

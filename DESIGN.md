@@ -1,49 +1,307 @@
-# DESIGN.md — Sistema de Diseño KALT (v2)
+# 1. Principios de Diseño
 
-Sustituye la dirección visual anterior (estilo ANZ banking / gris+blanco). Nueva dirección: paleta cálida (crema/naranja/negro), inspirada en referencia tipo "Flux Health Dashboard".
+## Claridad
 
-## 1. Navegación
+La información importante debe entenderse en menos de 3 segundos.
 
-- **Desktop (≥1024px):** sidebar fijo a la izquierda, fondo oscuro (`--color-surface-dark`), con icono+label por sección.
-- **Mobile (<1024px):** bottom tab bar flotante, mismas secciones que el sidebar. Si hay más de 5 secciones, las menos usadas se agrupan bajo "Más" en mobile.
-- Ambos comparten el mismo store de navegación (Pinia) para estado activo.
+## Simplicidad
 
-> Nota de alcance: cada feature nueva debe testearse en ambos breakpoints (incluido en checklist de tests manuales del flujo).
+Eliminar cualquier elemento visual innecesario.
 
-## 2. Paleta base
+## Adaptabilidad
 
-| Token | Uso | Color |
-| --- | --- | --- |
-| `--color-bg` | Fondo general (light mode) | Crema `#FDF6F0` |
-| `--color-surface` | Tarjetas sobre fondo claro | Blanco `#FFFFFF` |
-| `--color-surface-dark` | Sidebar / tarjetas de contraste oscuro (ej. heatmap, stats destacadas) | Negro cálido `#1F1B16` |
-| `--color-text` | Texto principal | `#1F1B16` |
-| `--color-text-muted` | Texto secundario | `#8A8178` |
-| `--color-accent` | CTAs, elementos activos, badges positivos | Verde pastel `#A8E063` |
-| `--color-accent-dark` | Variante hover/active de accent | `#7CC242` |
+La interfaz debe transmitir flexibilidad y control.
 
-**Importante:** el naranja queda **reservado exclusivamente** para el token `--color-carbs`. No se usa naranja en botones, CTAs, sidebar activo, ni ningún elemento que no represente carbohidratos. El acento general de la app es el verde pastel (`--color-accent`), tomado de los elementos "Upgrade to Pro" / badges de la referencia.
+## Confianza
 
-## 3. Tokens semánticos de macros (sin cambios respecto al manuscrito)
+Cada acción automática debe explicarse al usuario.
 
-| Token | Uso | Color |
-| --- | --- | --- |
-| `--color-protein` | Proteína | `#16A34A` |
-| `--color-carbs` | Carbohidratos | `#EA580C` (uso exclusivo) |
-| `--color-fat` | Grasas | `#CA8A04` |
-| `--color-calories` | Calorías totales | `#2563EB` |
-| `--color-goal` | Objetivo / referencia | `#64748B` |
-| `--color-success-adherence` | Heatmap — adherencia completa | `#15803D` |
-| `--color-partial-adherence` | Heatmap — adherencia parcial | `#86EFAC` |
+# 2. Personalidad Visual
 
-## 4. Patrones de UI rescatados de la referencia
+KALT no es una marca fitness agresiva.
 
-- **Números grandes y bold** para métricas clave (ej. "4,3k kcal hoy"), con badge de variación (`+5%`) en `--color-accent` cuando es positivo, rojo suave (`#F87171`) cuando es negativo.
-- **Tarjetas de contraste oscuro** (`--color-surface-dark`) para destacar bloques concretos: AdherenceHeatmap y/o resumen semanal en Stats. No usar como fondo general.
-- **Badges redondeados** para porcentajes y estados (estilo "+10%", "Monthly ▾").
+KALT es una herramienta inteligente de nutrición.
 
-## 5. Tipografía
+Inspiraciones:
 
-- **Tipografía principal**: **Plus Jakarta Sans** (Google Fonts)
-- Pesos utilizados: `400` (body), `500` (labels/nav), `600` (subtítulos), `700` (métricas grandes, headings)
-- Nombre definitivo de la app: KALT (confirmado, sustituye a FitDiet).
+```
+Linear
+Apple Health
+Notion
+Stripe Dashboard
+```
+Evitar referencias visuales típicas del sector fitness.
+
+### •
+
+### •
+
+### •
+
+### •
+
+
+# 3. Paleta Principal
+
+## Fondo
+
+```
+--color-bg: #F8F4EF;
+```
+Crema cálido.
+
+## Superficie
+
+```
+--color-surface: #FFFFFF;
+```
+## Superficie oscura
+
+```
+--color-surface-dark: #1C1A17;
+```
+## Texto principal
+
+```
+--color-text:#1C1A17;
+```
+## Texto secundario
+
+```
+--color-text-muted: #8A8178;
+```
+# 4. Color de Marca
+
+## Primario
+
+```
+--color-primary: #7FBF4D;
+```
+Uso:
+
+- CTA principal
+
+
+```
+Estado activo
+Indicadores positivos
+Elementos destacados
+```
+## Hover
+
+```
+--color-primary-hover: #6BA63D;
+```
+# 5. Color Sistema
+
+Representa automatización, cálculo y adaptación.
+
+```
+--color-system: #3B82F6;
+```
+Uso:
+
+```
+Ajustes automáticos
+IA futura
+Recalculados
+Estados inteligentes
+```
+# 6. Colores de Macronutrientes
+
+## Proteína
+
+```
+--color-protein: #16A34A;
+```
+## Carbohidratos
+
+```
+--color-carbs: #EA580C;
+```
+## Grasas
+
+```
+--color-fat: #CA8A04;
+```
+### • • • • • • •
+
+
+## Calorías
+
+```
+--color-calories: #2563EB;
+```
+## Objetivo
+
+```
+--color-goal:#64748B;
+```
+# 7. Tipografía
+
+## Principal
+
+Plus Jakarta Sans
+
+Pesos:
+
+### 400
+
+### 500
+
+### 600
+
+### 700
+
+# 8. Escala Tipográfica
+
+## Hero
+
+48px / 700
+
+## Heading 1
+
+36px / 700
+
+## Heading 2
+
+28px / 700
+
+## Heading 3
+
+22px / 600
+
+### •
+
+### •
+
+### •
+
+### •
+
+
+## Body
+
+16px / 400
+
+## Small
+
+14px / 400
+
+# 9. Navegación
+
+## Desktop
+
+Sidebar izquierda fija.
+
+Color:
+
+```
+--color-surface-dark
+```
+Ancho:
+
+```
+280px
+```
+## Mobile
+
+Bottom Navigation.
+
+Máximo 5 secciones.
+
+# 10. Nomenclatura UX
+
+Evitar lenguaje técnico.
+
+Usar:
+
+```
+Interno Usuario
+```
+```
+Dashboard Hoy
+```
+```
+Weekly Plan Tu semana
+```
+```
+Shopping List Compra
+```
+
+```
+Interno Usuario
+```
+```
+Statistics Progreso
+```
+```
+Recalculation Ajuste
+```
+```
+Goal Meta
+```
+# 11. Componentes Destacados
+
+## KPI Card
+
+```
+Número grande
+Descripción pequeña
+Badge opcional
+```
+## Recalc Notice
+
+Elemento clave de producto.
+
+Debe utilizar:
+
+```
+--color-system
+```
+Para transmitir inteligencia y adaptación.
+
+## Macro Bar
+
+Mostrar siempre:
+
+```
+Consumido
+Objetivo
+Progreso visual
+```
+# 12. Iconografía
+
+Estilo:
+
+```
+Lucide
+Minimalista
+Outline
+```
+### • • • • • • • • •
+
+
+Evitar:
+
+```
+Pesas
+Bíceps
+Llamas
+Rayos
+```
+# 13. Experiencia Visual
+
+Cuando un usuario entra en KALT debe pensar:
+
+"Esto parece una herramienta profesional que simplifica mi nutrición."
+
+Nunca:
+
+"Otra app fitness más."
+
+# 14. Regla Principal
+
+Toda decisión de diseño debe reforzar una única idea:
+
+La nutrición se adapta automáticamente al usuario.

@@ -42,14 +42,9 @@ export const useUserStore = defineStore('user', () => {
     macros.value = null
   }
 
-  /**
-   * Authenticate an existing account.
-   * Loads the profile with macros immediately after login.
-   */
   async function login(email, password) {
-    await api.post('/login', { email, password })
-    // Load full profile (including macros) in one extra call
-    await fetchProfile()
+    const { data } = await api.post('/login', { email, password })
+    _applyProfileResponse(data)
   }
 
   async function logout() {
