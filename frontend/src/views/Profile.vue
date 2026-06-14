@@ -241,13 +241,27 @@
       </form>
     </section>
 
+    <!-- Account / Actions section -->
+    <section class="actions-section">
+      <button
+        id="profile-logout"
+        type="button"
+        class="btn-secondary btn-danger-text"
+        @click="handleLogout"
+      >
+        Cerrar sesión
+      </button>
+    </section>
+
   </div>
 </template>
 
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/userStore'
 
+const router = useRouter()
 const userStore = useUserStore()
 
 const saving     = ref(false)
@@ -314,6 +328,15 @@ async function handleSave() {
     }
   } finally {
     saving.value = false
+  }
+}
+
+async function handleLogout() {
+  try {
+    await userStore.logout()
+    router.push({ name: 'login' })
+  } catch (err) {
+    saveError.value = 'Error al cerrar sesión. Inténtalo de nuevo.'
   }
 }
 </script>
@@ -653,5 +676,39 @@ async function handleSave() {
 
 @keyframes spin {
   to { transform: rotate(360deg); }
+}
+
+/* ── Actions / Logout Section ───────────────────────────── */
+.actions-section {
+  display: flex;
+  justify-content: center;
+}
+
+.btn-secondary {
+  padding: 0.75rem 1.5rem;
+  background: transparent;
+  color: var(--color-text-muted);
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  border: 1.5px solid var(--color-border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-secondary:hover {
+  background: var(--color-surface);
+  color: var(--color-text);
+  border-color: var(--color-text-muted);
+}
+
+.btn-danger-text:hover {
+  color: #dc2626;
+  border-color: #fca5a5;
+  background: #fef2f2;
 }
 </style>
