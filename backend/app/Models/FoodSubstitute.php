@@ -11,6 +11,8 @@ class FoodSubstitute extends Model
 {
     use HasFactory, HasUuids;
 
+    protected $table = 'food_substitutes';
+
     protected $fillable = [
         'food_id',
         'substitute_food_id',

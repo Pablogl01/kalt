@@ -9,6 +9,6 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // Phase 1: Food seeder (minimum 25 items per category)
-        // $this->call(FoodSeeder::class);
+        $this->call(FoodSeeder::class);
     }
 }

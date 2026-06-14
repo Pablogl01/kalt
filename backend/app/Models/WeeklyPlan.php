@@ -18,6 +18,7 @@ class WeeklyPlan extends Model
         'semana_inicio',
         'generado_en',
         'status',
+        'error_message',
     ];
 
     protected function casts(): array

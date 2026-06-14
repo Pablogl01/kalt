@@ -14,6 +14,7 @@ return new class extends Migration
             $table->date('semana_inicio');
             $table->timestamp('generado_en')->nullable();
             $table->string('status', 20)->default('pending'); // pending | ready | failed
+            $table->text('error_message')->nullable();
             $table->timestamps();
 
             // Index required by §3.6 — fast lookup of user's active plan
