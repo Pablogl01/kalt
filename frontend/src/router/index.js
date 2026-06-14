@@ -87,7 +87,9 @@ router.beforeEach(async (to) => {
 window.addEventListener('kalt:unauthenticated', () => {
   const userStore = useUserStore()
   userStore.logout().catch(() => {})
-  router.push({ name: 'login' })
+  if (router.currentRoute.value?.meta?.requiresAuth) {
+    router.push({ name: 'login' })
+  }
 })
 
 export default router
