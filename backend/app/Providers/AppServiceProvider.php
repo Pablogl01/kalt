@@ -4,10 +4,12 @@ namespace App\Providers;
 
 use App\Models\DailyLog;
 use App\Models\MealLog;
+use App\Models\MealItem;
 use App\Models\ShoppingList;
 use App\Models\WeeklyPlan;
 use App\Policies\DailyLogPolicy;
 use App\Policies\MealLogPolicy;
+use App\Policies\MealItemPolicy;
 use App\Policies\ShoppingListPolicy;
 use App\Policies\WeeklyPlanPolicy;
 use Illuminate\Support\Facades\Gate;
@@ -35,5 +37,6 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(DailyLog::class, DailyLogPolicy::class);
         Gate::policy(ShoppingList::class, ShoppingListPolicy::class);
         Gate::policy(MealLog::class, MealLogPolicy::class);
+        Gate::policy(MealItem::class, MealItemPolicy::class);
     }
 }

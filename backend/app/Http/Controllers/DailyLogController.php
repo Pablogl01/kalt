@@ -82,13 +82,77 @@ class DailyLogController extends Controller
             'hora_gimnasio' => ['nullable', 'string'],
         ]);
 
-        $dailyLog->update([
-            'ha_entrenado'     => $validated['ha_entrenado'],
-            'hora_gimnasio'    => $validated['hora_gimnasio'] ?? null,
-            'recalculo_motivo' => $validated['ha_entrenado'] ? 'entreno_realizado' : 'entreno_no_realizado',
-        ]);
+        $haEntrenado = $validated['ha_entrenado'];
+        $horaGimnasio = $validated['hora_gimnasio'] ?? $dailyLog->hora_gimnasio;
 
-        return $this->formatLogResponse($dailyLog);
+        $recalMotivo = null;
+        $recalMsg = null;
+
+        if ($dailyLog->entreno_planificado && !$haEntrenado) {
+            $dailyLog->update([
+                'ha_entrenado' => false,
+                'hora_gimnasio' => null,
+            ]);
+
+            $dayPlan = $dailyLog->user->weeklyPlans()
+                ->where('status', 'ready')
+                ->where('semana_inicio', '<=', $dailyLog->fecha->toDateString())
+                ->orderBy('semana_inicio', 'desc')
+                ->first()?->dayPlans()->whereDate('fecha', $dailyLog->fecha->toDateString())->first();
+
+            $oldCal = $dayPlan ? $dayPlan->calorias_objetivo : 2000;
+
+            $recalculator = new \App\Services\DayRecalculator();
+            $recalculator->recalculateNoTraining($dailyLog);
+
+            $dayPlan?->refresh();
+            $newCal = $dayPlan ? $dayPlan->calorias_objetivo : 2000;
+            $reducedCal = round($oldCal - $newCal);
+
+            $remainingCount = $dailyLog->mealLogs()->where('realizada', false)->where('es_extra', false)->count();
+            $recalMsg = $remainingCount > 0
+                ? "Como no has entrenado hoy, hemos reducido {$reducedCal} kcal de tus comidas restantes."
+                : "No quedan comidas para ajustar hoy.";
+            $recalMotivo = 'no_ha_entrenado';
+        } elseif (!$dailyLog->entreno_planificado && $haEntrenado) {
+            if (empty($horaGimnasio)) {
+                return response()->json([
+                    'message' => 'La hora de gimnasio es obligatoria para registrar un entrenamiento hoy.',
+                    'errors' => [
+                        'hora_gimnasio' => ['La hora de gimnasio es obligatoria.']
+                    ]
+                ], 422);
+            }
+
+            $dailyLog->update([
+                'ha_entrenado' => true,
+                'hora_gimnasio' => $horaGimnasio,
+            ]);
+
+            $recalculator = new \App\Services\DayRecalculator();
+            $recalculator->recalculateExtraTraining($dailyLog);
+
+            $remainingCount = $dailyLog->mealLogs()->where('realizada', false)->where('es_extra', false)->count();
+            $recalMsg = $remainingCount > 0
+                ? "Hemos añadido 400 kcal a tus comidas de hoy por el entreno no planificado."
+                : "No quedan comidas para ajustar hoy.";
+            $recalMotivo = 'entreno_no_planificado';
+        } else {
+            $dailyLog->update([
+                'ha_entrenado' => $haEntrenado,
+                'hora_gimnasio' => $horaGimnasio,
+                'recalculo_motivo' => $haEntrenado ? 'entreno_realizado' : 'entreno_no_realizado',
+            ]);
+        }
+
+        $response = $this->formatLogResponse($dailyLog);
+        $data = $response->getData(true);
+        if ($recalMotivo) {
+            $data['recalculo_motivo'] = $recalMotivo;
+            $data['mensaje_recalculo'] = $recalMsg;
+        }
+
+        return response()->json($data);
     }
 
     private function formatLogResponse(DailyLog $log): JsonResponse

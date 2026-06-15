@@ -60,6 +60,10 @@ Route::middleware(['auth:sanctum', 'throttle:api'])->group(function () {
     Route::post('/meal-logs/{dailyLog}/extra', [MealLogController::class, 'extra']);
     Route::apiResource('meal-logs', MealLogController::class);
 
+    // Substitutes
+    Route::get('/meal-items/{mealItem}/substitutes', [\App\Http\Controllers\SubstituteController::class, 'substitutes']);
+    Route::patch('/meal-items/{mealItem}/substitute', [\App\Http\Controllers\SubstituteController::class, 'substitute']);
+
     // Shopping
     Route::get('/shopping-lists/{shoppingList}', [ShoppingController::class, 'show']);
     Route::patch('/shopping-items/{shoppingItem}', [ShoppingController::class, 'update']);

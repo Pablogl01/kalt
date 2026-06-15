@@ -188,7 +188,7 @@ it('updates daily log training state and recalculation motive', function () {
         ])
         ->assertStatus(200)
         ->assertJsonPath('ha_entrenado', false)
-        ->assertJsonPath('recalculo_motivo', 'entreno_no_realizado');
+        ->assertJsonPath('recalculo_motivo', 'no_ha_entrenado');
 });
 
 it('adds extra meal', function () {

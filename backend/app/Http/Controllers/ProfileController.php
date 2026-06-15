@@ -20,7 +20,7 @@ class ProfileController extends Controller
      */
     public function show(Request $request): JsonResponse
     {
-        $user  = $request->user();
+        $user  = $request->user()->load('foodRestrictions');
         $macros = $this->calculator->userHasCompleteProfile($user)
             ? $this->calculator->calculate($user)
             : null;
@@ -41,6 +41,7 @@ class ProfileController extends Controller
         $user = $request->user();
         $user->update($request->validated());
         $user->refresh();
+        $user->load('foodRestrictions');
 
         $macros = $this->calculator->userHasCompleteProfile($user)
             ? $this->calculator->calculate($user)

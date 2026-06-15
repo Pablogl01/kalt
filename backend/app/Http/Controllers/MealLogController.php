@@ -87,11 +87,25 @@ class MealLogController extends Controller
             'hora_real' => null,
         ]);
 
-        $mealLog->dailyLog->update([
-            'recalculo_motivo' => 'comida_saltada',
-        ]);
+        $recalculator = new \App\Services\DayRecalculator();
+        $recalculator->recalculateSkippedMeal($mealLog->dailyLog, $mealLog);
 
-        return response()->json($mealLog->load(['mealLogItems.food', 'meal.mealSlot', 'meal.mealItems.food']));
+        $skippedCal = 0;
+        if ($mealLog->meal) {
+            $skippedCal = round($mealLog->meal->mealItems->sum('calorias'));
+        }
+        $time = $mealLog->meal ? substr($mealLog->meal->hora_objetivo, 0, 5) : '';
+
+        $remainingCount = $mealLog->dailyLog->mealLogs()->where('realizada', false)->where('es_extra', false)->count();
+        $msg = $remainingCount > 0 
+            ? "Tu comida de las {$time} fue saltada. Hemos redistribuido {$skippedCal} kcal entre tus comidas restantes."
+            : "No quedan comidas para ajustar hoy.";
+
+        $data = $mealLog->fresh()->load(['mealLogItems.food', 'meal.mealSlot', 'meal.mealItems.food'])->toArray();
+        $data['recalculo_motivo'] = 'comida_saltada';
+        $data['mensaje_recalculo'] = $msg;
+
+        return response()->json($data);
     }
 
     public function extra(DailyLog $dailyLog, Request $request): JsonResponse
@@ -130,6 +144,21 @@ class MealLogController extends Controller
             return $mealLog;
         });
 
-        return response()->json($mealLog->load('mealLogItems.food'), 201);
+        $recalculator = new \App\Services\DayRecalculator();
+        $recalculator->recalculateExtraMeal($dailyLog, $mealLog);
+
+        $extraCal = round($mealLog->mealLogItems->sum('calorias'));
+        $time = substr($mealLog->hora_real, 0, 5);
+
+        $remainingCount = $dailyLog->mealLogs()->where('realizada', false)->where('es_extra', false)->count();
+        $msg = $remainingCount > 0
+            ? "Hemos ajustado tus comidas restantes porque añadiste {$extraCal} kcal extra a las {$time}."
+            : "No quedan comidas para ajustar hoy.";
+
+        $data = $mealLog->fresh()->load('mealLogItems.food')->toArray();
+        $data['recalculo_motivo'] = 'comida_extra';
+        $data['mensaje_recalculo'] = $msg;
+
+        return response()->json($data, 201);
     }
 }
