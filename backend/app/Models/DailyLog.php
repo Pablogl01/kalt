@@ -20,6 +20,7 @@ class DailyLog extends Model
         'hora_gimnasio',
         'tipo_sesion',
         'recalculo_motivo',
+        'nota_exceso',
     ];
 
     protected function casts(): array
