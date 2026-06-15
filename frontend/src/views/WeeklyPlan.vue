@@ -4,12 +4,32 @@ import { useUserStore } from '@/stores/userStore'
 import { useDietStore } from '@/stores/dietStore'
 import MacroBar from '@/components/MacroBar.vue'
 import PlanStatusPoller from '@/components/PlanStatusPoller.vue'
+import SubstituteSelector from '@/components/SubstituteSelector.vue'
 
 const userStore = useUserStore()
 const dietStore = useDietStore()
 
 const activeDayIndex = ref(0)
 const currentPlanId = ref(null)
+
+const showSubstituteSelector = ref(false)
+const selectedMealItem = ref(null)
+
+const isAllergic = (foodId) => {
+  if (!userStore.user?.food_restrictions) return false
+  return userStore.user.food_restrictions.some(
+    r => r.food_id === foodId && r.tipo === 'alergia'
+  )
+}
+
+function triggerSubstitute(item) {
+  selectedMealItem.value = item
+  showSubstituteSelector.value = true
+}
+
+async function handleSubstituteSelected(updatedItem) {
+  await dietStore.loadActivePlan()
+}
 
 onMounted(async () => {
   // Load active plan on mount if user is authenticated and has complete profile
@@ -204,7 +224,12 @@ function formatTime(timeStr) {
                   <span class="item-macro font-fat">{{ Math.round(item.grasa) }}g G</span>
                   <span class="item-macro font-calories">{{ Math.round(item.calorias) }} kcal</span>
                 </div>
-                <button class="btn-substitute" disabled title="Sustitución disponible en Fase 4">
+                <button 
+                  v-if="!isAllergic(item.food_id)" 
+                  @click="triggerSubstitute(item)" 
+                  class="btn-substitute" 
+                  title="Sustituir alimento"
+                >
                   Sustituir
                 </button>
               </li>
@@ -214,6 +239,16 @@ function formatTime(timeStr) {
       </main>
 
     </div>
+
+    <!-- Substitute Selector Modal -->
+    <SubstituteSelector
+      v-if="showSubstituteSelector && selectedMealItem"
+      :mealItemId="selectedMealItem.id"
+      :foodName="selectedMealItem.food?.nombre"
+      context="plan"
+      @selected="handleSubstituteSelected"
+      @close="showSubstituteSelector = false; selectedMealItem = null"
+    />
   </div>
 </template>
 
@@ -540,13 +575,18 @@ function formatTime(timeStr) {
 .btn-substitute {
   padding: 0.375rem 0.75rem;
   background: var(--color-bg);
-  border: 1px solid var(--color-border);
-  color: var(--color-text-muted);
+  border: 1px solid rgba(138, 129, 120, 0.15);
+  color: var(--color-system, #3B82F6);
   font-size: 0.75rem;
   font-weight: 600;
   border-radius: 6px;
-  cursor: not-allowed;
-  opacity: 0.6;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-substitute:hover {
+  background-color: rgba(59, 130, 246, 0.08);
+  border-color: var(--color-system, #3B82F6);
 }
 
 /* ── Typography modifications ─────────────────────── */

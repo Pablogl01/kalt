@@ -6,6 +6,7 @@ import api from '@/api/client'
 import MacroBar from '@/components/MacroBar.vue'
 import MealCard from '@/components/MealCard.vue'
 import RecalcNotice from '@/components/RecalcNotice.vue'
+import SubstituteSelector from '@/components/SubstituteSelector.vue'
 
 const logStore = useLogStore()
 const userStore = useUserStore()
@@ -14,6 +15,10 @@ const userStore = useUserStore()
 const currentDate = ref(new Date())
 const foodsList = ref([])
 const showExtraForm = ref(false)
+
+const activeNoticeMessage = ref('')
+const showSubstituteSelector = ref(false)
+const selectedMealItem = ref(null)
 
 // Extra meal form state
 const extraItems = ref([]) // array of { food_id, name, grams }
@@ -138,28 +143,63 @@ const consumedMacros = computed(() => {
 async function handleTrainingToggle(event) {
   if (!logStore.dailyLog) return
   const isChecked = event.target.checked
-  await logStore.updateTraining(logStore.dailyLog.id, isChecked, logStore.dailyLog.hora_gimnasio)
+  const data = await logStore.updateTraining(logStore.dailyLog.id, isChecked, logStore.dailyLog.hora_gimnasio)
+  if (data?.mensaje_recalculo) {
+    activeNoticeMessage.value = data.mensaje_recalculo
+  }
 }
 
 async function handleTrainingBtnClick() {
   if (!logStore.dailyLog) return
   const nextVal = !logStore.dailyLog.ha_entrenado
-  await logStore.updateTraining(logStore.dailyLog.id, nextVal, logStore.dailyLog.hora_gimnasio || '18:00:00')
+  const data = await logStore.updateTraining(logStore.dailyLog.id, nextVal, logStore.dailyLog.hora_gimnasio || '18:00:00')
+  if (data?.mensaje_recalculo) {
+    activeNoticeMessage.value = data.mensaje_recalculo
+  }
+}
+
+async function handleComplete(mealLogId) {
+  const data = await logStore.completeMeal(mealLogId)
+  if (data?.mensaje_recalculo) {
+    activeNoticeMessage.value = data.mensaje_recalculo
+  }
+}
+
+async function handleSkip(mealLogId) {
+  const data = await logStore.skipMeal(mealLogId)
+  if (data?.mensaje_recalculo) {
+    activeNoticeMessage.value = data.mensaje_recalculo
+  }
+}
+
+function triggerSubstitute(item) {
+  selectedMealItem.value = item
+  showSubstituteSelector.value = true
+}
+
+async function handleSubstituteSelected(updatedItem) {
+  await logStore.fetchDailyLog(dateString.value)
 }
 
 // Recalculation explanation mapper
 const recalcMessage = computed(() => {
+  if (activeNoticeMessage.value) {
+    return activeNoticeMessage.value
+  }
   if (!logStore.dailyLog?.recalculo_motivo) return null
   
   const motivo = logStore.dailyLog.recalculo_motivo
-  if (motivo === 'entreno_no_realizado') {
+  if (motivo === 'no_ha_entrenado' || motivo === 'entreno_no_realizado') {
     return 'Como no has entrenado hoy, se aplicó un ajuste en tu plan reduciendo calorías de las comidas restantes.'
   }
-  if (motivo === 'entreno_realizado') {
+  if (motivo === 'entreno_no_planificado' || motivo === 'entreno_realizado') {
     return 'Has entrenado en un día de descanso planificado. Se ajustaron tus macros para soportar el entrenamiento.'
   }
   if (motivo === 'comida_saltada') {
     return 'Se marcó una comida como saltada. Los macros sobrantes se han redistribuido entre tus comidas restantes.'
+  }
+  if (motivo === 'comida_extra') {
+    return 'Has añadido una comida extra. Se ajustaron tus comidas restantes.'
   }
   return 'Tus macros diarios se han recalculado automáticamente para adaptarse a tus eventos del día.'
 })
@@ -203,13 +243,16 @@ function removeExtraItem(index) {
 async function saveExtraMeal() {
   if (extraItems.value.length === 0 || !logStore.dailyLog) return
   
-  await logStore.addExtraMeal(
+  const data = await logStore.addExtraMeal(
     logStore.dailyLog.id, 
     extraItems.value.map(item => ({
       food_id: item.food_id,
       cantidad_gramos: item.grams
     }))
   )
+  if (data?.mensaje_recalculo) {
+    activeNoticeMessage.value = data.mensaje_recalculo
+  }
 
   // Clear & hide form
   extraItems.value = []
@@ -237,7 +280,11 @@ async function saveExtraMeal() {
     <div v-if="logStore.dailyLog" class="log-content-wrap">
       
       <!-- ── Recalculation Notice ─────────────────────────── -->
-      <RecalcNotice v-if="recalcMessage" :message="recalcMessage" />
+      <RecalcNotice 
+        v-if="recalcMessage" 
+        :message="recalcMessage" 
+        @close="activeNoticeMessage = ''; if (logStore.dailyLog) { logStore.dailyLog.recalculo_motivo = null; }"
+      />
 
       <!-- ── Daily Macro Progress ────────────────────────── -->
       <section class="section-card macros-summary-card">
@@ -289,8 +336,9 @@ async function saveExtraMeal() {
             v-for="ml in logStore.mealLogs" 
             :key="ml.id" 
             :mealLog="ml"
-            @complete="logStore.completeMeal"
-            @skip="logStore.skipMeal"
+            @complete="handleComplete"
+            @skip="handleSkip"
+            @substitute="triggerSubstitute"
           />
 
           <!-- Empty state -->
@@ -365,6 +413,16 @@ async function saveExtraMeal() {
       </section>
 
     </div>
+
+    <!-- Substitute Selector Modal -->
+    <SubstituteSelector
+      v-if="showSubstituteSelector && selectedMealItem"
+      :mealItemId="selectedMealItem.id"
+      :foodName="selectedMealItem.food?.nombre"
+      context="log"
+      @selected="handleSubstituteSelected"
+      @close="showSubstituteSelector = false; selectedMealItem = null"
+    />
   </div>
 </template>
 

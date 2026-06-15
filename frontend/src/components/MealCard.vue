@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from 'vue'
+import { useUserStore } from '@/stores/userStore'
 
 const props = defineProps({
   mealLog: {
@@ -8,7 +9,16 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['complete', 'skip'])
+const userStore = useUserStore()
+
+const emit = defineEmits(['complete', 'skip', 'substitute'])
+
+const isAllergic = (foodId) => {
+  if (!userStore.user?.food_restrictions) return false
+  return userStore.user.food_restrictions.some(
+    r => r.food_id === foodId && r.tipo === 'alergia'
+  )
+}
 
 // Computed properties to calculate actual macros of this meal log from its items
 const actualMacros = computed(() => {
@@ -111,8 +121,17 @@ const formatTime = (timeStr) => {
       <!-- If not completed and has planned meal items: show planned items -->
       <ul v-else-if="mealLog.meal?.meal_items" class="food-list food-list--planned">
         <li v-for="item in mealLog.meal.meal_items" :key="item.id" class="food-item">
-          <span class="food-name">{{ item.food?.nombre }}</span>
-          <span class="food-weight">{{ Math.round(item.cantidad_gramos) }}g</span>
+          <span class="food-name">
+            {{ item.food?.nombre }}
+            <span class="food-weight">({{ Math.round(item.cantidad_gramos) }}g)</span>
+          </span>
+          <button 
+            v-if="!isAllergic(item.food_id)" 
+            @click="emit('substitute', item)" 
+            class="btn-substitute"
+          >
+            🔄 Sustituir
+          </button>
         </li>
       </ul>
     </div>
@@ -358,5 +377,24 @@ const formatTime = (timeStr) => {
   background-color: rgba(138, 129, 120, 0.05);
   border-color: rgba(138, 129, 120, 0.5);
   color: var(--color-text);
+}
+
+.btn-substitute {
+  background: none;
+  border: none;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-system, #3B82F6);
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.btn-substitute:hover {
+  background-color: rgba(59, 130, 246, 0.08);
 }
 </style>
