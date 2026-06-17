@@ -21,6 +21,27 @@ class ShoppingItem extends Model
         'sustituido_por_food_id',
     ];
 
+    protected $appends = [
+        'cantidad_recalculada',
+    ];
+
+    public function getCantidadRecalculadaAttribute(): float
+    {
+        if (!$this->sustituido_por_food_id) {
+            return (float)$this->cantidad_total;
+        }
+
+        $originalFood = $this->food;
+        $substituteFood = $this->substituteFood;
+
+        if ($originalFood && $substituteFood && $substituteFood->calorias > 0 && $originalFood->calorias > 0) {
+            $originalCalories = ($originalFood->calorias * $this->cantidad_total) / 100;
+            return round(($originalCalories / $substituteFood->calorias) * 100, 2);
+        }
+
+        return (float)$this->cantidad_total;
+    }
+
     protected function casts(): array
     {
         return [

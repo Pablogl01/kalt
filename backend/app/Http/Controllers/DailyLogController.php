@@ -182,7 +182,7 @@ class DailyLogController extends Controller
 
     private function isTrainingDay($user, int $dayOfWeek): bool
     {
-        $level = $user->nivel_actividad ?? 'sedentario';
+        $level = $user->nivel_actividad ?? 'moderado';
         return match ($level) {
             'alto'     => in_array($dayOfWeek, [1, 2, 3, 5, 6]),
             'moderado' => in_array($dayOfWeek, [1, 3, 5]),

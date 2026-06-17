@@ -27,6 +27,17 @@ class UserWeightLog extends Model
         ];
     }
 
+    protected static function booted(): void
+    {
+        static::saved(function ($weightLog) {
+            \App\Services\StatsService::clearCache($weightLog->user_id);
+        });
+
+        static::deleted(function ($weightLog) {
+            \App\Services\StatsService::clearCache($weightLog->user_id);
+        });
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

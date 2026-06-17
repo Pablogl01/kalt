@@ -65,11 +65,20 @@ Route::middleware(['auth:sanctum', 'throttle:api'])->group(function () {
     Route::patch('/meal-items/{mealItem}/substitute', [\App\Http\Controllers\SubstituteController::class, 'substitute']);
 
     // Shopping
+    Route::get('/shopping-lists/active', [ShoppingController::class, 'active']);
+    Route::post('/shopping-lists/generate', [ShoppingController::class, 'generate']);
     Route::get('/shopping-lists/{shoppingList}', [ShoppingController::class, 'show']);
+    Route::patch('/shopping-items/{shoppingItem}/have', [ShoppingController::class, 'have']);
+    Route::patch('/shopping-items/{shoppingItem}/dont-want', [ShoppingController::class, 'dontWant']);
+    Route::patch('/shopping-items/{shoppingItem}/substitute', [ShoppingController::class, 'substitute']);
     Route::patch('/shopping-items/{shoppingItem}', [ShoppingController::class, 'update']);
 
-    // Stats
-    Route::get('/stats', [StatsController::class, 'index']);
+    // Stats & Weight Logs
+    Route::get('/stats/macros', [StatsController::class, 'macros']);
+    Route::get('/stats/adherence', [StatsController::class, 'adherence']);
+    Route::get('/stats/training', [StatsController::class, 'training']);
+    Route::get('/stats/weight', [StatsController::class, 'weight']);
+    Route::get('/weight-logs', [StatsController::class, 'indexWeight']);
     Route::post('/weight-logs', [StatsController::class, 'storeWeight']);
 });
 

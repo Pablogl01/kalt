@@ -28,6 +28,21 @@ class MealLog extends Model
         ];
     }
 
+    protected static function booted(): void
+    {
+        static::saved(function ($mealLog) {
+            if ($mealLog->dailyLog) {
+                \App\Services\StatsService::clearCache($mealLog->dailyLog->user_id);
+            }
+        });
+
+        static::deleted(function ($mealLog) {
+            if ($mealLog->dailyLog) {
+                \App\Services\StatsService::clearCache($mealLog->dailyLog->user_id);
+            }
+        });
+    }
+
     public function dailyLog(): BelongsTo
     {
         return $this->belongsTo(DailyLog::class);

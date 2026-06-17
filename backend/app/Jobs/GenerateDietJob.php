@@ -121,6 +121,14 @@ class GenerateDietJob implements ShouldQueue
             });
 
             $this->weeklyPlan->update(['status' => 'ready', 'generado_en' => now()]);
+
+            $generator = app(\App\Services\ShoppingGenerator::class);
+            if (\App\Models\ShoppingList::where('weekly_plan_id', $this->weeklyPlan->id)->exists()) {
+                $generator->regenerate($this->weeklyPlan);
+            } else {
+                $generator->generate($this->weeklyPlan);
+            }
+
             Log::info('GenerateDietJob completed successfully for plan: ' . $this->weeklyPlan->id);
 
         } catch (\Throwable $e) {
@@ -131,7 +139,7 @@ class GenerateDietJob implements ShouldQueue
 
     private function isTrainingDay(User $user, int $dayOfWeek): bool
     {
-        $level = $user->nivel_actividad ?? 'sedentario';
+        $level = $user->nivel_actividad ?? 'moderado';
         return match ($level) {
             'alto'       => in_array($dayOfWeek, [1, 2, 3, 5, 6]),
             'moderado'   => in_array($dayOfWeek, [1, 3, 5]),

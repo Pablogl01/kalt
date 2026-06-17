@@ -29,8 +29,13 @@ const errorMessage = ref('')
 
 onMounted(async () => {
   try {
-    const { data } = await api.get(`/meal-items/${props.mealItemId}/substitutes`)
-    substitutes.value = data
+    if (props.context === 'shopping') {
+      const { data } = await api.patch(`/shopping-items/${props.mealItemId}/dont-want`)
+      substitutes.value = data
+    } else {
+      const { data } = await api.get(`/meal-items/${props.mealItemId}/substitutes`)
+      substitutes.value = data
+    }
   } catch (err) {
     console.error('Failed to load substitutes:', err)
     errorMessage.value = 'No se pudieron cargar los sustitutos.'
@@ -43,10 +48,17 @@ async function selectSubstitute(substituteId) {
   isSaving.value = true
   errorMessage.value = ''
   try {
-    const { data } = await api.patch(`/meal-items/${props.mealItemId}/substitute`, {
-      substitute_food_id: substituteId
-    })
-    emit('selected', data)
+    if (props.context === 'shopping') {
+      const { data } = await api.patch(`/shopping-items/${props.mealItemId}/substitute`, {
+        substitute_food_id: substituteId
+      })
+      emit('selected', data)
+    } else {
+      const { data } = await api.patch(`/meal-items/${props.mealItemId}/substitute`, {
+        substitute_food_id: substituteId
+      })
+      emit('selected', data)
+    }
     emit('close')
   } catch (err) {
     console.error('Failed to apply substitute:', err)

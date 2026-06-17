@@ -32,6 +32,17 @@ class DailyLog extends Model
         ];
     }
 
+    protected static function booted(): void
+    {
+        static::saved(function ($dailyLog) {
+            \App\Services\StatsService::clearCache($dailyLog->user_id);
+        });
+
+        static::deleted(function ($dailyLog) {
+            \App\Services\StatsService::clearCache($dailyLog->user_id);
+        });
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

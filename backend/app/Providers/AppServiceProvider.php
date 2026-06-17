@@ -38,5 +38,6 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(ShoppingList::class, ShoppingListPolicy::class);
         Gate::policy(MealLog::class, MealLogPolicy::class);
         Gate::policy(MealItem::class, MealItemPolicy::class);
+        Gate::policy(\App\Models\UserWeightLog::class, \App\Policies\UserWeightLogPolicy::class);
     }
 }

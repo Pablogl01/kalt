@@ -21,6 +21,21 @@ class MealLogItem extends Model
         'grasa',
     ];
 
+    protected static function booted(): void
+    {
+        static::saved(function ($item) {
+            if ($item->mealLog && $item->mealLog->dailyLog) {
+                \App\Services\StatsService::clearCache($item->mealLog->dailyLog->user_id);
+            }
+        });
+
+        static::deleted(function ($item) {
+            if ($item->mealLog && $item->mealLog->dailyLog) {
+                \App\Services\StatsService::clearCache($item->mealLog->dailyLog->user_id);
+            }
+        });
+    }
+
     public function mealLog(): BelongsTo
     {
         return $this->belongsTo(MealLog::class);

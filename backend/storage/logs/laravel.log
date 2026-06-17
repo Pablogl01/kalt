@@ -1299,3 +1299,526 @@
 #68 /var/www/html/vendor/bin/pest(119): include('/var/www/html/v...')
 #69 {main}
 "} 
+[2026-06-14 17:36:32] local.INFO: GenerateDietJob started for plan: a205a5bd-6826-4574-90b7-1dbc84007ea6  
+[2026-06-14 17:36:32] local.INFO: GenerateDietJob completed successfully for plan: a205a5bd-6826-4574-90b7-1dbc84007ea6  
+[2026-06-14 17:36:32] local.INFO: GenerateDietJob started for plan: a205a5bd-efda-415e-afd4-c0f54415c578  
+[2026-06-14 17:36:32] local.ERROR: GenerateDietJob failed: Alimentos insuficientes en BD para generar el plan  
+[2026-06-14 17:38:59] local.INFO: GenerateDietJob started for plan: a205a69e-5699-4454-aafc-6ef8bb226337  
+[2026-06-14 17:38:59] local.INFO: GenerateDietJob completed successfully for plan: a205a69e-5699-4454-aafc-6ef8bb226337  
+[2026-06-14 17:38:59] local.INFO: GenerateDietJob started for plan: a205a69e-c37d-497e-88e4-06a72d53f56e  
+[2026-06-14 17:38:59] local.ERROR: GenerateDietJob failed: Alimentos insuficientes en BD para generar el plan  
+[2026-06-14 17:39:36] local.INFO: GenerateDietJob started for plan: a205a6d7-9b29-4dbc-8d8c-3126b4015105  
+[2026-06-14 17:39:37] local.INFO: GenerateDietJob completed successfully for plan: a205a6d7-9b29-4dbc-8d8c-3126b4015105  
+[2026-06-14 17:39:37] local.INFO: GenerateDietJob started for plan: a205a6d8-1190-48cf-9b2b-abbb9397bc7c  
+[2026-06-14 17:39:37] local.ERROR: GenerateDietJob failed: Alimentos insuficientes en BD para generar el plan  
+[2026-06-14 17:40:42] local.INFO: GenerateDietJob started for plan: a205a73b-7735-45fb-8ba1-57487598b095  
+[2026-06-14 17:40:42] local.INFO: GenerateDietJob completed successfully for plan: a205a73b-7735-45fb-8ba1-57487598b095  
+[2026-06-14 17:40:42] local.INFO: GenerateDietJob started for plan: a205a73b-df25-490b-a74c-7f2907d0b491  
+[2026-06-14 17:40:42] local.ERROR: GenerateDietJob failed: Alimentos insuficientes en BD para generar el plan  
+[2026-06-14 17:59:26] local.INFO: GenerateDietJob started for plan: a205ade9-093a-415c-8618-2876a9df59d9  
+[2026-06-14 17:59:26] local.INFO: GenerateDietJob completed successfully for plan: a205ade9-093a-415c-8618-2876a9df59d9  
+[2026-06-14 18:07:46] local.INFO: GenerateDietJob started for plan: a205b0e7-2cc9-4688-bd53-1ea67f356646  
+[2026-06-14 18:07:47] local.INFO: GenerateDietJob completed successfully for plan: a205b0e7-2cc9-4688-bd53-1ea67f356646  
+[2026-06-14 18:08:59] local.INFO: GenerateDietJob started for plan: a205b157-2fd7-49ba-a190-7f36ce3992ab  
+[2026-06-14 18:08:59] local.INFO: GenerateDietJob completed successfully for plan: a205b157-2fd7-49ba-a190-7f36ce3992ab  
+[2026-06-14 18:10:20] local.INFO: GenerateDietJob started for plan: a205b1d1-c702-46aa-ac17-68b61133f570  
+[2026-06-14 18:10:21] local.INFO: GenerateDietJob completed successfully for plan: a205b1d1-c702-46aa-ac17-68b61133f570  
+[2026-06-14 18:13:14] local.INFO: GenerateDietJob started for plan: a205b2dd-807d-48a8-ab03-6a4192963d79  
+[2026-06-14 18:13:15] local.INFO: GenerateDietJob completed successfully for plan: a205b2dd-807d-48a8-ab03-6a4192963d79  
+[2026-06-14 18:15:45] local.INFO: GenerateDietJob started for plan: a205b3bf-b633-4c41-b5ce-b4f0c49fd549  
+[2026-06-14 18:15:46] local.INFO: GenerateDietJob completed successfully for plan: a205b3bf-b633-4c41-b5ce-b4f0c49fd549  
+[2026-06-14 18:16:19] local.INFO: GenerateDietJob started for plan: a205b3f7-d23b-4e80-b611-79f3ec176ea0  
+[2026-06-14 18:16:19] local.INFO: GenerateDietJob completed successfully for plan: a205b3f7-d23b-4e80-b611-79f3ec176ea0  
+[2026-06-14 18:24:22] local.INFO: GenerateDietJob started for plan: a205b6d8-ef6a-45e5-b6c7-3658b1934830  
+[2026-06-14 18:24:22] local.INFO: GenerateDietJob completed successfully for plan: a205b6d8-ef6a-45e5-b6c7-3658b1934830  
+[2026-06-14 18:24:22] local.INFO: GenerateDietJob started for plan: a205b6d9-5d52-4e4c-a7a5-668e0dce8450  
+[2026-06-14 18:24:22] local.ERROR: GenerateDietJob failed: Alimentos insuficientes en BD para generar el plan  
+[2026-06-14 19:30:42] local.INFO: GenerateDietJob started for plan: a205ce92-7ee2-4a89-b301-1473788461a2  
+[2026-06-14 19:30:42] local.INFO: GenerateDietJob completed successfully for plan: a205ce92-7ee2-4a89-b301-1473788461a2  
+[2026-06-14 19:30:42] local.INFO: GenerateDietJob started for plan: a205ce92-ea68-4e76-bc2b-c16adb821bb0  
+[2026-06-14 19:30:42] local.ERROR: GenerateDietJob failed: Alimentos insuficientes en BD para generar el plan  
+[2026-06-14 19:31:05] local.INFO: GenerateDietJob started for plan: a205ceb5-4ded-40fb-8dba-3b3ff34b86ef  
+[2026-06-14 19:31:05] local.INFO: GenerateDietJob completed successfully for plan: a205ceb5-4ded-40fb-8dba-3b3ff34b86ef  
+[2026-06-14 19:31:05] local.INFO: GenerateDietJob started for plan: a205ceb5-b81b-40df-99d3-0d0c5c6f80cc  
+[2026-06-14 19:31:05] local.ERROR: GenerateDietJob failed: Alimentos insuficientes en BD para generar el plan  
+[2026-06-15 17:29:33] local.INFO: GenerateDietJob started for plan: a207a63b-0c99-4eae-8477-f000ec8e51e5  
+[2026-06-15 17:29:34] local.INFO: GenerateDietJob completed successfully for plan: a207a63b-0c99-4eae-8477-f000ec8e51e5  
+[2026-06-15 17:29:34] local.INFO: GenerateDietJob started for plan: a207a63b-d431-4299-b6bd-5546db84273a  
+[2026-06-15 17:29:34] local.ERROR: GenerateDietJob failed: Alimentos insuficientes en BD para generar el plan  
+[2026-06-17 18:15:16] local.INFO: GenerateDietJob started for plan: a20bbc8b-e983-4a7f-9768-5620bc285936  
+[2026-06-17 18:15:16] local.INFO: GenerateDietJob completed successfully for plan: a20bbc8b-e983-4a7f-9768-5620bc285936  
+[2026-06-17 18:15:16] local.INFO: GenerateDietJob started for plan: a20bbc8c-a7f1-4b02-ad5b-38e379d1d146  
+[2026-06-17 18:15:16] local.ERROR: GenerateDietJob failed: Alimentos insuficientes en BD para generar el plan  
+[2026-06-17 18:23:18] local.INFO: GenerateDietJob started for plan: a20bbf68-ac06-465c-9b77-d83ee60855ea  
+[2026-06-17 18:23:19] local.INFO: GenerateDietJob completed successfully for plan: a20bbf68-ac06-465c-9b77-d83ee60855ea  
+[2026-06-17 19:20:57] local.ERROR: Attempt to read property "user_id" on null {"userId":"a20bd408-f7fd-4b51-98ac-445508d6b478","exception":"[object] (ErrorException(code: 0): Attempt to read property \"user_id\" on null at /var/www/html/app/Policies/ShoppingListPolicy.php:12)
+[stacktrace]
+#0 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(258): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(2, 'Attempt to read...', '/var/www/html/a...', 12)
+#1 /var/www/html/app/Policies/ShoppingListPolicy.php(12): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->Illuminate\\Foundation\\Bootstrap\\{closure}(2, 'Attempt to read...', '/var/www/html/a...', 12)
+#2 /var/www/html/vendor/laravel/framework/src/Illuminate/Auth/Access/Gate.php(816): App\\Policies\\ShoppingListPolicy->view(Object(App\\Models\\User), Object(App\\Models\\ShoppingList))
+#3 /var/www/html/vendor/laravel/framework/src/Illuminate/Auth/Access/Gate.php(769): Illuminate\\Auth\\Access\\Gate->callPolicyMethod(Object(App\\Policies\\ShoppingListPolicy), 'view', Object(App\\Models\\User), Array)
+#4 /var/www/html/vendor/laravel/framework/src/Illuminate/Auth/Access/Gate.php(553): Illuminate\\Auth\\Access\\Gate->Illuminate\\Auth\\Access\\{closure}(Object(App\\Models\\User), Object(App\\Models\\ShoppingList))
+#5 /var/www/html/vendor/laravel/framework/src/Illuminate/Auth/Access/Gate.php(448): Illuminate\\Auth\\Access\\Gate->callAuthCallback(Object(App\\Models\\User), 'view', Array)
+#6 /var/www/html/vendor/laravel/framework/src/Illuminate/Auth/Access/Gate.php(411): Illuminate\\Auth\\Access\\Gate->raw('view', Array)
+#7 /var/www/html/vendor/laravel/framework/src/Illuminate/Auth/Access/Gate.php(398): Illuminate\\Auth\\Access\\Gate->inspect('view', Object(App\\Models\\ShoppingList))
+#8 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Auth/Access/AuthorizesRequests.php(25): Illuminate\\Auth\\Access\\Gate->authorize('view', Object(App\\Models\\ShoppingList))
+#9 /var/www/html/app/Http/Controllers/ShoppingController.php(74): App\\Http\\Controllers\\Controller->authorize('view', Object(App\\Models\\ShoppingList))
+#10 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php(47): App\\Http\\Controllers\\ShoppingController->show(Object(App\\Models\\ShoppingList))
+#11 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Route.php(266): Illuminate\\Routing\\ControllerDispatcher->dispatch(Object(Illuminate\\Routing\\Route), Object(App\\Http\\Controllers\\ShoppingController), 'show')
+#12 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Route.php(212): Illuminate\\Routing\\Route->runController()
+#13 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Router.php(808): Illuminate\\Routing\\Route->run()
+#14 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(170): Illuminate\\Routing\\Router->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#15 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Middleware/SubstituteBindings.php(51): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#16 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Routing\\Middleware\\SubstituteBindings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#17 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php(161): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#18 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php(127): Illuminate\\Routing\\Middleware\\ThrottleRequests->handleRequest(Object(Illuminate\\Http\\Request), Object(Closure), Array)
+#19 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php(89): Illuminate\\Routing\\Middleware\\ThrottleRequests->handleRequestUsingNamedLimiter(Object(Illuminate\\Http\\Request), Object(Closure), 'api', Object(Closure))
+#20 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Routing\\Middleware\\ThrottleRequests->handle(Object(Illuminate\\Http\\Request), Object(Closure), 'api')
+#21 /var/www/html/vendor/laravel/framework/src/Illuminate/Auth/Middleware/Authenticate.php(64): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#22 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Auth\\Middleware\\Authenticate->handle(Object(Illuminate\\Http\\Request), Object(Closure), 'sanctum')
+#23 /var/www/html/vendor/laravel/framework/src/Illuminate/Session/Middleware/StartSession.php(121): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#24 /var/www/html/vendor/laravel/framework/src/Illuminate/Session/Middleware/StartSession.php(64): Illuminate\\Session\\Middleware\\StartSession->handleStatefulRequest(Object(Illuminate\\Http\\Request), Object(Illuminate\\Session\\Store), Object(Closure))
+#25 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Session\\Middleware\\StartSession->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#26 /var/www/html/vendor/laravel/sanctum/src/Http/Middleware/EnsureFrontendRequestsAreStateful.php(26): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#27 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(170): Laravel\\Sanctum\\Http\\Middleware\\EnsureFrontendRequestsAreStateful->Laravel\\Sanctum\\Http\\Middleware\\{closure}(Object(Illuminate\\Http\\Request))
+#28 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(127): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#29 /var/www/html/vendor/laravel/sanctum/src/Http/Middleware/EnsureFrontendRequestsAreStateful.php(25): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#30 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Laravel\\Sanctum\\Http\\Middleware\\EnsureFrontendRequestsAreStateful->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#31 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(127): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#32 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Router.php(807): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#33 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Router.php(786): Illuminate\\Routing\\Router->runRouteWithinStack(Object(Illuminate\\Routing\\Route), Object(Illuminate\\Http\\Request))
+#34 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Router.php(750): Illuminate\\Routing\\Router->runRoute(Object(Illuminate\\Http\\Request), Object(Illuminate\\Routing\\Route))
+#35 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Router.php(739): Illuminate\\Routing\\Router->dispatchToRoute(Object(Illuminate\\Http\\Request))
+#36 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(201): Illuminate\\Routing\\Router->dispatch(Object(Illuminate\\Http\\Request))
+#37 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(170): Illuminate\\Foundation\\Http\\Kernel->Illuminate\\Foundation\\Http\\{closure}(Object(Illuminate\\Http\\Request))
+#38 /var/www/html/vendor/barryvdh/laravel-debugbar/src/Middleware/InjectDebugbar.php(59): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#39 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Barryvdh\\Debugbar\\Middleware\\InjectDebugbar->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#40 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#41 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ConvertEmptyStringsToNull.php(31): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#42 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#43 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#44 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TrimStrings.php(51): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#45 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Foundation\\Http\\Middleware\\TrimStrings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#46 /var/www/html/vendor/laravel/framework/src/Illuminate/Http/Middleware/ValidatePostSize.php(27): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#47 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Http\\Middleware\\ValidatePostSize->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#48 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/PreventRequestsDuringMaintenance.php(110): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#49 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#50 /var/www/html/vendor/laravel/framework/src/Illuminate/Http/Middleware/HandleCors.php(62): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#51 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Http\\Middleware\\HandleCors->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#52 /var/www/html/vendor/laravel/framework/src/Illuminate/Http/Middleware/TrustProxies.php(58): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#53 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Http\\Middleware\\TrustProxies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#54 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/InvokeDeferredCallbacks.php(22): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#55 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Foundation\\Http\\Middleware\\InvokeDeferredCallbacks->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#56 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(127): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#57 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(176): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#58 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(145): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#59 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Testing/Concerns/MakesHttpRequests.php(607): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#60 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Testing/Concerns/MakesHttpRequests.php(573): Illuminate\\Foundation\\Testing\\TestCase->call('GET', '/api/shopping-l...', Array, Array, Array, Array, '[]')
+#61 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Testing/Concerns/MakesHttpRequests.php(381): Illuminate\\Foundation\\Testing\\TestCase->json('GET', '/api/shopping-l...', Array, Array, 0)
+#62 /var/www/html/tests/Feature/ShoppingListTest.php(92): Illuminate\\Foundation\\Testing\\TestCase->getJson('/api/shopping-l...')
+#63 /var/www/html/vendor/pestphp/pest/src/Factories/TestCaseMethodFactory.php(110): P\\Tests\\Feature\\ShoppingListTest->{closure}()
+#64 [internal function]: P\\Tests\\Feature\\ShoppingListTest->Pest\\Factories\\{closure}()
+#65 /var/www/html/vendor/pestphp/pest/src/Concerns/Testable.php(339): call_user_func_array(Object(Closure), Array)
+#66 /var/www/html/vendor/pestphp/pest/src/Support/ExceptionTrace.php(26): P\\Tests\\Feature\\ShoppingListTest->Pest\\Concerns\\{closure}()
+#67 /var/www/html/vendor/pestphp/pest/src/Concerns/Testable.php(339): Pest\\Support\\ExceptionTrace::ensure(Object(Closure))
+#68 /var/www/html/vendor/pestphp/pest/src/Concerns/Testable.php(256): P\\Tests\\Feature\\ShoppingListTest->__callClosure(Object(Closure), Array)
+#69 /var/www/html/vendor/pestphp/pest/src/Factories/TestCaseFactory.php(197) : eval()'d code(41): P\\Tests\\Feature\\ShoppingListTest->__runTest(Object(Closure))
+#70 /var/www/html/vendor/phpunit/phpunit/src/Framework/TestCase.php(1548): P\\Tests\\Feature\\ShoppingListTest->__pest_evaluable_it_GET__api_shopping_lists_active_of_another_users_list_returns_HTTP_403()
+#71 /var/www/html/vendor/phpunit/phpunit/src/Framework/TestCase.php(686): PHPUnit\\Framework\\TestCase->runTest()
+#72 /var/www/html/vendor/phpunit/phpunit/src/Framework/TestRunner.php(106): PHPUnit\\Framework\\TestCase->runBare()
+#73 /var/www/html/vendor/phpunit/phpunit/src/Framework/TestCase.php(516): PHPUnit\\Framework\\TestRunner->run(Object(P\\Tests\\Feature\\ShoppingListTest))
+#74 /var/www/html/vendor/phpunit/phpunit/src/Framework/TestSuite.php(374): PHPUnit\\Framework\\TestCase->run()
+#75 /var/www/html/vendor/phpunit/phpunit/src/TextUI/TestRunner.php(64): PHPUnit\\Framework\\TestSuite->run()
+#76 /var/www/html/vendor/phpunit/phpunit/src/TextUI/Application.php(204): PHPUnit\\TextUI\\TestRunner->run(Object(PHPUnit\\TextUI\\Configuration\\Configuration), Object(PHPUnit\\Runner\\ResultCache\\DefaultResultCache), Object(PHPUnit\\Framework\\TestSuite))
+#77 /var/www/html/vendor/pestphp/pest/src/Kernel.php(103): PHPUnit\\TextUI\\Application->run(Array)
+#78 /var/www/html/vendor/pestphp/pest/bin/pest(91): Pest\\Kernel->handle(Array, Array)
+#79 /var/www/html/vendor/pestphp/pest/bin/pest(99): {closure}()
+#80 /var/www/html/vendor/bin/pest(119): include('/var/www/html/v...')
+#81 {main}
+"} 
+[2026-06-17 19:20:57] local.ERROR: Attempt to read property "user_id" on null {"userId":"a20bd40a-7fdf-4a3e-a4f0-66c2bcc9b99c","exception":"[object] (ErrorException(code: 0): Attempt to read property \"user_id\" on null at /var/www/html/app/Policies/ShoppingListPolicy.php:17)
+[stacktrace]
+#0 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(258): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(2, 'Attempt to read...', '/var/www/html/a...', 17)
+#1 /var/www/html/app/Policies/ShoppingListPolicy.php(17): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->Illuminate\\Foundation\\Bootstrap\\{closure}(2, 'Attempt to read...', '/var/www/html/a...', 17)
+#2 /var/www/html/vendor/laravel/framework/src/Illuminate/Auth/Access/Gate.php(816): App\\Policies\\ShoppingListPolicy->update(Object(App\\Models\\User), Object(App\\Models\\ShoppingList))
+#3 /var/www/html/vendor/laravel/framework/src/Illuminate/Auth/Access/Gate.php(769): Illuminate\\Auth\\Access\\Gate->callPolicyMethod(Object(App\\Policies\\ShoppingListPolicy), 'update', Object(App\\Models\\User), Array)
+#4 /var/www/html/vendor/laravel/framework/src/Illuminate/Auth/Access/Gate.php(553): Illuminate\\Auth\\Access\\Gate->Illuminate\\Auth\\Access\\{closure}(Object(App\\Models\\User), Object(App\\Models\\ShoppingList))
+#5 /var/www/html/vendor/laravel/framework/src/Illuminate/Auth/Access/Gate.php(448): Illuminate\\Auth\\Access\\Gate->callAuthCallback(Object(App\\Models\\User), 'update', Array)
+#6 /var/www/html/vendor/laravel/framework/src/Illuminate/Auth/Access/Gate.php(411): Illuminate\\Auth\\Access\\Gate->raw('update', Array)
+#7 /var/www/html/vendor/laravel/framework/src/Illuminate/Auth/Access/Gate.php(398): Illuminate\\Auth\\Access\\Gate->inspect('update', Object(App\\Models\\ShoppingList))
+#8 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Auth/Access/AuthorizesRequests.php(25): Illuminate\\Auth\\Access\\Gate->authorize('update', Object(App\\Models\\ShoppingList))
+#9 /var/www/html/app/Http/Controllers/ShoppingController.php(86): App\\Http\\Controllers\\Controller->authorize('update', Object(App\\Models\\ShoppingList))
+#10 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php(47): App\\Http\\Controllers\\ShoppingController->have(Object(App\\Models\\ShoppingItem))
+#11 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Route.php(266): Illuminate\\Routing\\ControllerDispatcher->dispatch(Object(Illuminate\\Routing\\Route), Object(App\\Http\\Controllers\\ShoppingController), 'have')
+#12 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Route.php(212): Illuminate\\Routing\\Route->runController()
+#13 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Router.php(808): Illuminate\\Routing\\Route->run()
+#14 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(170): Illuminate\\Routing\\Router->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#15 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Middleware/SubstituteBindings.php(51): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#16 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Routing\\Middleware\\SubstituteBindings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#17 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php(161): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#18 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php(127): Illuminate\\Routing\\Middleware\\ThrottleRequests->handleRequest(Object(Illuminate\\Http\\Request), Object(Closure), Array)
+#19 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php(89): Illuminate\\Routing\\Middleware\\ThrottleRequests->handleRequestUsingNamedLimiter(Object(Illuminate\\Http\\Request), Object(Closure), 'api', Object(Closure))
+#20 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Routing\\Middleware\\ThrottleRequests->handle(Object(Illuminate\\Http\\Request), Object(Closure), 'api')
+#21 /var/www/html/vendor/laravel/framework/src/Illuminate/Auth/Middleware/Authenticate.php(64): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#22 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Auth\\Middleware\\Authenticate->handle(Object(Illuminate\\Http\\Request), Object(Closure), 'sanctum')
+#23 /var/www/html/vendor/laravel/framework/src/Illuminate/Session/Middleware/StartSession.php(121): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#24 /var/www/html/vendor/laravel/framework/src/Illuminate/Session/Middleware/StartSession.php(64): Illuminate\\Session\\Middleware\\StartSession->handleStatefulRequest(Object(Illuminate\\Http\\Request), Object(Illuminate\\Session\\Store), Object(Closure))
+#25 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Session\\Middleware\\StartSession->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#26 /var/www/html/vendor/laravel/sanctum/src/Http/Middleware/EnsureFrontendRequestsAreStateful.php(26): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#27 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(170): Laravel\\Sanctum\\Http\\Middleware\\EnsureFrontendRequestsAreStateful->Laravel\\Sanctum\\Http\\Middleware\\{closure}(Object(Illuminate\\Http\\Request))
+#28 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(127): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#29 /var/www/html/vendor/laravel/sanctum/src/Http/Middleware/EnsureFrontendRequestsAreStateful.php(25): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#30 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Laravel\\Sanctum\\Http\\Middleware\\EnsureFrontendRequestsAreStateful->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#31 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(127): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#32 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Router.php(807): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#33 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Router.php(786): Illuminate\\Routing\\Router->runRouteWithinStack(Object(Illuminate\\Routing\\Route), Object(Illuminate\\Http\\Request))
+#34 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Router.php(750): Illuminate\\Routing\\Router->runRoute(Object(Illuminate\\Http\\Request), Object(Illuminate\\Routing\\Route))
+#35 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Router.php(739): Illuminate\\Routing\\Router->dispatchToRoute(Object(Illuminate\\Http\\Request))
+#36 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(201): Illuminate\\Routing\\Router->dispatch(Object(Illuminate\\Http\\Request))
+#37 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(170): Illuminate\\Foundation\\Http\\Kernel->Illuminate\\Foundation\\Http\\{closure}(Object(Illuminate\\Http\\Request))
+#38 /var/www/html/vendor/barryvdh/laravel-debugbar/src/Middleware/InjectDebugbar.php(59): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#39 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Barryvdh\\Debugbar\\Middleware\\InjectDebugbar->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#40 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#41 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ConvertEmptyStringsToNull.php(31): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#42 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#43 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#44 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TrimStrings.php(51): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#45 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Foundation\\Http\\Middleware\\TrimStrings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#46 /var/www/html/vendor/laravel/framework/src/Illuminate/Http/Middleware/ValidatePostSize.php(27): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#47 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Http\\Middleware\\ValidatePostSize->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#48 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/PreventRequestsDuringMaintenance.php(110): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#49 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#50 /var/www/html/vendor/laravel/framework/src/Illuminate/Http/Middleware/HandleCors.php(62): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#51 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Http\\Middleware\\HandleCors->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#52 /var/www/html/vendor/laravel/framework/src/Illuminate/Http/Middleware/TrustProxies.php(58): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#53 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Http\\Middleware\\TrustProxies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#54 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/InvokeDeferredCallbacks.php(22): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#55 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Foundation\\Http\\Middleware\\InvokeDeferredCallbacks->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#56 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(127): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#57 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(176): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#58 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(145): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#59 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Testing/Concerns/MakesHttpRequests.php(607): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#60 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Testing/Concerns/MakesHttpRequests.php(573): Illuminate\\Foundation\\Testing\\TestCase->call('PATCH', '/api/shopping-i...', Array, Array, Array, Array, '[]')
+#61 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Testing/Concerns/MakesHttpRequests.php(471): Illuminate\\Foundation\\Testing\\TestCase->json('PATCH', '/api/shopping-i...', Array, Array, 0)
+#62 /var/www/html/tests/Feature/ShoppingListTest.php(120): Illuminate\\Foundation\\Testing\\TestCase->patchJson('/api/shopping-i...')
+#63 /var/www/html/vendor/pestphp/pest/src/Factories/TestCaseMethodFactory.php(110): P\\Tests\\Feature\\ShoppingListTest->{closure}()
+#64 [internal function]: P\\Tests\\Feature\\ShoppingListTest->Pest\\Factories\\{closure}()
+#65 /var/www/html/vendor/pestphp/pest/src/Concerns/Testable.php(339): call_user_func_array(Object(Closure), Array)
+#66 /var/www/html/vendor/pestphp/pest/src/Support/ExceptionTrace.php(26): P\\Tests\\Feature\\ShoppingListTest->Pest\\Concerns\\{closure}()
+#67 /var/www/html/vendor/pestphp/pest/src/Concerns/Testable.php(339): Pest\\Support\\ExceptionTrace::ensure(Object(Closure))
+#68 /var/www/html/vendor/pestphp/pest/src/Concerns/Testable.php(256): P\\Tests\\Feature\\ShoppingListTest->__callClosure(Object(Closure), Array)
+#69 /var/www/html/vendor/pestphp/pest/src/Factories/TestCaseFactory.php(197) : eval()'d code(71): P\\Tests\\Feature\\ShoppingListTest->__runTest(Object(Closure))
+#70 /var/www/html/vendor/phpunit/phpunit/src/Framework/TestCase.php(1548): P\\Tests\\Feature\\ShoppingListTest->__pest_evaluable_it_PATCH__api_shopping_items__id__have_marks_the_item_correctly()
+#71 /var/www/html/vendor/phpunit/phpunit/src/Framework/TestCase.php(686): PHPUnit\\Framework\\TestCase->runTest()
+#72 /var/www/html/vendor/phpunit/phpunit/src/Framework/TestRunner.php(106): PHPUnit\\Framework\\TestCase->runBare()
+#73 /var/www/html/vendor/phpunit/phpunit/src/Framework/TestCase.php(516): PHPUnit\\Framework\\TestRunner->run(Object(P\\Tests\\Feature\\ShoppingListTest))
+#74 /var/www/html/vendor/phpunit/phpunit/src/Framework/TestSuite.php(374): PHPUnit\\Framework\\TestCase->run()
+#75 /var/www/html/vendor/phpunit/phpunit/src/TextUI/TestRunner.php(64): PHPUnit\\Framework\\TestSuite->run()
+#76 /var/www/html/vendor/phpunit/phpunit/src/TextUI/Application.php(204): PHPUnit\\TextUI\\TestRunner->run(Object(PHPUnit\\TextUI\\Configuration\\Configuration), Object(PHPUnit\\Runner\\ResultCache\\DefaultResultCache), Object(PHPUnit\\Framework\\TestSuite))
+#77 /var/www/html/vendor/pestphp/pest/src/Kernel.php(103): PHPUnit\\TextUI\\Application->run(Array)
+#78 /var/www/html/vendor/pestphp/pest/bin/pest(91): Pest\\Kernel->handle(Array, Array)
+#79 /var/www/html/vendor/pestphp/pest/bin/pest(99): {closure}()
+#80 /var/www/html/vendor/bin/pest(119): include('/var/www/html/v...')
+#81 {main}
+"} 
+[2026-06-17 19:20:58] local.ERROR: Attempt to read property "user_id" on null {"userId":"a20bd40a-a1dd-4528-b2c7-dc2b733b16d0","exception":"[object] (ErrorException(code: 0): Attempt to read property \"user_id\" on null at /var/www/html/app/Policies/ShoppingListPolicy.php:17)
+[stacktrace]
+#0 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(258): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(2, 'Attempt to read...', '/var/www/html/a...', 17)
+#1 /var/www/html/app/Policies/ShoppingListPolicy.php(17): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->Illuminate\\Foundation\\Bootstrap\\{closure}(2, 'Attempt to read...', '/var/www/html/a...', 17)
+#2 /var/www/html/vendor/laravel/framework/src/Illuminate/Auth/Access/Gate.php(816): App\\Policies\\ShoppingListPolicy->update(Object(App\\Models\\User), Object(App\\Models\\ShoppingList))
+#3 /var/www/html/vendor/laravel/framework/src/Illuminate/Auth/Access/Gate.php(769): Illuminate\\Auth\\Access\\Gate->callPolicyMethod(Object(App\\Policies\\ShoppingListPolicy), 'update', Object(App\\Models\\User), Array)
+#4 /var/www/html/vendor/laravel/framework/src/Illuminate/Auth/Access/Gate.php(553): Illuminate\\Auth\\Access\\Gate->Illuminate\\Auth\\Access\\{closure}(Object(App\\Models\\User), Object(App\\Models\\ShoppingList))
+#5 /var/www/html/vendor/laravel/framework/src/Illuminate/Auth/Access/Gate.php(448): Illuminate\\Auth\\Access\\Gate->callAuthCallback(Object(App\\Models\\User), 'update', Array)
+#6 /var/www/html/vendor/laravel/framework/src/Illuminate/Auth/Access/Gate.php(411): Illuminate\\Auth\\Access\\Gate->raw('update', Array)
+#7 /var/www/html/vendor/laravel/framework/src/Illuminate/Auth/Access/Gate.php(398): Illuminate\\Auth\\Access\\Gate->inspect('update', Object(App\\Models\\ShoppingList))
+#8 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Auth/Access/AuthorizesRequests.php(25): Illuminate\\Auth\\Access\\Gate->authorize('update', Object(App\\Models\\ShoppingList))
+#9 /var/www/html/app/Http/Controllers/ShoppingController.php(98): App\\Http\\Controllers\\Controller->authorize('update', Object(App\\Models\\ShoppingList))
+#10 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php(47): App\\Http\\Controllers\\ShoppingController->dontWant(Object(App\\Models\\ShoppingItem), Object(App\\Services\\SubstituteEngine))
+#11 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Route.php(266): Illuminate\\Routing\\ControllerDispatcher->dispatch(Object(Illuminate\\Routing\\Route), Object(App\\Http\\Controllers\\ShoppingController), 'dontWant')
+#12 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Route.php(212): Illuminate\\Routing\\Route->runController()
+#13 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Router.php(808): Illuminate\\Routing\\Route->run()
+#14 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(170): Illuminate\\Routing\\Router->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#15 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Middleware/SubstituteBindings.php(51): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#16 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Routing\\Middleware\\SubstituteBindings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#17 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php(161): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#18 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php(127): Illuminate\\Routing\\Middleware\\ThrottleRequests->handleRequest(Object(Illuminate\\Http\\Request), Object(Closure), Array)
+#19 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php(89): Illuminate\\Routing\\Middleware\\ThrottleRequests->handleRequestUsingNamedLimiter(Object(Illuminate\\Http\\Request), Object(Closure), 'api', Object(Closure))
+#20 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Routing\\Middleware\\ThrottleRequests->handle(Object(Illuminate\\Http\\Request), Object(Closure), 'api')
+#21 /var/www/html/vendor/laravel/framework/src/Illuminate/Auth/Middleware/Authenticate.php(64): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#22 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Auth\\Middleware\\Authenticate->handle(Object(Illuminate\\Http\\Request), Object(Closure), 'sanctum')
+#23 /var/www/html/vendor/laravel/framework/src/Illuminate/Session/Middleware/StartSession.php(121): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#24 /var/www/html/vendor/laravel/framework/src/Illuminate/Session/Middleware/StartSession.php(64): Illuminate\\Session\\Middleware\\StartSession->handleStatefulRequest(Object(Illuminate\\Http\\Request), Object(Illuminate\\Session\\Store), Object(Closure))
+#25 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Session\\Middleware\\StartSession->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#26 /var/www/html/vendor/laravel/sanctum/src/Http/Middleware/EnsureFrontendRequestsAreStateful.php(26): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#27 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(170): Laravel\\Sanctum\\Http\\Middleware\\EnsureFrontendRequestsAreStateful->Laravel\\Sanctum\\Http\\Middleware\\{closure}(Object(Illuminate\\Http\\Request))
+#28 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(127): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#29 /var/www/html/vendor/laravel/sanctum/src/Http/Middleware/EnsureFrontendRequestsAreStateful.php(25): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#30 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Laravel\\Sanctum\\Http\\Middleware\\EnsureFrontendRequestsAreStateful->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#31 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(127): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#32 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Router.php(807): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#33 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Router.php(786): Illuminate\\Routing\\Router->runRouteWithinStack(Object(Illuminate\\Routing\\Route), Object(Illuminate\\Http\\Request))
+#34 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Router.php(750): Illuminate\\Routing\\Router->runRoute(Object(Illuminate\\Http\\Request), Object(Illuminate\\Routing\\Route))
+#35 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Router.php(739): Illuminate\\Routing\\Router->dispatchToRoute(Object(Illuminate\\Http\\Request))
+#36 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(201): Illuminate\\Routing\\Router->dispatch(Object(Illuminate\\Http\\Request))
+#37 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(170): Illuminate\\Foundation\\Http\\Kernel->Illuminate\\Foundation\\Http\\{closure}(Object(Illuminate\\Http\\Request))
+#38 /var/www/html/vendor/barryvdh/laravel-debugbar/src/Middleware/InjectDebugbar.php(59): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#39 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Barryvdh\\Debugbar\\Middleware\\InjectDebugbar->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#40 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#41 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ConvertEmptyStringsToNull.php(31): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#42 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#43 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#44 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TrimStrings.php(51): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#45 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Foundation\\Http\\Middleware\\TrimStrings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#46 /var/www/html/vendor/laravel/framework/src/Illuminate/Http/Middleware/ValidatePostSize.php(27): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#47 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Http\\Middleware\\ValidatePostSize->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#48 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/PreventRequestsDuringMaintenance.php(110): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#49 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#50 /var/www/html/vendor/laravel/framework/src/Illuminate/Http/Middleware/HandleCors.php(62): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#51 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Http\\Middleware\\HandleCors->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#52 /var/www/html/vendor/laravel/framework/src/Illuminate/Http/Middleware/TrustProxies.php(58): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#53 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Http\\Middleware\\TrustProxies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#54 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/InvokeDeferredCallbacks.php(22): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#55 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Foundation\\Http\\Middleware\\InvokeDeferredCallbacks->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#56 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(127): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#57 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(176): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#58 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(145): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#59 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Testing/Concerns/MakesHttpRequests.php(607): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#60 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Testing/Concerns/MakesHttpRequests.php(573): Illuminate\\Foundation\\Testing\\TestCase->call('PATCH', '/api/shopping-i...', Array, Array, Array, Array, '[]')
+#61 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Testing/Concerns/MakesHttpRequests.php(471): Illuminate\\Foundation\\Testing\\TestCase->json('PATCH', '/api/shopping-i...', Array, Array, 0)
+#62 /var/www/html/tests/Feature/ShoppingListTest.php(145): Illuminate\\Foundation\\Testing\\TestCase->patchJson('/api/shopping-i...')
+#63 /var/www/html/vendor/pestphp/pest/src/Factories/TestCaseMethodFactory.php(110): P\\Tests\\Feature\\ShoppingListTest->{closure}()
+#64 [internal function]: P\\Tests\\Feature\\ShoppingListTest->Pest\\Factories\\{closure}()
+#65 /var/www/html/vendor/pestphp/pest/src/Concerns/Testable.php(339): call_user_func_array(Object(Closure), Array)
+#66 /var/www/html/vendor/pestphp/pest/src/Support/ExceptionTrace.php(26): P\\Tests\\Feature\\ShoppingListTest->Pest\\Concerns\\{closure}()
+#67 /var/www/html/vendor/pestphp/pest/src/Concerns/Testable.php(339): Pest\\Support\\ExceptionTrace::ensure(Object(Closure))
+#68 /var/www/html/vendor/pestphp/pest/src/Concerns/Testable.php(256): P\\Tests\\Feature\\ShoppingListTest->__callClosure(Object(Closure), Array)
+#69 /var/www/html/vendor/pestphp/pest/src/Factories/TestCaseFactory.php(197) : eval()'d code(86): P\\Tests\\Feature\\ShoppingListTest->__runTest(Object(Closure))
+#70 /var/www/html/vendor/phpunit/phpunit/src/Framework/TestCase.php(1548): P\\Tests\\Feature\\ShoppingListTest->__pest_evaluable_it_PATCH__api_shopping_items__id__dont_want_returns_valid_substitutes__no_user_allergens_()
+#71 /var/www/html/vendor/phpunit/phpunit/src/Framework/TestCase.php(686): PHPUnit\\Framework\\TestCase->runTest()
+#72 /var/www/html/vendor/phpunit/phpunit/src/Framework/TestRunner.php(106): PHPUnit\\Framework\\TestCase->runBare()
+#73 /var/www/html/vendor/phpunit/phpunit/src/Framework/TestCase.php(516): PHPUnit\\Framework\\TestRunner->run(Object(P\\Tests\\Feature\\ShoppingListTest))
+#74 /var/www/html/vendor/phpunit/phpunit/src/Framework/TestSuite.php(374): PHPUnit\\Framework\\TestCase->run()
+#75 /var/www/html/vendor/phpunit/phpunit/src/TextUI/TestRunner.php(64): PHPUnit\\Framework\\TestSuite->run()
+#76 /var/www/html/vendor/phpunit/phpunit/src/TextUI/Application.php(204): PHPUnit\\TextUI\\TestRunner->run(Object(PHPUnit\\TextUI\\Configuration\\Configuration), Object(PHPUnit\\Runner\\ResultCache\\DefaultResultCache), Object(PHPUnit\\Framework\\TestSuite))
+#77 /var/www/html/vendor/pestphp/pest/src/Kernel.php(103): PHPUnit\\TextUI\\Application->run(Array)
+#78 /var/www/html/vendor/pestphp/pest/bin/pest(91): Pest\\Kernel->handle(Array, Array)
+#79 /var/www/html/vendor/pestphp/pest/bin/pest(99): {closure}()
+#80 /var/www/html/vendor/bin/pest(119): include('/var/www/html/v...')
+#81 {main}
+"} 
+[2026-06-17 19:20:58] local.ERROR: Attempt to read property "user_id" on null {"userId":"a20bd40a-c54b-445d-a3fd-59eb5c40f056","exception":"[object] (ErrorException(code: 0): Attempt to read property \"user_id\" on null at /var/www/html/app/Policies/ShoppingListPolicy.php:17)
+[stacktrace]
+#0 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(258): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(2, 'Attempt to read...', '/var/www/html/a...', 17)
+#1 /var/www/html/app/Policies/ShoppingListPolicy.php(17): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->Illuminate\\Foundation\\Bootstrap\\{closure}(2, 'Attempt to read...', '/var/www/html/a...', 17)
+#2 /var/www/html/vendor/laravel/framework/src/Illuminate/Auth/Access/Gate.php(816): App\\Policies\\ShoppingListPolicy->update(Object(App\\Models\\User), Object(App\\Models\\ShoppingList))
+#3 /var/www/html/vendor/laravel/framework/src/Illuminate/Auth/Access/Gate.php(769): Illuminate\\Auth\\Access\\Gate->callPolicyMethod(Object(App\\Policies\\ShoppingListPolicy), 'update', Object(App\\Models\\User), Array)
+#4 /var/www/html/vendor/laravel/framework/src/Illuminate/Auth/Access/Gate.php(553): Illuminate\\Auth\\Access\\Gate->Illuminate\\Auth\\Access\\{closure}(Object(App\\Models\\User), Object(App\\Models\\ShoppingList))
+#5 /var/www/html/vendor/laravel/framework/src/Illuminate/Auth/Access/Gate.php(448): Illuminate\\Auth\\Access\\Gate->callAuthCallback(Object(App\\Models\\User), 'update', Array)
+#6 /var/www/html/vendor/laravel/framework/src/Illuminate/Auth/Access/Gate.php(411): Illuminate\\Auth\\Access\\Gate->raw('update', Array)
+#7 /var/www/html/vendor/laravel/framework/src/Illuminate/Auth/Access/Gate.php(398): Illuminate\\Auth\\Access\\Gate->inspect('update', Object(App\\Models\\ShoppingList))
+#8 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Auth/Access/AuthorizesRequests.php(25): Illuminate\\Auth\\Access\\Gate->authorize('update', Object(App\\Models\\ShoppingList))
+#9 /var/www/html/app/Http/Controllers/ShoppingController.php(112): App\\Http\\Controllers\\Controller->authorize('update', Object(App\\Models\\ShoppingList))
+#10 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php(47): App\\Http\\Controllers\\ShoppingController->substitute(Object(Illuminate\\Http\\Request), Object(App\\Models\\ShoppingItem), Object(App\\Services\\SubstituteEngine))
+#11 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Route.php(266): Illuminate\\Routing\\ControllerDispatcher->dispatch(Object(Illuminate\\Routing\\Route), Object(App\\Http\\Controllers\\ShoppingController), 'substitute')
+#12 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Route.php(212): Illuminate\\Routing\\Route->runController()
+#13 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Router.php(808): Illuminate\\Routing\\Route->run()
+#14 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(170): Illuminate\\Routing\\Router->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#15 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Middleware/SubstituteBindings.php(51): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#16 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Routing\\Middleware\\SubstituteBindings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#17 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php(161): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#18 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php(127): Illuminate\\Routing\\Middleware\\ThrottleRequests->handleRequest(Object(Illuminate\\Http\\Request), Object(Closure), Array)
+#19 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php(89): Illuminate\\Routing\\Middleware\\ThrottleRequests->handleRequestUsingNamedLimiter(Object(Illuminate\\Http\\Request), Object(Closure), 'api', Object(Closure))
+#20 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Routing\\Middleware\\ThrottleRequests->handle(Object(Illuminate\\Http\\Request), Object(Closure), 'api')
+#21 /var/www/html/vendor/laravel/framework/src/Illuminate/Auth/Middleware/Authenticate.php(64): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#22 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Auth\\Middleware\\Authenticate->handle(Object(Illuminate\\Http\\Request), Object(Closure), 'sanctum')
+#23 /var/www/html/vendor/laravel/framework/src/Illuminate/Session/Middleware/StartSession.php(121): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#24 /var/www/html/vendor/laravel/framework/src/Illuminate/Session/Middleware/StartSession.php(64): Illuminate\\Session\\Middleware\\StartSession->handleStatefulRequest(Object(Illuminate\\Http\\Request), Object(Illuminate\\Session\\Store), Object(Closure))
+#25 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Session\\Middleware\\StartSession->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#26 /var/www/html/vendor/laravel/sanctum/src/Http/Middleware/EnsureFrontendRequestsAreStateful.php(26): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#27 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(170): Laravel\\Sanctum\\Http\\Middleware\\EnsureFrontendRequestsAreStateful->Laravel\\Sanctum\\Http\\Middleware\\{closure}(Object(Illuminate\\Http\\Request))
+#28 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(127): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#29 /var/www/html/vendor/laravel/sanctum/src/Http/Middleware/EnsureFrontendRequestsAreStateful.php(25): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#30 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Laravel\\Sanctum\\Http\\Middleware\\EnsureFrontendRequestsAreStateful->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#31 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(127): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#32 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Router.php(807): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#33 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Router.php(786): Illuminate\\Routing\\Router->runRouteWithinStack(Object(Illuminate\\Routing\\Route), Object(Illuminate\\Http\\Request))
+#34 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Router.php(750): Illuminate\\Routing\\Router->runRoute(Object(Illuminate\\Http\\Request), Object(Illuminate\\Routing\\Route))
+#35 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Router.php(739): Illuminate\\Routing\\Router->dispatchToRoute(Object(Illuminate\\Http\\Request))
+#36 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(201): Illuminate\\Routing\\Router->dispatch(Object(Illuminate\\Http\\Request))
+#37 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(170): Illuminate\\Foundation\\Http\\Kernel->Illuminate\\Foundation\\Http\\{closure}(Object(Illuminate\\Http\\Request))
+#38 /var/www/html/vendor/barryvdh/laravel-debugbar/src/Middleware/InjectDebugbar.php(59): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#39 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Barryvdh\\Debugbar\\Middleware\\InjectDebugbar->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#40 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#41 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ConvertEmptyStringsToNull.php(31): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#42 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#43 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#44 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TrimStrings.php(51): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#45 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Foundation\\Http\\Middleware\\TrimStrings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#46 /var/www/html/vendor/laravel/framework/src/Illuminate/Http/Middleware/ValidatePostSize.php(27): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#47 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Http\\Middleware\\ValidatePostSize->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#48 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/PreventRequestsDuringMaintenance.php(110): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#49 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#50 /var/www/html/vendor/laravel/framework/src/Illuminate/Http/Middleware/HandleCors.php(62): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#51 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Http\\Middleware\\HandleCors->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#52 /var/www/html/vendor/laravel/framework/src/Illuminate/Http/Middleware/TrustProxies.php(58): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#53 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Http\\Middleware\\TrustProxies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#54 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/InvokeDeferredCallbacks.php(22): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#55 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Foundation\\Http\\Middleware\\InvokeDeferredCallbacks->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#56 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(127): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#57 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(176): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#58 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(145): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#59 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Testing/Concerns/MakesHttpRequests.php(607): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#60 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Testing/Concerns/MakesHttpRequests.php(573): Illuminate\\Foundation\\Testing\\TestCase->call('PATCH', '/api/shopping-i...', Array, Array, Array, Array, '{\"substitute_fo...')
+#61 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Testing/Concerns/MakesHttpRequests.php(471): Illuminate\\Foundation\\Testing\\TestCase->json('PATCH', '/api/shopping-i...', Array, Array, 0)
+#62 /var/www/html/tests/Feature/ShoppingListTest.php(184): Illuminate\\Foundation\\Testing\\TestCase->patchJson('/api/shopping-i...', Array)
+#63 /var/www/html/vendor/pestphp/pest/src/Factories/TestCaseMethodFactory.php(110): P\\Tests\\Feature\\ShoppingListTest->{closure}()
+#64 [internal function]: P\\Tests\\Feature\\ShoppingListTest->Pest\\Factories\\{closure}()
+#65 /var/www/html/vendor/pestphp/pest/src/Concerns/Testable.php(339): call_user_func_array(Object(Closure), Array)
+#66 /var/www/html/vendor/pestphp/pest/src/Support/ExceptionTrace.php(26): P\\Tests\\Feature\\ShoppingListTest->Pest\\Concerns\\{closure}()
+#67 /var/www/html/vendor/pestphp/pest/src/Concerns/Testable.php(339): Pest\\Support\\ExceptionTrace::ensure(Object(Closure))
+#68 /var/www/html/vendor/pestphp/pest/src/Concerns/Testable.php(256): P\\Tests\\Feature\\ShoppingListTest->__callClosure(Object(Closure), Array)
+#69 /var/www/html/vendor/pestphp/pest/src/Factories/TestCaseFactory.php(197) : eval()'d code(101): P\\Tests\\Feature\\ShoppingListTest->__runTest(Object(Closure))
+#70 /var/www/html/vendor/phpunit/phpunit/src/Framework/TestCase.php(1548): P\\Tests\\Feature\\ShoppingListTest->__pest_evaluable_it_PATCH__api_shopping_items__id__substitute_with_allergen_returns_HTTP_422()
+#71 /var/www/html/vendor/phpunit/phpunit/src/Framework/TestCase.php(686): PHPUnit\\Framework\\TestCase->runTest()
+#72 /var/www/html/vendor/phpunit/phpunit/src/Framework/TestRunner.php(106): PHPUnit\\Framework\\TestCase->runBare()
+#73 /var/www/html/vendor/phpunit/phpunit/src/Framework/TestCase.php(516): PHPUnit\\Framework\\TestRunner->run(Object(P\\Tests\\Feature\\ShoppingListTest))
+#74 /var/www/html/vendor/phpunit/phpunit/src/Framework/TestSuite.php(374): PHPUnit\\Framework\\TestCase->run()
+#75 /var/www/html/vendor/phpunit/phpunit/src/TextUI/TestRunner.php(64): PHPUnit\\Framework\\TestSuite->run()
+#76 /var/www/html/vendor/phpunit/phpunit/src/TextUI/Application.php(204): PHPUnit\\TextUI\\TestRunner->run(Object(PHPUnit\\TextUI\\Configuration\\Configuration), Object(PHPUnit\\Runner\\ResultCache\\DefaultResultCache), Object(PHPUnit\\Framework\\TestSuite))
+#77 /var/www/html/vendor/pestphp/pest/src/Kernel.php(103): PHPUnit\\TextUI\\Application->run(Array)
+#78 /var/www/html/vendor/pestphp/pest/bin/pest(91): Pest\\Kernel->handle(Array, Array)
+#79 /var/www/html/vendor/pestphp/pest/bin/pest(99): {closure}()
+#80 /var/www/html/vendor/bin/pest(119): include('/var/www/html/v...')
+#81 {main}
+"} 
+[2026-06-17 19:20:58] local.ERROR: Attempt to read property "user_id" on null {"userId":"a20bd40a-f0ac-4133-93ac-20f78a36e3d3","exception":"[object] (ErrorException(code: 0): Attempt to read property \"user_id\" on null at /var/www/html/app/Policies/ShoppingListPolicy.php:17)
+[stacktrace]
+#0 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(258): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(2, 'Attempt to read...', '/var/www/html/a...', 17)
+#1 /var/www/html/app/Policies/ShoppingListPolicy.php(17): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->Illuminate\\Foundation\\Bootstrap\\{closure}(2, 'Attempt to read...', '/var/www/html/a...', 17)
+#2 /var/www/html/vendor/laravel/framework/src/Illuminate/Auth/Access/Gate.php(816): App\\Policies\\ShoppingListPolicy->update(Object(App\\Models\\User), Object(App\\Models\\ShoppingList))
+#3 /var/www/html/vendor/laravel/framework/src/Illuminate/Auth/Access/Gate.php(769): Illuminate\\Auth\\Access\\Gate->callPolicyMethod(Object(App\\Policies\\ShoppingListPolicy), 'update', Object(App\\Models\\User), Array)
+#4 /var/www/html/vendor/laravel/framework/src/Illuminate/Auth/Access/Gate.php(553): Illuminate\\Auth\\Access\\Gate->Illuminate\\Auth\\Access\\{closure}(Object(App\\Models\\User), Object(App\\Models\\ShoppingList))
+#5 /var/www/html/vendor/laravel/framework/src/Illuminate/Auth/Access/Gate.php(448): Illuminate\\Auth\\Access\\Gate->callAuthCallback(Object(App\\Models\\User), 'update', Array)
+#6 /var/www/html/vendor/laravel/framework/src/Illuminate/Auth/Access/Gate.php(411): Illuminate\\Auth\\Access\\Gate->raw('update', Array)
+#7 /var/www/html/vendor/laravel/framework/src/Illuminate/Auth/Access/Gate.php(398): Illuminate\\Auth\\Access\\Gate->inspect('update', Object(App\\Models\\ShoppingList))
+#8 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Auth/Access/AuthorizesRequests.php(25): Illuminate\\Auth\\Access\\Gate->authorize('update', Object(App\\Models\\ShoppingList))
+#9 /var/www/html/app/Http/Controllers/ShoppingController.php(112): App\\Http\\Controllers\\Controller->authorize('update', Object(App\\Models\\ShoppingList))
+#10 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php(47): App\\Http\\Controllers\\ShoppingController->substitute(Object(Illuminate\\Http\\Request), Object(App\\Models\\ShoppingItem), Object(App\\Services\\SubstituteEngine))
+#11 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Route.php(266): Illuminate\\Routing\\ControllerDispatcher->dispatch(Object(Illuminate\\Routing\\Route), Object(App\\Http\\Controllers\\ShoppingController), 'substitute')
+#12 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Route.php(212): Illuminate\\Routing\\Route->runController()
+#13 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Router.php(808): Illuminate\\Routing\\Route->run()
+#14 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(170): Illuminate\\Routing\\Router->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#15 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Middleware/SubstituteBindings.php(51): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#16 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Routing\\Middleware\\SubstituteBindings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#17 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php(161): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#18 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php(127): Illuminate\\Routing\\Middleware\\ThrottleRequests->handleRequest(Object(Illuminate\\Http\\Request), Object(Closure), Array)
+#19 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php(89): Illuminate\\Routing\\Middleware\\ThrottleRequests->handleRequestUsingNamedLimiter(Object(Illuminate\\Http\\Request), Object(Closure), 'api', Object(Closure))
+#20 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Routing\\Middleware\\ThrottleRequests->handle(Object(Illuminate\\Http\\Request), Object(Closure), 'api')
+#21 /var/www/html/vendor/laravel/framework/src/Illuminate/Auth/Middleware/Authenticate.php(64): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#22 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Auth\\Middleware\\Authenticate->handle(Object(Illuminate\\Http\\Request), Object(Closure), 'sanctum')
+#23 /var/www/html/vendor/laravel/framework/src/Illuminate/Session/Middleware/StartSession.php(121): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#24 /var/www/html/vendor/laravel/framework/src/Illuminate/Session/Middleware/StartSession.php(64): Illuminate\\Session\\Middleware\\StartSession->handleStatefulRequest(Object(Illuminate\\Http\\Request), Object(Illuminate\\Session\\Store), Object(Closure))
+#25 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Session\\Middleware\\StartSession->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#26 /var/www/html/vendor/laravel/sanctum/src/Http/Middleware/EnsureFrontendRequestsAreStateful.php(26): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#27 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(170): Laravel\\Sanctum\\Http\\Middleware\\EnsureFrontendRequestsAreStateful->Laravel\\Sanctum\\Http\\Middleware\\{closure}(Object(Illuminate\\Http\\Request))
+#28 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(127): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#29 /var/www/html/vendor/laravel/sanctum/src/Http/Middleware/EnsureFrontendRequestsAreStateful.php(25): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#30 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Laravel\\Sanctum\\Http\\Middleware\\EnsureFrontendRequestsAreStateful->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#31 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(127): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#32 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Router.php(807): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#33 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Router.php(786): Illuminate\\Routing\\Router->runRouteWithinStack(Object(Illuminate\\Routing\\Route), Object(Illuminate\\Http\\Request))
+#34 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Router.php(750): Illuminate\\Routing\\Router->runRoute(Object(Illuminate\\Http\\Request), Object(Illuminate\\Routing\\Route))
+#35 /var/www/html/vendor/laravel/framework/src/Illuminate/Routing/Router.php(739): Illuminate\\Routing\\Router->dispatchToRoute(Object(Illuminate\\Http\\Request))
+#36 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(201): Illuminate\\Routing\\Router->dispatch(Object(Illuminate\\Http\\Request))
+#37 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(170): Illuminate\\Foundation\\Http\\Kernel->Illuminate\\Foundation\\Http\\{closure}(Object(Illuminate\\Http\\Request))
+#38 /var/www/html/vendor/barryvdh/laravel-debugbar/src/Middleware/InjectDebugbar.php(59): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#39 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Barryvdh\\Debugbar\\Middleware\\InjectDebugbar->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#40 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#41 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ConvertEmptyStringsToNull.php(31): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#42 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#43 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#44 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TrimStrings.php(51): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#45 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Foundation\\Http\\Middleware\\TrimStrings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#46 /var/www/html/vendor/laravel/framework/src/Illuminate/Http/Middleware/ValidatePostSize.php(27): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#47 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Http\\Middleware\\ValidatePostSize->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#48 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/PreventRequestsDuringMaintenance.php(110): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#49 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#50 /var/www/html/vendor/laravel/framework/src/Illuminate/Http/Middleware/HandleCors.php(62): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#51 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Http\\Middleware\\HandleCors->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#52 /var/www/html/vendor/laravel/framework/src/Illuminate/Http/Middleware/TrustProxies.php(58): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#53 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Http\\Middleware\\TrustProxies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#54 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/InvokeDeferredCallbacks.php(22): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#55 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(209): Illuminate\\Foundation\\Http\\Middleware\\InvokeDeferredCallbacks->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#56 /var/www/html/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(127): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#57 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(176): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#58 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(145): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#59 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Testing/Concerns/MakesHttpRequests.php(607): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#60 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Testing/Concerns/MakesHttpRequests.php(573): Illuminate\\Foundation\\Testing\\TestCase->call('PATCH', '/api/shopping-i...', Array, Array, Array, Array, '{\"substitute_fo...')
+#61 /var/www/html/vendor/laravel/framework/src/Illuminate/Foundation/Testing/Concerns/MakesHttpRequests.php(471): Illuminate\\Foundation\\Testing\\TestCase->json('PATCH', '/api/shopping-i...', Array, Array, 0)
+#62 /var/www/html/tests/Feature/ShoppingListTest.php(205): Illuminate\\Foundation\\Testing\\TestCase->patchJson('/api/shopping-i...', Array)
+#63 /var/www/html/vendor/pestphp/pest/src/Factories/TestCaseMethodFactory.php(110): P\\Tests\\Feature\\ShoppingListTest->{closure}()
+#64 [internal function]: P\\Tests\\Feature\\ShoppingListTest->Pest\\Factories\\{closure}()
+#65 /var/www/html/vendor/pestphp/pest/src/Concerns/Testable.php(339): call_user_func_array(Object(Closure), Array)
+#66 /var/www/html/vendor/pestphp/pest/src/Support/ExceptionTrace.php(26): P\\Tests\\Feature\\ShoppingListTest->Pest\\Concerns\\{closure}()
+#67 /var/www/html/vendor/pestphp/pest/src/Concerns/Testable.php(339): Pest\\Support\\ExceptionTrace::ensure(Object(Closure))
+#68 /var/www/html/vendor/pestphp/pest/src/Concerns/Testable.php(256): P\\Tests\\Feature\\ShoppingListTest->__callClosure(Object(Closure), Array)
+#69 /var/www/html/vendor/pestphp/pest/src/Factories/TestCaseFactory.php(197) : eval()'d code(116): P\\Tests\\Feature\\ShoppingListTest->__runTest(Object(Closure))
+#70 /var/www/html/vendor/phpunit/phpunit/src/Framework/TestCase.php(1548): P\\Tests\\Feature\\ShoppingListTest->__pest_evaluable_it_PATCH__api_shopping_items__id__substitute_valid_updates_sustituido__por__food__id_and_contains_cantidad__recalculada()
+#71 /var/www/html/vendor/phpunit/phpunit/src/Framework/TestCase.php(686): PHPUnit\\Framework\\TestCase->runTest()
+#72 /var/www/html/vendor/phpunit/phpunit/src/Framework/TestRunner.php(106): PHPUnit\\Framework\\TestCase->runBare()
+#73 /var/www/html/vendor/phpunit/phpunit/src/Framework/TestCase.php(516): PHPUnit\\Framework\\TestRunner->run(Object(P\\Tests\\Feature\\ShoppingListTest))
+#74 /var/www/html/vendor/phpunit/phpunit/src/Framework/TestSuite.php(374): PHPUnit\\Framework\\TestCase->run()
+#75 /var/www/html/vendor/phpunit/phpunit/src/TextUI/TestRunner.php(64): PHPUnit\\Framework\\TestSuite->run()
+#76 /var/www/html/vendor/phpunit/phpunit/src/TextUI/Application.php(204): PHPUnit\\TextUI\\TestRunner->run(Object(PHPUnit\\TextUI\\Configuration\\Configuration), Object(PHPUnit\\Runner\\ResultCache\\DefaultResultCache), Object(PHPUnit\\Framework\\TestSuite))
+#77 /var/www/html/vendor/pestphp/pest/src/Kernel.php(103): PHPUnit\\TextUI\\Application->run(Array)
+#78 /var/www/html/vendor/pestphp/pest/bin/pest(91): Pest\\Kernel->handle(Array, Array)
+#79 /var/www/html/vendor/pestphp/pest/bin/pest(99): {closure}()
+#80 /var/www/html/vendor/bin/pest(119): include('/var/www/html/v...')
+#81 {main}
+"} 
+[2026-06-17 19:20:58] local.INFO: GenerateDietJob started for plan: a20bd40b-822f-4186-9205-116094550186  
+[2026-06-17 19:20:58] local.ERROR: GenerateDietJob failed: El perfil del usuario está incompleto.  
+[2026-06-17 19:21:15] local.INFO: GenerateDietJob started for plan: a20bd425-b784-467e-9dc6-4a4858606764  
+[2026-06-17 19:21:15] local.ERROR: GenerateDietJob failed: Alimentos insuficientes en BD para generar el plan  
+[2026-06-17 19:21:30] local.INFO: GenerateDietJob started for plan: a20bd43b-d688-4e1d-9cac-316222cfa6c7  
+[2026-06-17 19:21:30] local.INFO: GenerateDietJob completed successfully for plan: a20bd43b-d688-4e1d-9cac-316222cfa6c7  
+[2026-06-17 19:22:18] local.INFO: GenerateDietJob started for plan: a20bd485-bccc-4c0c-8e56-3c8decfab1b4  
+[2026-06-17 19:22:18] local.INFO: GenerateDietJob completed successfully for plan: a20bd485-bccc-4c0c-8e56-3c8decfab1b4  
+[2026-06-17 19:22:19] local.INFO: GenerateDietJob started for plan: a20bd486-c282-4f5f-8aba-e58ece0b5eba  
+[2026-06-17 19:22:19] local.INFO: GenerateDietJob completed successfully for plan: a20bd486-c282-4f5f-8aba-e58ece0b5eba  
+[2026-06-17 19:22:19] local.INFO: GenerateDietJob started for plan: a20bd487-030e-4c39-9e2a-1e5c8b8d7dd8  
+[2026-06-17 19:22:19] local.ERROR: GenerateDietJob failed: Alimentos insuficientes en BD para generar el plan  
+[2026-06-17 19:29:51] local.INFO: GenerateDietJob started for plan: a20bd738-21c2-459c-ab08-217a62672e3e  
+[2026-06-17 19:29:51] local.INFO: GenerateDietJob completed successfully for plan: a20bd738-21c2-459c-ab08-217a62672e3e  
+[2026-06-17 19:29:51] local.INFO: GenerateDietJob started for plan: a20bd739-3191-4d07-a733-80fe40ea73aa  
+[2026-06-17 19:29:51] local.INFO: GenerateDietJob completed successfully for plan: a20bd739-3191-4d07-a733-80fe40ea73aa  
+[2026-06-17 19:29:52] local.INFO: GenerateDietJob started for plan: a20bd739-77cb-4242-a71b-b8d14df11f8f  
+[2026-06-17 19:29:52] local.ERROR: GenerateDietJob failed: Alimentos insuficientes en BD para generar el plan  
+[2026-06-17 19:34:26] local.INFO: GenerateDietJob started for plan: a20bd8db-7c4b-4750-8ae5-74e92819277e  
+[2026-06-17 19:34:26] local.INFO: GenerateDietJob completed successfully for plan: a20bd8db-7c4b-4750-8ae5-74e92819277e  
+[2026-06-17 19:34:27] local.INFO: GenerateDietJob started for plan: a20bd8dd-5c6d-48bf-ae6d-af33f6578f3f  
+[2026-06-17 19:34:27] local.INFO: GenerateDietJob completed successfully for plan: a20bd8dd-5c6d-48bf-ae6d-af33f6578f3f  
+[2026-06-17 19:34:27] local.INFO: GenerateDietJob started for plan: a20bd8dd-9f24-4efe-aea3-18170254ac24  
+[2026-06-17 19:34:27] local.ERROR: GenerateDietJob failed: Alimentos insuficientes en BD para generar el plan  
+[2026-06-17 19:35:11] local.INFO: GenerateDietJob started for plan: a20bd920-161f-4385-b927-1b5738431b1a  
+[2026-06-17 19:35:11] local.INFO: GenerateDietJob completed successfully for plan: a20bd920-161f-4385-b927-1b5738431b1a  
+[2026-06-17 19:35:12] local.INFO: GenerateDietJob started for plan: a20bd921-de36-4ee9-98ad-0a989bcef613  
+[2026-06-17 19:35:12] local.INFO: GenerateDietJob completed successfully for plan: a20bd921-de36-4ee9-98ad-0a989bcef613  
+[2026-06-17 19:35:12] local.INFO: GenerateDietJob started for plan: a20bd922-1c36-4153-995f-34ecfb1e7701  
+[2026-06-17 19:35:12] local.ERROR: GenerateDietJob failed: Alimentos insuficientes en BD para generar el plan  
+[2026-06-17 19:36:01] local.INFO: GenerateDietJob started for plan: a20bd96d-651f-4a7d-acf8-17ab5fa5a6c7  
+[2026-06-17 19:36:01] local.INFO: GenerateDietJob completed successfully for plan: a20bd96d-651f-4a7d-acf8-17ab5fa5a6c7  
+[2026-06-17 19:36:02] local.INFO: GenerateDietJob started for plan: a20bd96f-235a-43b8-81b6-a666f34d6235  
+[2026-06-17 19:36:02] local.INFO: GenerateDietJob completed successfully for plan: a20bd96f-235a-43b8-81b6-a666f34d6235  
+[2026-06-17 19:36:02] local.INFO: GenerateDietJob started for plan: a20bd96f-6096-4c2c-93b4-5e5fafce4945  
+[2026-06-17 19:36:02] local.ERROR: GenerateDietJob failed: Alimentos insuficientes en BD para generar el plan  
+[2026-06-17 19:45:30] local.INFO: GenerateDietJob started for plan: a20bdcd1-c590-4f55-9ebf-6babb48b7065  
+[2026-06-17 19:45:30] local.INFO: GenerateDietJob completed successfully for plan: a20bdcd1-c590-4f55-9ebf-6babb48b7065  
+[2026-06-17 19:45:31] local.INFO: GenerateDietJob started for plan: a20bdcd3-6d59-4883-8a2f-ee6bd71d5fe9  
+[2026-06-17 19:45:31] local.INFO: GenerateDietJob completed successfully for plan: a20bdcd3-6d59-4883-8a2f-ee6bd71d5fe9  
+[2026-06-17 19:45:31] local.INFO: GenerateDietJob started for plan: a20bdcd3-a7f3-4d49-8466-2e28d74a87f8  
+[2026-06-17 19:45:32] local.ERROR: GenerateDietJob failed: Alimentos insuficientes en BD para generar el plan  
+[2026-06-17 19:50:24] local.INFO: GenerateDietJob started for plan: a20bde8e-8939-430c-a430-a24d72b542b2  
+[2026-06-17 19:50:25] local.INFO: GenerateDietJob completed successfully for plan: a20bde8e-8939-430c-a430-a24d72b542b2  
+[2026-06-17 19:51:43] local.INFO: GenerateDietJob started for plan: a20bdf07-e039-45a4-9015-e25385959475  
+[2026-06-17 19:51:43] local.INFO: GenerateDietJob completed successfully for plan: a20bdf07-e039-45a4-9015-e25385959475  

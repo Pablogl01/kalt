@@ -29,7 +29,7 @@ class OnboardingController extends Controller
         $user->refresh();
 
         // Calculate macros in real-time
-        $activityLevel = $user->nivel_actividad ?? 'sedentario';
+        $activityLevel = $user->nivel_actividad ?? 'moderado';
         $bmr = $this->calculator->calculateBMR($user);
         $tdee = $this->calculator->calculateTDEE($bmr, $activityLevel);
         $macros = $this->calculator->calculateMacros($tdee, $user->objetivo);

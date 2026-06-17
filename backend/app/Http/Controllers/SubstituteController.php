@@ -40,6 +40,16 @@ class SubstituteController extends Controller
                 $request->user()->id
             );
 
+            $plan = $mealItem->meal?->dayPlan?->weeklyPlan;
+            if ($plan) {
+                $generator = app(\App\Services\ShoppingGenerator::class);
+                if (\App\Models\ShoppingList::where('weekly_plan_id', $plan->id)->exists()) {
+                    $generator->regenerate($plan);
+                } else {
+                    $generator->generate($plan);
+                }
+            }
+
             return response()->json($updatedItem->load('food'));
         } catch (\InvalidArgumentException $e) {
             return response()->json([
