@@ -24,9 +24,9 @@ const hoveredCell = ref(null)
 const tooltipX = ref(0)
 const tooltipY = ref(0)
 
-const CELL_SIZE = 24
-const CELL_GAP = 6
-const COLS_COUNT = 7 // Mon to Sun
+const CELL_SIZE = 14
+const CELL_GAP = 4
+const ROWS_COUNT = 7 // Mon to Sun
 
 const gridData = computed(() => {
   if (!props.logs || props.logs.length === 0) return []
@@ -47,8 +47,10 @@ const gridData = computed(() => {
     const logDateParts = log.fecha.split('-')
     const logDate = new Date(logDateParts[0], logDateParts[1] - 1, logDateParts[2])
     const diffDays = Math.round((logDate.getTime() - startMonday.getTime()) / (1000 * 60 * 60 * 24))
-    const row = Math.floor(diffDays / 7)
-    const col = diffDays % 7
+    
+    // Switch row and col for horizontal layout
+    const col = Math.floor(diffDays / 7)
+    const row = diffDays % 7
 
     const macro = macrosMap.value[log.fecha] || {}
 
@@ -56,6 +58,7 @@ const gridData = computed(() => {
       ...log,
       row,
       col,
+      logDate,
       isToday: log.fecha === todayStr,
       caloriasReales: macro.calorias_reales || 0,
       caloriasObjetivo: macro.calorias_objetivo || 0,
@@ -63,20 +66,47 @@ const gridData = computed(() => {
   })
 
   // Keep last 52 weeks max
-  const maxRow = Math.max(...mapped.map(m => m.row), 0)
-  const minRowToShow = Math.max(maxRow - 51, 0)
+  const maxCol = Math.max(...mapped.map(m => m.col), 0)
+  const minColToShow = Math.max(maxCol - 51, 0)
 
   return mapped
-    .filter(m => m.row >= minRowToShow)
+    .filter(m => m.col >= minColToShow)
     .map(m => ({
       ...m,
-      row: m.row - minRowToShow
+      col: m.col - minColToShow
     }))
 })
 
-const totalRows = computed(() => {
+const totalCols = computed(() => {
   if (gridData.value.length === 0) return 0
-  return Math.max(...gridData.value.map(m => m.row), 0) + 1
+  return Math.max(...gridData.value.map(m => m.col), 0) + 1
+})
+
+const monthLabels = computed(() => {
+  if (gridData.value.length === 0) return []
+  
+  const labels = []
+  let lastMonth = -1
+  
+  // We sort by col and row to scan chronologically
+  const sorted = [...gridData.value].sort((a, b) => a.col !== b.col ? a.col - b.col : a.row - b.row)
+  
+  for (const cell of sorted) {
+    // Only put a label if it's the first week of a month (roughly)
+    const month = cell.logDate.getMonth()
+    if (month !== lastMonth) {
+      // Avoid putting two labels too close to each other
+      if (labels.length === 0 || (cell.col - labels[labels.length - 1].col) > 2) {
+        const monthName = cell.logDate.toLocaleDateString('es-ES', { month: 'short' })
+        labels.push({
+          col: cell.col,
+          label: monthName.charAt(0).toUpperCase() + monthName.slice(1)
+        })
+      }
+      lastMonth = month
+    }
+  }
+  return labels
 })
 
 const getCellColor = (level) => {
@@ -90,7 +120,6 @@ const handleMouseEnter = (event, cell) => {
   const rect = event.currentTarget.getBoundingClientRect()
   const parentRect = event.currentTarget.closest('.heatmap-container').getBoundingClientRect()
   
-  // Position tooltip relative to container
   tooltipX.value = rect.left - parentRect.left + rect.width / 2
   tooltipY.value = rect.top - parentRect.top - 110
 }
@@ -115,26 +144,41 @@ const formatDateLabel = (dateStr) => {
     <div class="heatmap-container">
       <div class="heatmap-scrollable">
         <svg
-          :width="COLS_COUNT * (CELL_SIZE + CELL_GAP) + 30"
-          :height="totalRows * (CELL_SIZE + CELL_GAP) + 30"
+          :width="totalCols * (CELL_SIZE + CELL_GAP) + 40"
+          :height="ROWS_COUNT * (CELL_SIZE + CELL_GAP) + 30"
           class="heatmap-svg"
         >
-          <!-- Headers L M X J V S D -->
-          <g class="headers">
+          <!-- Month Headers -->
+          <g class="month-headers">
+            <text
+              v-for="(month, index) in monthLabels"
+              :key="'m-'+index"
+              :x="month.col * (CELL_SIZE + CELL_GAP) + 30"
+              y="12"
+              class="header-text"
+            >
+              {{ month.label }}
+            </text>
+          </g>
+
+          <!-- Day Headers L M X J V S D -->
+          <g class="day-headers">
             <text
               v-for="(day, index) in ['L', 'M', 'X', 'J', 'V', 'S', 'D']"
               :key="index"
-              :x="index * (CELL_SIZE + CELL_GAP) + CELL_SIZE / 2 + 20"
-              y="15"
+              x="15"
+              :y="index * (CELL_SIZE + CELL_GAP) + 25 + CELL_SIZE / 2"
               text-anchor="middle"
+              alignment-baseline="central"
               class="header-text"
+              :style="{ display: index % 2 === 0 ? 'block' : 'none' }" 
             >
               {{ day }}
             </text>
           </g>
 
           <!-- Heatmap Cells -->
-          <g transform="translate(20, 25)">
+          <g transform="translate(30, 25)">
             <rect
               v-for="cell in gridData"
               :key="cell.fecha"
@@ -142,7 +186,7 @@ const formatDateLabel = (dateStr) => {
               :y="cell.row * (CELL_SIZE + CELL_GAP)"
               :width="CELL_SIZE"
               :height="CELL_SIZE"
-              rx="4"
+              rx="2"
               :fill="getCellColor(cell.nivel)"
               :stroke="cell.isToday ? '#A8E063' : 'none'"
               :stroke-width="cell.isToday ? 2 : 0"
@@ -227,23 +271,14 @@ const formatDateLabel = (dateStr) => {
 .heatmap-scrollable {
   display: flex;
   justify-content: center;
-  overflow-y: auto;
-  max-height: 380px;
+  overflow: hidden; /* No scroll as requested */
   padding: 8px 0;
-  scrollbar-width: thin;
-  scrollbar-color: #4B5563 transparent;
-}
-
-.heatmap-scrollable::-webkit-scrollbar {
-  width: 6px;
-}
-.heatmap-scrollable::-webkit-scrollbar-thumb {
-  background-color: #4B5563;
-  border-radius: 3px;
+  width: 100%;
 }
 
 .heatmap-svg {
   user-select: none;
+  max-width: 100%;
 }
 
 .header-text {
