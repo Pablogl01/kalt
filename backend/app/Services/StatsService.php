@@ -19,14 +19,6 @@ class StatsService
         $this->trackCacheKey($user->id, $cacheKey);
 
         return Cache::remember($cacheKey, 3600, function () use ($user, $from, $to) {
-            $dailyLogs = DailyLog::where('user_id', $user->id)
-                ->whereBetween('fecha', [$from->copy()->startOfDay(), $to->copy()->endOfDay()])
-                ->with(['mealLogs' => function ($q) {
-                    $q->where('realizada', true)->with('mealLogItems');
-                }])
-                ->get()
-                ->keyBy(fn($log) => $log->fecha->format('Y-m-d'));
-
             $dayPlans = DayPlan::whereHas('weeklyPlan', function ($q) use ($user) {
                     $q->where('user_id', $user->id);
                 })
@@ -34,38 +26,33 @@ class StatsService
                 ->get()
                 ->keyBy(fn($plan) => $plan->fecha->format('Y-m-d'));
 
+            $aggregates = \Illuminate\Support\Facades\DB::table('daily_logs')
+                ->join('meal_logs', 'daily_logs.id', '=', 'meal_logs.daily_log_id')
+                ->join('meal_log_items', 'meal_logs.id', '=', 'meal_log_items.meal_log_id')
+                ->where('daily_logs.user_id', $user->id)
+                ->whereBetween('daily_logs.fecha', [$from->copy()->startOfDay(), $to->copy()->endOfDay()])
+                ->where('meal_logs.realizada', true)
+                ->selectRaw('daily_logs.fecha, SUM(meal_log_items.calorias) as real_cal, SUM(meal_log_items.proteina) as real_prot, SUM(meal_log_items.carbos) as real_carb, SUM(meal_log_items.grasa) as real_fat')
+                ->groupBy('daily_logs.fecha')
+                ->get()
+                ->keyBy(fn($row) => Carbon::parse($row->fecha)->format('Y-m-d'));
+
             $result = [];
             $curr = $from->copy();
             while ($curr->lte($to)) {
                 $dateStr = $curr->format('Y-m-d');
-                $log = $dailyLogs->get($dateStr);
                 $plan = $dayPlans->get($dateStr);
-
-                $realCal = 0;
-                $realProt = 0;
-                $realCarb = 0;
-                $realFat = 0;
-
-                if ($log) {
-                    foreach ($log->mealLogs as $mealLog) {
-                        foreach ($mealLog->mealLogItems as $item) {
-                            $realCal += $item->calorias;
-                            $realProt += $item->proteina;
-                            $realCarb += $item->carbos;
-                            $realFat += $item->grasa;
-                        }
-                    }
-                }
+                $agg = $aggregates->get($dateStr);
 
                 $result[] = [
                     'fecha'             => $dateStr,
-                    'calorias_reales'   => round($realCal, 2),
+                    'calorias_reales'   => $agg ? round($agg->real_cal, 2) : 0,
                     'calorias_objetivo' => $plan ? (float)$plan->calorias_objetivo : 0.0,
-                    'proteina_real'     => round($realProt, 2),
+                    'proteina_real'     => $agg ? round($agg->real_prot, 2) : 0,
                     'proteina_objetivo' => $plan ? (float)$plan->proteina_obj : 0.0,
-                    'carbos_real'       => round($realCarb, 2),
+                    'carbos_real'       => $agg ? round($agg->real_carb, 2) : 0,
                     'carbos_objetivo'   => $plan ? (float)$plan->carbos_obj : 0.0,
-                    'grasa_real'        => round($realFat, 2),
+                    'grasa_real'        => $agg ? round($agg->real_fat, 2) : 0,
                     'grasa_objetivo'    => $plan ? (float)$plan->grasa_obj : 0.0,
                 ];
 
@@ -86,7 +73,11 @@ class StatsService
         return Cache::remember($cacheKey, 3600, function () use ($user, $from, $to) {
             $dailyLogs = DailyLog::where('user_id', $user->id)
                 ->whereBetween('fecha', [$from->copy()->startOfDay(), $to->copy()->endOfDay()])
-                ->with(['mealLogs'])
+                ->withCount(['mealLogs as total_planned' => function ($q) {
+                    $q->where('es_extra', false);
+                }, 'mealLogs as completed_planned' => function ($q) {
+                    $q->where('es_extra', false)->where('realizada', true);
+                }])
                 ->get()
                 ->keyBy(fn($log) => $log->fecha->format('Y-m-d'));
 
@@ -100,8 +91,7 @@ class StatsService
                     $level = 'sin_datos';
                 } else {
                     $trainingOk = !$log->entreno_planificado || $log->ha_entrenado;
-                    $mealsPlanned = $log->mealLogs->where('es_extra', false);
-                    $mealsOk = $mealsPlanned->count() === 0 || $mealsPlanned->every(fn($m) => $m->realizada);
+                    $mealsOk = $log->total_planned === 0 || $log->total_planned === $log->completed_planned;
 
                     if ($trainingOk && $mealsOk) {
                         $level = 'completa';
@@ -121,6 +111,88 @@ class StatsService
             }
 
             return $result;
+        });
+    }
+
+    public function getHeatmapStats(User $user, Carbon $from, Carbon $to): array
+    {
+        $this->validateRange($from, $to);
+
+        $cacheKey = "stats:{$user->id}:heatmap:{$from->format('Y-m-d')}:{$to->format('Y-m-d')}";
+        $this->trackCacheKey($user->id, $cacheKey);
+
+        return Cache::remember($cacheKey, 3600, function () use ($user, $from, $to) {
+            $dailyLogs = DailyLog::where('user_id', $user->id)
+                ->whereBetween('fecha', [$from->copy()->startOfDay(), $to->copy()->endOfDay()])
+                ->withCount(['mealLogs as total_planned' => function ($q) {
+                    $q->where('es_extra', false);
+                }, 'mealLogs as completed_planned' => function ($q) {
+                    $q->where('es_extra', false)->where('realizada', true);
+                }])
+                ->get()
+                ->keyBy(fn($log) => $log->fecha->format('Y-m-d'));
+
+            $aggregates = \Illuminate\Support\Facades\DB::table('daily_logs')
+                ->join('meal_logs', 'daily_logs.id', '=', 'meal_logs.daily_log_id')
+                ->join('meal_log_items', 'meal_logs.id', '=', 'meal_log_items.meal_log_id')
+                ->where('daily_logs.user_id', $user->id)
+                ->whereBetween('daily_logs.fecha', [$from->copy()->startOfDay(), $to->copy()->endOfDay()])
+                ->where('meal_logs.realizada', true)
+                ->selectRaw('daily_logs.fecha, SUM(meal_log_items.calorias) as real_cal')
+                ->groupBy('daily_logs.fecha')
+                ->get()
+                ->keyBy(fn($row) => Carbon::parse($row->fecha)->format('Y-m-d'));
+
+            $dayPlans = DayPlan::whereHas('weeklyPlan', function ($q) use ($user) {
+                    $q->where('user_id', $user->id);
+                })
+                ->whereBetween('fecha', [$from->copy()->startOfDay(), $to->copy()->endOfDay()])
+                ->get()
+                ->keyBy(fn($plan) => $plan->fecha->format('Y-m-d'));
+
+            $adherenceResult = [];
+            $macrosResult = [];
+            $curr = $from->copy();
+
+            while ($curr->lte($to)) {
+                $dateStr = $curr->format('Y-m-d');
+                $log = $dailyLogs->get($dateStr);
+                $agg = $aggregates->get($dateStr);
+                $plan = $dayPlans->get($dateStr);
+
+                if (!$log) {
+                    $level = 'sin_datos';
+                } else {
+                    $trainingOk = !$log->entreno_planificado || $log->ha_entrenado;
+                    $mealsOk = $log->total_planned === 0 || $log->total_planned === $log->completed_planned;
+
+                    if ($trainingOk && $mealsOk) {
+                        $level = 'completa';
+                    } else {
+                        $level = 'parcial';
+                    }
+                }
+
+                $adherenceResult[] = [
+                    'fecha' => $dateStr,
+                    'nivel' => $level,
+                    'entreno_planificado' => $log ? (bool)$log->entreno_planificado : null,
+                    'ha_entrenado' => $log ? (bool)$log->ha_entrenado : null,
+                ];
+
+                $macrosResult[] = [
+                    'fecha'             => $dateStr,
+                    'calorias_reales'   => $agg ? round($agg->real_cal, 2) : 0,
+                    'calorias_objetivo' => $plan ? (float)$plan->calorias_objetivo : 0.0,
+                ];
+
+                $curr->addDay();
+            }
+
+            return [
+                'adherence' => $adherenceResult,
+                'macros'    => $macrosResult,
+            ];
         });
     }
 

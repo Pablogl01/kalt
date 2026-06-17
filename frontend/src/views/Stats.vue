@@ -81,12 +81,9 @@ const fetchRangeData = async () => {
 const fetchHeatmapData = async () => {
   const { from, to } = getRangeDates(365) // 1 year
   try {
-    const [adherenceRes, macrosRes] = await Promise.all([
-      api.get(`/stats/adherence?from=${from}&to=${to}`),
-      api.get(`/stats/macros?from=${from}&to=${to}`)
-    ])
-    heatmapAdherence.value = adherenceRes.data
-    heatmapMacros.value = macrosRes.data
+    const res = await api.get(`/stats/heatmap?from=${from}&to=${to}`)
+    heatmapAdherence.value = res.data.adherence
+    heatmapMacros.value = res.data.macros
   } catch (error) {
     console.error('Error fetching heatmap data:', error)
   }

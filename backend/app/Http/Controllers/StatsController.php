@@ -66,6 +66,22 @@ class StatsController extends Controller
         return response()->json($stats);
     }
 
+    public function heatmap(Request $request): JsonResponse
+    {
+        $dates = $this->getDates($request);
+        if ($dates instanceof JsonResponse) {
+            return $dates;
+        }
+
+        $stats = $this->statsService->getHeatmapStats(
+            $request->user(),
+            $dates['from'],
+            $dates['to']
+        );
+
+        return response()->json($stats);
+    }
+
     public function weight(Request $request): JsonResponse
     {
         $dates = $this->getDates($request);

@@ -78,6 +78,7 @@ Route::middleware(['auth:sanctum', 'throttle:api'])->group(function () {
     Route::get('/stats/adherence', [StatsController::class, 'adherence']);
     Route::get('/stats/training', [StatsController::class, 'training']);
     Route::get('/stats/weight', [StatsController::class, 'weight']);
+    Route::get('/stats/heatmap', [StatsController::class, 'heatmap']);
     Route::get('/weight-logs', [StatsController::class, 'indexWeight']);
     Route::post('/weight-logs', [StatsController::class, 'storeWeight']);
 });
