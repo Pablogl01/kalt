@@ -173,6 +173,12 @@ async function handleSkip(mealLogId) {
   }
 }
 
+async function handleReset(mealLogId) {
+  await logStore.resetMeal(mealLogId)
+  // Reverting clears any active recalculation, so retire its notice too.
+  activeNoticeMessage.value = null
+}
+
 function triggerSubstitute(item) {
   selectedMealItem.value = item
   showSubstituteSelector.value = true
@@ -340,6 +346,7 @@ async function saveExtraMeal() {
             :mealLog="ml"
             @complete="handleComplete"
             @skip="handleSkip"
+            @reset="handleReset"
             @substitute="triggerSubstitute"
           />
 

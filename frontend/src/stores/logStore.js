@@ -73,6 +73,20 @@ export const useLogStore = defineStore('log', () => {
     }
   }
 
+  async function resetMeal(mealLogId) {
+    try {
+      // Returns the full DailyLog: a reset can restore several meals (undo of
+      // a skip's redistribution), so we replace the whole day state.
+      const { data } = await api.patch(`/meal-logs/${mealLogId}/reset`)
+      setDailyLog(data)
+      setMealLogs(data.meal_logs || [])
+      return data
+    } catch (err) {
+      console.error('Error resetting meal:', err)
+      throw err
+    }
+  }
+
   async function addExtraMeal(dailyLogId, items) {
     try {
       const { data } = await api.post(`/meal-logs/${dailyLogId}/extra`, { items })
@@ -96,6 +110,7 @@ export const useLogStore = defineStore('log', () => {
     updateTraining,
     completeMeal,
     skipMeal,
+    resetMeal,
     addExtraMeal
   }
 })

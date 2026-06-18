@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from 'vue'
-import { RefreshCw, CircleCheck } from 'lucide-vue-next'
+import { RefreshCw, CircleCheck, CircleSlash } from 'lucide-vue-next'
 import { useUserStore } from '@/stores/userStore'
 
 const props = defineProps({
@@ -12,7 +12,7 @@ const props = defineProps({
 
 const userStore = useUserStore()
 
-const emit = defineEmits(['complete', 'skip', 'substitute'])
+const emit = defineEmits(['complete', 'skip', 'reset', 'substitute'])
 
 const isAllergic = (foodId) => {
   if (!userStore.user?.food_restrictions) return false
@@ -80,10 +80,11 @@ const formatTime = (timeStr) => {
 
 <template>
   <div 
-    class="meal-card" 
-    :class="{ 
-      'meal-card--completed': mealLog.realizada, 
-      'meal-card--extra': mealLog.es_extra 
+    class="meal-card"
+    :class="{
+      'meal-card--completed': mealLog.realizada,
+      'meal-card--skipped': mealLog.saltada,
+      'meal-card--extra': mealLog.es_extra
     }"
   >
     <div class="meal-header">
@@ -119,16 +120,21 @@ const formatTime = (timeStr) => {
         </p>
       </ul>
 
-      <!-- If not completed and has planned meal items: show planned items -->
+      <!-- Skipped: show a note instead of the planned items -->
+      <p v-else-if="mealLog.saltada" class="skipped-note">
+        Comida saltada. Sus macros se han redistribuido entre el resto del día.
+      </p>
+
+      <!-- Pending with planned meal items: show planned items -->
       <ul v-else-if="mealLog.meal?.meal_items" class="food-list food-list--planned">
         <li v-for="item in mealLog.meal.meal_items" :key="item.id" class="food-item">
           <span class="food-name">
             {{ item.food?.nombre }}
             <span class="food-weight">({{ Math.round(item.cantidad_gramos) }}g)</span>
           </span>
-          <button 
-            v-if="!isAllergic(item.food_id)" 
-            @click="emit('substitute', item)" 
+          <button
+            v-if="!isAllergic(item.food_id)"
+            @click="emit('substitute', item)"
             class="btn-substitute"
           >
             <RefreshCw :size="14" :stroke-width="2" aria-hidden="true" />
@@ -160,20 +166,35 @@ const formatTime = (timeStr) => {
 
       <!-- Action buttons -->
       <div class="meal-actions" v-if="!mealLog.es_extra">
-        <button 
-          v-if="!mealLog.realizada" 
-          @click="emit('complete', mealLog.id)" 
-          class="btn-action btn-action--complete"
-        >
-          Marcar como realizada
-        </button>
-        <div v-else class="completed-actions-wrap">
-          <span class="completed-indicator"><CircleCheck :size="14" :stroke-width="2" aria-hidden="true" /> Realizada</span>
-          <button 
-            @click="emit('skip', mealLog.id)" 
+        <!-- Pending: complete or skip directly -->
+        <template v-if="!mealLog.realizada && !mealLog.saltada">
+          <button
+            @click="emit('complete', mealLog.id)"
+            class="btn-action btn-action--complete"
+          >
+            Realizada
+          </button>
+          <button
+            @click="emit('skip', mealLog.id)"
             class="btn-action btn-action--skip"
           >
             Saltar
+          </button>
+        </template>
+
+        <!-- Completed: indicator + undo -->
+        <div v-else-if="mealLog.realizada" class="state-actions-wrap">
+          <span class="completed-indicator"><CircleCheck :size="14" :stroke-width="2" aria-hidden="true" /> Realizada</span>
+          <button @click="emit('reset', mealLog.id)" class="btn-action btn-action--undo">
+            Deshacer
+          </button>
+        </div>
+
+        <!-- Skipped: indicator + undo -->
+        <div v-else-if="mealLog.saltada" class="state-actions-wrap">
+          <span class="skipped-indicator"><CircleSlash :size="14" :stroke-width="2" aria-hidden="true" /> Saltada</span>
+          <button @click="emit('reset', mealLog.id)" class="btn-action btn-action--undo">
+            Deshacer
           </button>
         </div>
       </div>
@@ -196,6 +217,12 @@ const formatTime = (timeStr) => {
 .meal-card--completed {
   border-color: rgba(22, 163, 74, 0.3);
   box-shadow: 0 4px 12px rgba(22, 163, 74, 0.04);
+}
+
+.meal-card--skipped {
+  border-style: dashed;
+  border-color: rgba(138, 129, 120, 0.4);
+  opacity: 0.75;
 }
 
 .meal-card--extra {
@@ -338,10 +365,32 @@ const formatTime = (timeStr) => {
   color: var(--color-calories);
 }
 
-.completed-actions-wrap {
+.meal-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.state-actions-wrap {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+}
+
+.skipped-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.skipped-note {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+  font-style: italic;
 }
 
 .completed-indicator {
@@ -379,6 +428,18 @@ const formatTime = (timeStr) => {
 }
 
 .btn-action--skip:hover {
+  background-color: rgba(138, 129, 120, 0.05);
+  border-color: rgba(138, 129, 120, 0.5);
+  color: var(--color-text);
+}
+
+.btn-action--undo {
+  background-color: transparent;
+  border-color: rgba(138, 129, 120, 0.3);
+  color: var(--color-text-muted);
+}
+
+.btn-action--undo:hover {
   background-color: rgba(138, 129, 120, 0.05);
   border-color: rgba(138, 129, 120, 0.5);
   color: var(--color-text);

@@ -14,21 +14,31 @@ const props = defineProps({
   }
 })
 
-// Calculations for consumption progress percentages
+// Calculations for consumption progress.
+// The bar fill is capped at 100% (it can't overflow its track), but we also
+// expose whether the target was exceeded and by how much, so overconsumption
+// is communicated instead of silently clamped.
 const progress = computed(() => {
   if (!props.consumed) return null
 
-  const getPct = (c, t) => {
+  const build = (c, t) => {
+    const consumed = parseFloat(c || 0)
     const target = parseFloat(t || 0)
-    if (target <= 0) return 0
-    return Math.min(100, Math.round((parseFloat(c || 0) / target) * 100))
+    if (target <= 0) return { pct: 0, over: false, excess: 0 }
+    const rawPct = Math.round((consumed / target) * 100)
+    const over = consumed > target
+    return {
+      pct: Math.min(100, rawPct),
+      over,
+      excess: over ? Math.round(consumed - target) : 0,
+    }
   }
 
   return {
-    calorias: getPct(props.consumed.calorias, props.macros.calorias),
-    proteina: getPct(props.consumed.proteina, props.macros.proteina),
-    carbos: getPct(props.consumed.carbos, props.macros.carbos),
-    grasa: getPct(props.consumed.grasa, props.macros.grasa),
+    calorias: build(props.consumed.calorias, props.macros.calorias),
+    proteina: build(props.consumed.proteina, props.macros.proteina),
+    carbos: build(props.consumed.carbos, props.macros.carbos),
+    grasa: build(props.consumed.grasa, props.macros.grasa),
   }
 })
 
@@ -53,10 +63,15 @@ const fatPct = computed(() => (parseFloat(props.macros?.grasa || 0) / totalGrams
         <span class="progress-label">Calorías</span>
         <span class="progress-nums text-calories">
           <strong>{{ Math.round(consumed.calorias) }}</strong> / {{ Math.round(macros.calorias) }} kcal
+          <span v-if="progress.calorias.over" class="progress-excess">+{{ progress.calorias.excess }} kcal</span>
         </span>
       </div>
       <div class="progress-bar-bg">
-        <div class="progress-bar-fill bar-calories" :style="{ width: progress.calorias + '%' }"></div>
+        <div
+          class="progress-bar-fill bar-calories"
+          :class="{ 'progress-bar-fill--over': progress.calorias.over }"
+          :style="{ width: progress.calorias.pct + '%' }"
+        ></div>
       </div>
     </div>
 
@@ -66,10 +81,15 @@ const fatPct = computed(() => (parseFloat(props.macros?.grasa || 0) / totalGrams
         <span class="progress-label">Proteína</span>
         <span class="progress-nums text-protein">
           <strong>{{ Math.round(consumed.proteina) }}g</strong> / {{ Math.round(macros.proteina) }}g
+          <span v-if="progress.proteina.over" class="progress-excess">+{{ progress.proteina.excess }}g</span>
         </span>
       </div>
       <div class="progress-bar-bg">
-        <div class="progress-bar-fill bar-protein" :style="{ width: progress.proteina + '%' }"></div>
+        <div
+          class="progress-bar-fill bar-protein"
+          :class="{ 'progress-bar-fill--over': progress.proteina.over }"
+          :style="{ width: progress.proteina.pct + '%' }"
+        ></div>
       </div>
     </div>
 
@@ -79,10 +99,15 @@ const fatPct = computed(() => (parseFloat(props.macros?.grasa || 0) / totalGrams
         <span class="progress-label">Carbohidratos</span>
         <span class="progress-nums text-carbs">
           <strong>{{ Math.round(consumed.carbos) }}g</strong> / {{ Math.round(macros.carbos) }}g
+          <span v-if="progress.carbos.over" class="progress-excess">+{{ progress.carbos.excess }}g</span>
         </span>
       </div>
       <div class="progress-bar-bg">
-        <div class="progress-bar-fill bar-carbs" :style="{ width: progress.carbos + '%' }"></div>
+        <div
+          class="progress-bar-fill bar-carbs"
+          :class="{ 'progress-bar-fill--over': progress.carbos.over }"
+          :style="{ width: progress.carbos.pct + '%' }"
+        ></div>
       </div>
     </div>
 
@@ -92,10 +117,15 @@ const fatPct = computed(() => (parseFloat(props.macros?.grasa || 0) / totalGrams
         <span class="progress-label">Grasas</span>
         <span class="progress-nums text-fat">
           <strong>{{ Math.round(consumed.grasa) }}g</strong> / {{ Math.round(macros.grasa) }}g
+          <span v-if="progress.grasa.over" class="progress-excess">+{{ progress.grasa.excess }}g</span>
         </span>
       </div>
       <div class="progress-bar-bg">
-        <div class="progress-bar-fill bar-fat" :style="{ width: progress.grasa + '%' }"></div>
+        <div
+          class="progress-bar-fill bar-fat"
+          :class="{ 'progress-bar-fill--over': progress.grasa.over }"
+          :style="{ width: progress.grasa.pct + '%' }"
+        ></div>
       </div>
     </div>
   </div>
@@ -205,6 +235,17 @@ const fatPct = computed(() => (parseFloat(props.macros?.grasa || 0) / totalGrams
 .bar-protein  { background-color: var(--color-protein); }
 .bar-carbs    { background-color: var(--color-carbs); }
 .bar-fat      { background-color: var(--color-fat); }
+
+/* Overconsumption: bar stays full, a red cap marks the exceeded target */
+.progress-bar-fill--over {
+  box-shadow: inset -4px 0 0 var(--color-negative-badge);
+}
+
+.progress-excess {
+  margin-left: 0.25rem;
+  font-weight: 700;
+  color: var(--color-negative-badge);
+}
 
 .text-calories { color: var(--color-calories); }
 .text-protein  { color: var(--color-protein); }
