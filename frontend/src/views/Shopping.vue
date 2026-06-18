@@ -4,6 +4,7 @@ import { Check, ArrowLeftRight, ShoppingCart } from 'lucide-vue-next'
 import { useDietStore } from '@/stores/dietStore'
 import api from '@/api/client'
 import SubstituteSelector from '@/components/SubstituteSelector.vue'
+import ConfirmDialog from '@/components/ConfirmDialog.vue'
 
 const dietStore = useDietStore()
 
@@ -11,6 +12,7 @@ const shoppingList = ref(null)
 const isLoading = ref(true)
 const isGenerating = ref(false)
 const errorMessage = ref('')
+const showRegenConfirm = ref(false)
 
 const showSubstituteSelector = ref(false)
 const selectedShoppingItem = ref(null)
@@ -75,10 +77,13 @@ async function generateList() {
   }
 }
 
-async function regenerateList() {
-  if (window.confirm('Regenerar la lista borrará los ítems que hayas marcado como disponibles. ¿Continuar?')) {
-    await generateList()
-  }
+function regenerateList() {
+  showRegenConfirm.value = true
+}
+
+async function confirmRegenerate() {
+  showRegenConfirm.value = false
+  await generateList()
 }
 
 async function markAsHave(item) {
@@ -287,6 +292,17 @@ function formatDate(dateStr) {
       context="shopping"
       @selected="handleSubstituteSelected"
       @close="showSubstituteSelector = false; selectedShoppingItem = null"
+    />
+
+    <!-- Regeneration confirmation -->
+    <ConfirmDialog
+      :open="showRegenConfirm"
+      title="Regenerar lista"
+      message="Volveremos a generar la lista a partir de tu plan actual. Tus marcas de «ya lo tengo» se conservarán."
+      confirmLabel="Regenerar"
+      cancelLabel="Cancelar"
+      @confirm="confirmRegenerate"
+      @cancel="showRegenConfirm = false"
     />
   </div>
 </template>
