@@ -185,25 +185,24 @@ const renderMacrosChart = () => {
   }
 
   macrosChart = new Chart(ctx, {
-    type: 'radar',
+    type: 'bar',
     data: {
       labels: ['Proteína (g)', 'Carbohidratos (g)', 'Grasas (g)'],
       datasets: [
         {
-          label: 'Consumo Medio',
+          label: 'Consumo medio',
           data: [avgProtReal, avgCarbReal, avgFatReal],
-          borderColor: '#A8E063', // --color-accent
-          backgroundColor: 'rgba(168, 224, 99, 0.2)',
-          borderWidth: 2,
-          pointBackgroundColor: '#A8E063'
+          // Semantic macro colors — orange stays exclusive to carbs.
+          backgroundColor: ['#16A34A', '#EA580C', '#CA8A04'],
+          borderRadius: 4,
+          borderWidth: 0
         },
         {
-          label: 'Objetivo Medio',
+          label: 'Objetivo medio',
           data: [avgProtObj, avgCarbObj, avgFatObj],
-          borderColor: '#64748B', // --color-goal
-          backgroundColor: 'rgba(100, 116, 139, 0.2)',
-          borderWidth: 2,
-          pointBackgroundColor: '#64748B'
+          backgroundColor: '#64748B', // --color-goal
+          borderRadius: 4,
+          borderWidth: 0
         }
       ]
     },
@@ -220,15 +219,19 @@ const renderMacrosChart = () => {
         }
       },
       scales: {
-        r: {
+        y: {
+          beginAtZero: true,
           grid: { color: 'rgba(138, 129, 120, 0.1)' },
-          angleLines: { color: 'rgba(138, 129, 120, 0.1)' },
-          pointLabels: {
+          ticks: {
+            color: '#1C1A17',
+            font: { family: 'Plus Jakarta Sans', size: 11 }
+          }
+        },
+        x: {
+          grid: { display: false },
+          ticks: {
             color: '#1C1A17',
             font: { family: 'Plus Jakarta Sans', size: 11, weight: '600' }
-          },
-          ticks: {
-            display: false
           }
         }
       }
@@ -377,10 +380,10 @@ const adherencePercentage = computed(() => {
         </div>
       </div>
 
-      <!-- Macros Radar Chart -->
+      <!-- Macros comparison (real vs target) -->
       <div class="chart-card">
         <h3 class="card-title">Consumo de Macronutrientes</h3>
-        <p class="card-subtitle">Comparativa del promedio de macros diario</p>
+        <p class="card-subtitle">Consumo medio frente a objetivo, por macronutriente</p>
         <div class="chart-content chart-wrapper mt-4">
           <canvas id="macrosChartCanvas"></canvas>
         </div>
