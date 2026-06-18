@@ -15,6 +15,20 @@ class ShoppingGenerator
     public function generate(WeeklyPlan $weeklyPlan): ShoppingList
     {
         return DB::transaction(function () use ($weeklyPlan) {
+            // Conserva las marcas manuales del usuario por food_id antes de
+            // recrear la lista, para no destruir su trabajo al regenerar.
+            $previousMarks = [];
+            $existing = $weeklyPlan->shoppingList;
+            if ($existing) {
+                foreach ($existing->shoppingItems as $item) {
+                    $previousMarks[$item->food_id] = [
+                        'tengo_en_casa'          => $item->tengo_en_casa,
+                        'no_lo_quiero'           => $item->no_lo_quiero,
+                        'sustituido_por_food_id' => $item->sustituido_por_food_id,
+                    ];
+                }
+            }
+
             // Borra la lista existente de este plan para evitar duplicados
             $weeklyPlan->shoppingList()->delete();
 
@@ -33,12 +47,14 @@ class ShoppingGenerator
 
             foreach ($grouped as $foodId => $items) {
                 $food = $items->first()->food;
+                $marks = $previousMarks[$foodId] ?? null;
                 $shoppingList->shoppingItems()->create([
                     'food_id' => $foodId,
                     'cantidad_total' => $items->sum('cantidad_gramos'),
                     'categoria' => $food->categoria ?? 'otros',
-                    'tengo_en_casa' => false,
-                    'no_lo_quiero' => false,
+                    'tengo_en_casa'          => $marks['tengo_en_casa'] ?? false,
+                    'no_lo_quiero'           => $marks['no_lo_quiero'] ?? false,
+                    'sustituido_por_food_id' => $marks['sustituido_por_food_id'] ?? null,
                 ]);
             }
 
