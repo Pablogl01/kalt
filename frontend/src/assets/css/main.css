@@ -15,7 +15,7 @@
   --color-surface: #FFFFFF;
   --color-surface-dark: #1F1B16;  /* Sidebar, dark-contrast cards */
   --color-text: #1F1B16;
-  --color-text-muted: #8A8178;
+  --color-text-muted: #6B635A;    /* Warm gray. AA: 4.9:1 on bg, 6.0:1 on surface */
   --color-accent: #A8E063;        /* General UI accent: CTAs, active nav, positive badges */
   --color-accent-dark: #7CC242;   /* Hover / active variant of accent */
   --color-border: #E8DDD4;
@@ -29,6 +29,13 @@
   --color-goal: #64748B;
   --color-success-adherence: #15803D;  /* Heatmap — full adherence */
   --color-partial-adherence: #86EFAC;  /* Heatmap — partial adherence */
+  --color-calories-on-dark: #60A5FA;   /* Calories blue for dark surfaces (--color-surface-dark). Reserved for future use */
+
+  /* ── System color (automation / recalculation) ──────────── */
+  /* Informational events: recalculations, adaptive adjustments. DESIGN.md §5.
+     Uses the calories blue (#2563EB) instead of #3B82F6 to meet WCAG AA (4.5:1)
+     for text on the warm background and white surfaces. */
+  --color-system: #2563EB;
 
   /* ── Feedback colors ─────────────────────────────────────── */
   --color-positive-badge: var(--color-accent);
