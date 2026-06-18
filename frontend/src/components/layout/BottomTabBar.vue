@@ -1,19 +1,8 @@
 <script setup>
 import { useNavStore } from '@/stores/navStore'
+import { navIcons } from './navIcons'
 
 const nav = useNavStore()
-
-function getIcon(name) {
-  const icons = {
-    'home': '🏠',
-    'calendar': '📅',
-    'check-circle': '✅',
-    'shopping-cart': '🛒',
-    'bar-chart': '📊',
-    'user': '👤',
-  }
-  return icons[name] ?? '●'
-}
 </script>
 
 <template>
@@ -27,7 +16,7 @@ function getIcon(name) {
       :aria-current="nav.isActive(item.name) ? 'page' : undefined"
       @click="nav.setRoute(item.name)"
     >
-      <span class="tab-icon" aria-hidden="true">{{ getIcon(item.icon) }}</span>
+      <component :is="navIcons[item.icon]" class="tab-icon" :size="22" :stroke-width="2" aria-hidden="true" />
       <span class="tab-label">{{ item.label }}</span>
     </button>
   </nav>
@@ -76,8 +65,7 @@ function getIcon(name) {
 }
 
 .tab-icon {
-  font-size: 1.25rem;
-  line-height: 1;
+  flex-shrink: 0;
 }
 
 .tab-label {

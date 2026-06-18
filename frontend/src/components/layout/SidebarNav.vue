@@ -1,5 +1,6 @@
 <script setup>
 import { useNavStore } from '@/stores/navStore'
+import { navIcons } from './navIcons'
 
 const nav = useNavStore()
 </script>
@@ -22,7 +23,7 @@ const nav = useNavStore()
           :aria-current="nav.isActive(item.name) ? 'page' : undefined"
           @click="nav.setRoute(item.name)"
         >
-          <span class="nav-icon" aria-hidden="true">{{ getIcon(item.icon) }}</span>
+          <component :is="navIcons[item.icon]" class="nav-icon" :size="20" :stroke-width="2" aria-hidden="true" />
           <span class="nav-label">{{ item.label }}</span>
         </button>
       </li>
@@ -36,27 +37,12 @@ const nav = useNavStore()
         :class="{ 'nav-item--active': nav.isActive('profile') }"
         @click="nav.setRoute('profile')"
       >
-        <span class="nav-icon" aria-hidden="true">👤</span>
+        <component :is="navIcons[nav.profileItem.icon]" class="nav-icon" :size="20" :stroke-width="2" aria-hidden="true" />
         <span class="nav-label">{{ nav.profileItem.label }}</span>
       </button>
     </div>
   </nav>
 </template>
-
-<script>
-// Icon helper — Phase 1 uses emoji, Phase 2+ will use an icon library
-function getIcon(name) {
-  const icons = {
-    'home': '🏠',
-    'calendar': '📅',
-    'check-circle': '✅',
-    'shopping-cart': '🛒',
-    'bar-chart': '📊',
-    'user': '👤',
-  }
-  return icons[name] ?? '●'
-}
-</script>
 
 <style scoped>
 .sidebar {
@@ -146,9 +132,6 @@ function getIcon(name) {
 }
 
 .nav-icon {
-  width: 20px;
-  text-align: center;
-  font-size: 1rem;
   flex-shrink: 0;
 }
 
