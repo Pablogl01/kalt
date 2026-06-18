@@ -21,7 +21,7 @@ const emit = defineEmits(['close', 'undo'])
 </script>
 
 <template>
-  <div class="recalc-notice">
+  <div class="recalc-notice" role="status" aria-live="polite">
     <div class="notice-icon"><RefreshCw :size="18" :stroke-width="2" aria-hidden="true" /></div>
     <div class="notice-content">
       <p class="notice-text">{{ message }}</p>

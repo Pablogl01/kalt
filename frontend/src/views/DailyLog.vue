@@ -18,6 +18,8 @@ const foodsList = ref([])
 const showExtraForm = ref(false)
 
 const activeNoticeMessage = ref('')
+// Screen-reader announcement for meal actions (one message per action).
+const liveMessage = ref('')
 const showSubstituteSelector = ref(false)
 const selectedMealItem = ref(null)
 
@@ -164,6 +166,7 @@ async function handleComplete(mealLogId) {
   if (data?.mensaje_recalculo) {
     activeNoticeMessage.value = data.mensaje_recalculo
   }
+  liveMessage.value = `Comida marcada como realizada. Llevas ${Math.round(consumedMacros.value.calorias)} de ${Math.round(targetMacros.value.calorias)} kilocalorías.`
 }
 
 async function handleSkip(mealLogId) {
@@ -177,6 +180,7 @@ async function handleReset(mealLogId) {
   await logStore.resetMeal(mealLogId)
   // Reverting clears any active recalculation, so retire its notice too.
   activeNoticeMessage.value = null
+  liveMessage.value = `Comida restablecida a pendiente. Llevas ${Math.round(consumedMacros.value.calorias)} de ${Math.round(targetMacros.value.calorias)} kilocalorías.`
 }
 
 async function handleUndoRecalc() {
@@ -295,7 +299,10 @@ async function saveExtraMeal() {
     </header>
 
     <div v-if="logStore.dailyLog" class="log-content-wrap">
-      
+
+      <!-- Screen-reader live announcements for meal actions -->
+      <p class="sr-only" aria-live="polite">{{ liveMessage }}</p>
+
       <!-- ── Recalculation Notice ─────────────────────────── -->
       <RecalcNotice
         v-if="recalcMessage"

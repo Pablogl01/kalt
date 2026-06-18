@@ -134,6 +134,36 @@ const formatDateLabel = (dateStr) => {
   const formatted = date.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'short' })
   return formatted.charAt(0).toUpperCase() + formatted.slice(1)
 }
+
+const adherenceText = (nivel) =>
+  nivel === 'completa' ? 'Completa' : nivel === 'parcial' ? 'Parcial' : 'Sin datos'
+
+const trainingText = (cell) => {
+  if (cell.entreno_planificado === null || cell.entreno_planificado === undefined) return 'Sin registrar'
+  if (cell.entreno_planificado && cell.ha_entrenado) return 'Sí (planificado)'
+  if (cell.entreno_planificado && !cell.ha_entrenado) return 'No (planificado)'
+  if (!cell.entreno_planificado && cell.ha_entrenado) return 'Sí (extra)'
+  return 'No planificado'
+}
+
+// Full screen-reader description for a single day cell.
+const cellLabel = (cell) => {
+  const kcal = `${Math.round(cell.caloriasReales)} de ${Math.round(cell.caloriasObjetivo) || '—'} kcal`
+  return `${formatDateLabel(cell.fecha)}. Adherencia: ${adherenceText(cell.nivel)}. ${kcal}. Entreno: ${trainingText(cell)}.`
+}
+
+// Equivalent textual alternative to the colour grid.
+const periodSummary = computed(() => {
+  const counts = { completa: 0, parcial: 0, otros: 0 }
+  gridData.value.forEach(c => {
+    if (c.nivel === 'completa') counts.completa++
+    else if (c.nivel === 'parcial') counts.parcial++
+    else counts.otros++
+  })
+  return `Calendario de adherencia: ${gridData.value.length} días. `
+    + `${counts.completa} con adherencia completa, ${counts.parcial} parcial y ${counts.otros} sin datos. `
+    + `Usa el tabulador para explorar el detalle de cada día.`
+})
 </script>
 
 <template>
@@ -141,12 +171,17 @@ const formatDateLabel = (dateStr) => {
     <h3 class="heatmap-title">Calendario de Adherencia</h3>
     <p class="heatmap-subtitle">Visualización de tu dieta y entrenamiento en el último año</p>
 
+    <!-- Textual alternative for screen readers -->
+    <p class="sr-only">{{ periodSummary }}</p>
+
     <div class="heatmap-container">
       <div class="heatmap-scrollable">
         <svg
           :width="totalCols * (CELL_SIZE + CELL_GAP) + 40"
           :height="ROWS_COUNT * (CELL_SIZE + CELL_GAP) + 30"
           class="heatmap-svg"
+          role="group"
+          aria-label="Calendario de adherencia por día"
         >
           <!-- Month Headers -->
           <g class="month-headers">
@@ -191,8 +226,13 @@ const formatDateLabel = (dateStr) => {
               :stroke="cell.isToday ? '#A8E063' : 'none'"
               :stroke-width="cell.isToday ? 2 : 0"
               class="heatmap-cell"
+              tabindex="0"
+              role="img"
+              :aria-label="cellLabel(cell)"
               @mouseenter="handleMouseEnter($event, cell)"
               @mouseleave="handleMouseLeave"
+              @focus="handleMouseEnter($event, cell)"
+              @blur="handleMouseLeave"
             />
           </g>
         </svg>
@@ -205,21 +245,14 @@ const formatDateLabel = (dateStr) => {
         >
           <div class="tooltip-date">{{ formatDateLabel(hoveredCell.fecha) }}</div>
           <div class="tooltip-adherence">
-            Adherencia: 
-            <span :class="'adherence-' + hoveredCell.nivel">
-              {{ hoveredCell.nivel === 'completa' ? 'Completa' : hoveredCell.nivel === 'parcial' ? 'Parcial' : 'Sin datos' }}
-            </span>
+            Adherencia:
+            <span :class="'adherence-' + hoveredCell.nivel">{{ adherenceText(hoveredCell.nivel) }}</span>
           </div>
           <div class="tooltip-calories">
             Kcal: {{ Math.round(hoveredCell.caloriasReales) }} / {{ Math.round(hoveredCell.caloriasObjetivo) || '-' }}
           </div>
           <div class="tooltip-training">
-            Entrenó: 
-            <span v-if="hoveredCell.entreno_planificado === null">Sin registrar</span>
-            <span v-else-if="hoveredCell.entreno_planificado && hoveredCell.ha_entrenado">Sí (Planificado)</span>
-            <span v-else-if="hoveredCell.entreno_planificado && !hoveredCell.ha_entrenado">No (Planificado)</span>
-            <span v-else-if="!hoveredCell.entreno_planificado && hoveredCell.ha_entrenado">Sí (Extra)</span>
-            <span v-else>No planificado</span>
+            Entrenó: <span>{{ trainingText(hoveredCell) }}</span>
           </div>
           <div class="tooltip-arrow"></div>
         </div>
@@ -230,9 +263,9 @@ const formatDateLabel = (dateStr) => {
     <div class="heatmap-legend">
       <span class="legend-text">Menos adherencia</span>
       <div class="legend-scale">
-        <span class="scale-box" style="background-color: #374151"></span>
-        <span class="scale-box" style="background-color: #86EFAC"></span>
-        <span class="scale-box" style="background-color: #15803D"></span>
+        <span class="scale-box" style="background-color: #374151" role="img" aria-label="Sin datos"></span>
+        <span class="scale-box" style="background-color: #86EFAC" role="img" aria-label="Adherencia parcial"></span>
+        <span class="scale-box" style="background-color: #15803D" role="img" aria-label="Adherencia completa"></span>
       </div>
       <span class="legend-text">Más adherencia</span>
     </div>

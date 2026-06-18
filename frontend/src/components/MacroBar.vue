@@ -42,6 +42,19 @@ const progress = computed(() => {
   }
 })
 
+// Accessible label for each progress bar, including overconsumption.
+const MACRO_NAMES = { calorias: 'Calorías', proteina: 'Proteína', carbos: 'Carbohidratos', grasa: 'Grasas' }
+const macroUnit = (key) => (key === 'calorias' ? 'kcal' : 'g')
+
+function ariaLabelFor(key) {
+  const consumed = Math.round(parseFloat(props.consumed?.[key] || 0))
+  const target = Math.round(parseFloat(props.macros?.[key] || 0))
+  const p = progress.value?.[key]
+  let label = `${MACRO_NAMES[key]}: ${consumed} de ${target} ${macroUnit(key)}`
+  if (p?.over) label += `, objetivo superado en ${p.excess} ${macroUnit(key)}`
+  return label
+}
+
 // Original proportions logic (used if not showing consumption progress)
 const totalGrams = computed(() => {
   const p = parseFloat(props.macros?.proteina || 0)
@@ -66,7 +79,14 @@ const fatPct = computed(() => (parseFloat(props.macros?.grasa || 0) / totalGrams
           <span v-if="progress.calorias.over" class="progress-excess">+{{ progress.calorias.excess }} kcal</span>
         </span>
       </div>
-      <div class="progress-bar-bg">
+      <div
+        class="progress-bar-bg"
+        role="progressbar"
+        aria-valuemin="0"
+        :aria-valuenow="Math.round(consumed.calorias)"
+        :aria-valuemax="Math.round(macros.calorias)"
+        :aria-label="ariaLabelFor('calorias')"
+      >
         <div
           class="progress-bar-fill bar-calories"
           :class="{ 'progress-bar-fill--over': progress.calorias.over }"
@@ -84,7 +104,14 @@ const fatPct = computed(() => (parseFloat(props.macros?.grasa || 0) / totalGrams
           <span v-if="progress.proteina.over" class="progress-excess">+{{ progress.proteina.excess }}g</span>
         </span>
       </div>
-      <div class="progress-bar-bg">
+      <div
+        class="progress-bar-bg"
+        role="progressbar"
+        aria-valuemin="0"
+        :aria-valuenow="Math.round(consumed.proteina)"
+        :aria-valuemax="Math.round(macros.proteina)"
+        :aria-label="ariaLabelFor('proteina')"
+      >
         <div
           class="progress-bar-fill bar-protein"
           :class="{ 'progress-bar-fill--over': progress.proteina.over }"
@@ -102,7 +129,14 @@ const fatPct = computed(() => (parseFloat(props.macros?.grasa || 0) / totalGrams
           <span v-if="progress.carbos.over" class="progress-excess">+{{ progress.carbos.excess }}g</span>
         </span>
       </div>
-      <div class="progress-bar-bg">
+      <div
+        class="progress-bar-bg"
+        role="progressbar"
+        aria-valuemin="0"
+        :aria-valuenow="Math.round(consumed.carbos)"
+        :aria-valuemax="Math.round(macros.carbos)"
+        :aria-label="ariaLabelFor('carbos')"
+      >
         <div
           class="progress-bar-fill bar-carbs"
           :class="{ 'progress-bar-fill--over': progress.carbos.over }"
@@ -120,7 +154,14 @@ const fatPct = computed(() => (parseFloat(props.macros?.grasa || 0) / totalGrams
           <span v-if="progress.grasa.over" class="progress-excess">+{{ progress.grasa.excess }}g</span>
         </span>
       </div>
-      <div class="progress-bar-bg">
+      <div
+        class="progress-bar-bg"
+        role="progressbar"
+        aria-valuemin="0"
+        :aria-valuenow="Math.round(consumed.grasa)"
+        :aria-valuemax="Math.round(macros.grasa)"
+        :aria-label="ariaLabelFor('grasa')"
+      >
         <div
           class="progress-bar-fill bar-fat"
           :class="{ 'progress-bar-fill--over': progress.grasa.over }"
