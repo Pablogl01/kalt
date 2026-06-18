@@ -69,7 +69,7 @@ const nav = useNavStore()
 }
 
 .tab-label {
-  font-size: 0.625rem;
+  font-size: var(--fs-xs);
   font-weight: 600;
   letter-spacing: 0.02em;
   white-space: nowrap;

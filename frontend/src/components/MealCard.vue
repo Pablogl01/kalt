@@ -208,23 +208,24 @@ const formatTime = (timeStr) => {
 <style scoped>
 .meal-card {
   background: var(--color-surface);
-  border: 1px solid rgba(138, 129, 120, 0.15);
-  border-radius: 16px;
-  padding: 1.25rem;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-5);
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--space-4);
   transition: all 0.25s ease;
 }
 
 .meal-card--completed {
   border-color: rgba(22, 163, 74, 0.3);
-  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.04);
+  box-shadow: var(--shadow-md);
 }
 
 .meal-card--skipped {
   border-style: dashed;
-  border-color: rgba(138, 129, 120, 0.4);
+  border-color: var(--border-strong);
   opacity: 0.75;
 }
 
@@ -237,28 +238,28 @@ const formatTime = (timeStr) => {
   justify-content: space-between;
   align-items: flex-start;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: var(--space-2);
 }
 
 .meal-title-wrap {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--space-2);
   flex-wrap: wrap;
 }
 
 .meal-name {
-  font-size: 1.125rem;
+  font-size: var(--fs-lg);
   font-weight: 600;
   color: var(--color-text);
   margin: 0;
 }
 
 .badge-extra, .badge-pre, .badge-post {
-  font-size: 0.6875rem;
+  font-size: var(--fs-xs);
   font-weight: 600;
-  padding: 0.125rem 0.5rem;
-  border-radius: 9999px;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-pill);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -279,16 +280,16 @@ const formatTime = (timeStr) => {
 }
 
 .badge-ajuste {
-  font-size: 0.6875rem;
+  font-size: var(--fs-xs);
   font-weight: 600;
-  padding: 0.125rem 0.5rem;
-  border-radius: 9999px;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-pill);
   background-color: rgba(37, 99, 235, 0.1);
   color: var(--color-system);
 }
 
 .meal-time {
-  font-size: 0.8125rem;
+  font-size: var(--fs-sm);
   color: var(--color-text-muted);
 }
 
@@ -298,9 +299,9 @@ const formatTime = (timeStr) => {
 }
 
 .meal-body {
-  border-top: 1px solid rgba(138, 129, 120, 0.1);
-  border-bottom: 1px solid rgba(138, 129, 120, 0.1);
-  padding: 0.75rem 0;
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: var(--space-3) 0;
 }
 
 .food-list {
@@ -309,7 +310,7 @@ const formatTime = (timeStr) => {
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--space-2);
 }
 
 .food-list--planned {
@@ -320,7 +321,7 @@ const formatTime = (timeStr) => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 0.875rem;
+  font-size: var(--fs-sm);
 }
 
 .food-name {
@@ -333,7 +334,7 @@ const formatTime = (timeStr) => {
 }
 
 .empty-food {
-  font-size: 0.875rem;
+  font-size: var(--fs-sm);
   color: var(--color-text-muted);
   font-style: italic;
   margin: 0;
@@ -344,23 +345,23 @@ const formatTime = (timeStr) => {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 .macros-summary {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  font-size: 0.8125rem;
+  gap: var(--space-3);
+  font-size: var(--fs-sm);
   font-weight: 600;
 }
 
 .macro-dot {
   width: 6px;
   height: 6px;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   display: inline-block;
-  margin-right: 0.25rem;
+  margin-right: var(--space-1);
 }
 
 .dot-protein { background-color: var(--color-protein); }
@@ -380,27 +381,27 @@ const formatTime = (timeStr) => {
 .meal-actions {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--space-2);
 }
 
 .state-actions-wrap {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: var(--space-3);
 }
 
 .skipped-indicator {
   display: inline-flex;
   align-items: center;
-  gap: 0.25rem;
-  font-size: 0.8125rem;
+  gap: var(--space-1);
+  font-size: var(--fs-sm);
   font-weight: 600;
   color: var(--color-text-muted);
 }
 
 .skipped-note {
   margin: 0;
-  font-size: 0.8125rem;
+  font-size: var(--fs-sm);
   color: var(--color-text-muted);
   font-style: italic;
 }
@@ -408,17 +409,17 @@ const formatTime = (timeStr) => {
 .completed-indicator {
   display: inline-flex;
   align-items: center;
-  gap: 0.25rem;
-  font-size: 0.8125rem;
+  gap: var(--space-1);
+  font-size: var(--fs-sm);
   font-weight: 600;
   color: var(--color-protein);
 }
 
 .btn-action {
-  font-size: 0.8125rem;
+  font-size: var(--fs-sm);
   font-weight: 600;
-  padding: 0.375rem 0.875rem;
-  border-radius: 8px;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
   cursor: pointer;
   border: 1px solid transparent;
   transition: all 0.2s;
@@ -435,41 +436,41 @@ const formatTime = (timeStr) => {
 
 .btn-action--skip {
   background-color: transparent;
-  border-color: rgba(138, 129, 120, 0.3);
+  border-color: var(--border-strong);
   color: var(--color-text-muted);
 }
 
 .btn-action--skip:hover {
   background-color: rgba(138, 129, 120, 0.05);
-  border-color: rgba(138, 129, 120, 0.5);
+  border-color: var(--border-strong);
   color: var(--color-text);
 }
 
 .btn-action--undo {
   background-color: transparent;
-  border-color: rgba(138, 129, 120, 0.3);
+  border-color: var(--border-strong);
   color: var(--color-text-muted);
 }
 
 .btn-action--undo:hover {
   background-color: rgba(138, 129, 120, 0.05);
-  border-color: rgba(138, 129, 120, 0.5);
+  border-color: var(--border-strong);
   color: var(--color-text);
 }
 
 .btn-substitute {
   background: none;
   border: none;
-  font-size: 0.75rem;
+  font-size: var(--fs-xs);
   font-weight: 600;
   color: var(--color-system);
   cursor: pointer;
-  padding: 0.25rem 0.5rem;
-  border-radius: 6px;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
   transition: all 0.2s ease;
   display: inline-flex;
   align-items: center;
-  gap: 0.25rem;
+  gap: var(--space-1);
 }
 
 .btn-substitute:hover {

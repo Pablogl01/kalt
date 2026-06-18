@@ -44,45 +44,45 @@ const emit = defineEmits(['confirm', 'cancel'])
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
+  padding: var(--space-4);
   z-index: 1000;
 }
 
 .cd-card {
   background: var(--color-surface);
-  border-radius: 16px;
-  padding: 1.5rem;
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
   width: 100%;
   max-width: 360px;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+  box-shadow: var(--shadow-lg);
 }
 
 .cd-title {
-  font-size: 1.125rem;
+  font-size: var(--fs-lg);
   font-weight: 700;
   color: var(--color-text);
-  margin: 0 0 0.5rem;
+  margin: 0 0 var(--space-2);
 }
 
 .cd-message {
-  font-size: 0.875rem;
+  font-size: var(--fs-sm);
   color: var(--color-text-muted);
   line-height: 1.5;
-  margin: 0 0 1.25rem;
+  margin: 0 0 var(--space-5);
 }
 
 .cd-actions {
   display: flex;
   justify-content: flex-end;
-  gap: 0.75rem;
+  gap: var(--space-3);
 }
 
 .cd-btn {
   font-family: inherit;
-  font-size: 0.875rem;
+  font-size: var(--fs-sm);
   font-weight: 600;
-  padding: 0.5rem 1rem;
-  border-radius: 10px;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
   cursor: pointer;
   border: 1px solid transparent;
   transition: background-color 0.2s ease;
@@ -90,7 +90,7 @@ const emit = defineEmits(['confirm', 'cancel'])
 
 .cd-btn--secondary {
   background: transparent;
-  border-color: rgba(138, 129, 120, 0.3);
+  border-color: var(--border-strong);
   color: var(--color-text-muted);
 }
 

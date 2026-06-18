@@ -477,7 +477,7 @@ const adherencePercentage = computed(() => {
 }
 
 .view-title {
-  font-size: 2.25rem;
+  font-size: var(--fs-2xl);
   font-weight: 700;
   margin: 0 0 4px;
 }
@@ -491,8 +491,8 @@ const adherencePercentage = computed(() => {
 .range-selector {
   display: flex;
   background-color: var(--color-surface);
-  border: 1px solid rgba(138, 129, 120, 0.2);
-  border-radius: 8px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
   padding: 4px;
 }
 
@@ -500,8 +500,8 @@ const adherencePercentage = computed(() => {
   background: none;
   border: none;
   padding: 6px 16px;
-  border-radius: 6px;
-  font-size: 0.875rem;
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-sm);
   font-weight: 500;
   color: var(--color-text-muted);
   cursor: pointer;
@@ -523,26 +523,26 @@ const adherencePercentage = computed(() => {
 
 .kpi-card {
   background-color: var(--color-surface);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   padding: 24px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--shadow-md);
 }
 
 .kpi-label {
-  font-size: 0.875rem;
+  font-size: var(--fs-sm);
   color: var(--color-text-muted);
   font-weight: 500;
   margin-bottom: 8px;
 }
 
 .kpi-value {
-  font-size: 2rem;
+  font-size: var(--fs-2xl);
   font-weight: 700;
   margin-bottom: 4px;
 }
 
 .kpi-desc {
-  font-size: 0.75rem;
+  font-size: var(--fs-xs);
   color: var(--color-text-muted);
 }
 
@@ -563,9 +563,9 @@ const adherencePercentage = computed(() => {
 
 .chart-card {
   background-color: var(--color-surface);
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   padding: 24px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
+  box-shadow: var(--shadow-md);
 }
 
 .card-header {
@@ -578,13 +578,13 @@ const adherencePercentage = computed(() => {
 }
 
 .card-title {
-  font-size: 1.25rem;
+  font-size: var(--fs-lg);
   font-weight: 600;
   margin: 0;
 }
 
 .card-subtitle {
-  font-size: 0.875rem;
+  font-size: var(--fs-sm);
   color: var(--color-text-muted);
   margin: 0;
 }
@@ -618,13 +618,13 @@ const adherencePercentage = computed(() => {
 }
 
 .empty-title {
-  font-size: 1.125rem;
+  font-size: var(--fs-lg);
   font-weight: 600;
   margin: 0 0 4px;
 }
 
 .empty-desc {
-  font-size: 0.875rem;
+  font-size: var(--fs-sm);
   color: var(--color-text-muted);
   max-width: 300px;
   margin: 0;
@@ -649,14 +649,14 @@ const adherencePercentage = computed(() => {
   background-color: var(--color-surface);
   width: 90%;
   max-width: 480px;
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
   overflow: hidden;
 }
 
 .modal-header {
   padding: 20px 24px;
-  border-bottom: 1px solid rgba(138, 129, 120, 0.1);
+  border-bottom: 1px solid var(--border-subtle);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -664,14 +664,14 @@ const adherencePercentage = computed(() => {
 
 .modal-title {
   margin: 0;
-  font-size: 1.25rem;
+  font-size: var(--fs-lg);
   font-weight: 600;
 }
 
 .modal-close {
   background: none;
   border: none;
-  font-size: 1.5rem;
+  font-size: var(--fs-xl);
   cursor: pointer;
   color: var(--color-text-muted);
 }
@@ -686,7 +686,7 @@ const adherencePercentage = computed(() => {
 
 .form-group label {
   display: block;
-  font-size: 0.875rem;
+  font-size: var(--fs-sm);
   font-weight: 500;
   margin-bottom: 6px;
 }
@@ -694,10 +694,10 @@ const adherencePercentage = computed(() => {
 .form-control {
   width: 100%;
   padding: 10px 12px;
-  border: 1px solid rgba(138, 129, 120, 0.3);
-  border-radius: 8px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
   font-family: inherit;
-  font-size: 0.95rem;
+  font-size: var(--fs-base);
   background-color: #FFFFFF;
   color: var(--color-text);
   box-sizing: border-box;
@@ -710,7 +710,7 @@ const adherencePercentage = computed(() => {
 
 .form-error-msg {
   color: #DC2626;
-  font-size: 0.875rem;
+  font-size: var(--fs-sm);
   margin-bottom: 16px;
 }
 
@@ -724,8 +724,8 @@ const adherencePercentage = computed(() => {
 /* General Buttons */
 .btn {
   padding: 10px 20px;
-  border-radius: 8px;
-  font-size: 0.875rem;
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-sm);
   font-weight: 600;
   cursor: pointer;
   border: none;

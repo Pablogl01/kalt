@@ -153,16 +153,16 @@ async function selectSubstitute(substituteId) {
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  padding: 1rem;
+  padding: var(--space-4);
 }
 
 .modal-card {
   background: var(--color-surface, #FFFFFF);
-  border: 1px solid rgba(138, 129, 120, 0.2);
-  border-radius: 20px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
   width: 100%;
   max-width: 480px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-lg);
   overflow: hidden;
   animation: scaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -171,12 +171,12 @@ async function selectSubstitute(substituteId) {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.25rem 1.5rem;
-  border-bottom: 1px solid rgba(138, 129, 120, 0.1);
+  padding: var(--space-5) var(--space-5);
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 .modal-title {
-  font-size: 1.25rem;
+  font-size: var(--fs-lg);
   font-weight: 700;
   color: var(--color-text, #1C1A17);
   margin: 0;
@@ -185,7 +185,7 @@ async function selectSubstitute(substituteId) {
 .close-btn {
   background: none;
   border: none;
-  font-size: 1.75rem;
+  font-size: var(--fs-2xl);
   font-weight: 300;
   color: var(--color-text-muted, #8A8178);
   cursor: pointer;
@@ -197,14 +197,14 @@ async function selectSubstitute(substituteId) {
 }
 
 .modal-body {
-  padding: 1.5rem;
+  padding: var(--space-5);
 }
 
 .original-food-label {
-  font-size: 0.875rem;
+  font-size: var(--fs-sm);
   color: var(--color-text-muted, #8A8178);
   margin-top: 0;
-  margin-bottom: 1.25rem;
+  margin-bottom: var(--space-5);
 }
 
 .food-highlight {
@@ -214,7 +214,7 @@ async function selectSubstitute(substituteId) {
 
 .loading-state, .empty-state, .error-state {
   text-align: center;
-  padding: 2.5rem 1rem;
+  padding: var(--space-6) var(--space-4);
   color: var(--color-text-muted, #8A8178);
 }
 
@@ -228,24 +228,24 @@ async function selectSubstitute(substituteId) {
   height: 32px;
   border: 3px solid rgba(37, 99, 235, 0.1);
   border-top-color: var(--color-system);
-  border-radius: 50%;
-  margin: 0 auto 1rem;
+  border-radius: var(--radius-full);
+  margin: 0 auto var(--space-4);
   animation: spin 0.8s linear infinite;
 }
 
 .substitutes-list {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--space-4);
   max-height: 350px;
   overflow-y: auto;
 }
 
 .substitute-card {
   background: #FAF8F5;
-  border: 1px solid rgba(138, 129, 120, 0.15);
-  border-radius: 12px;
-  padding: 1rem;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
   cursor: pointer;
   transition: all 0.2s ease;
   position: relative;
@@ -254,7 +254,7 @@ async function selectSubstitute(substituteId) {
 .substitute-card:hover {
   background: var(--color-surface, #FFFFFF);
   border-color: var(--color-accent, #A8E063);
-  box-shadow: 0 4px 12px rgba(168, 224, 99, 0.08);
+  box-shadow: var(--shadow-md);
 }
 
 .substitute-card--disabled {
@@ -266,32 +266,32 @@ async function selectSubstitute(substituteId) {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.75rem;
+  margin-bottom: var(--space-3);
 }
 
 .sub-name {
   font-weight: 600;
   color: var(--color-text, #1C1A17);
-  font-size: 0.9375rem;
+  font-size: var(--fs-base);
 }
 
 .similarity-badge {
-  font-size: 0.6875rem;
+  font-size: var(--fs-xs);
   font-weight: 600;
   background-color: rgba(37, 99, 235, 0.08);
   color: var(--color-system);
-  padding: 0.125rem 0.5rem;
-  border-radius: 9999px;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-pill);
   border: 1px solid rgba(37, 99, 235, 0.15);
 }
 
 .macros-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 0.5rem;
-  border-bottom: 1px solid rgba(138, 129, 120, 0.08);
-  padding-bottom: 0.75rem;
-  margin-bottom: 0.5rem;
+  gap: var(--space-2);
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: var(--space-3);
+  margin-bottom: var(--space-2);
 }
 
 .macro-item {
@@ -300,14 +300,14 @@ async function selectSubstitute(substituteId) {
 }
 
 .macro-val {
-  font-size: 0.8125rem;
+  font-size: var(--fs-sm);
   font-weight: 700;
 }
 
 .macro-label {
-  font-size: 0.6875rem;
+  font-size: var(--fs-xs);
   color: var(--color-text-muted, #8A8178);
-  margin-top: 0.125rem;
+  margin-top: var(--space-1);
 }
 
 .color-protein {
@@ -330,8 +330,8 @@ async function selectSubstitute(substituteId) {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: 0.25rem;
-  font-size: 0.75rem;
+  gap: var(--space-1);
+  font-size: var(--fs-xs);
   font-weight: 600;
   color: var(--color-text-muted, #8A8178);
   opacity: 0;

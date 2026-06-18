@@ -220,7 +220,7 @@ const fatPct = computed(() => (parseFloat(props.macros?.grasa || 0) / totalGrams
 .macro-progress-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1rem;
+  gap: var(--space-4);
   width: 100%;
 }
 
@@ -232,12 +232,12 @@ const fatPct = computed(() => (parseFloat(props.macros?.grasa || 0) / totalGrams
 
 .progress-card {
   background: var(--color-surface);
-  border: 1px solid rgba(138, 129, 120, 0.15);
-  border-radius: 12px;
-  padding: 0.875rem 1rem;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--space-2);
 }
 
 .progress-info {
@@ -247,27 +247,27 @@ const fatPct = computed(() => (parseFloat(props.macros?.grasa || 0) / totalGrams
 }
 
 .progress-label {
-  font-size: 0.8125rem;
+  font-size: var(--fs-sm);
   font-weight: 600;
   color: var(--color-text-muted);
 }
 
 .progress-nums {
-  font-size: 0.8125rem;
+  font-size: var(--fs-sm);
   font-weight: 500;
 }
 
 .progress-bar-bg {
   height: 8px;
   background-color: rgba(138, 129, 120, 0.1);
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   width: 100%;
   overflow: hidden;
 }
 
 .progress-bar-fill {
   height: 100%;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -283,7 +283,7 @@ const fatPct = computed(() => (parseFloat(props.macros?.grasa || 0) / totalGrams
 }
 
 .progress-excess {
-  margin-left: 0.25rem;
+  margin-left: var(--space-1);
   font-weight: 700;
   color: var(--color-negative-badge);
 }
@@ -297,13 +297,13 @@ const fatPct = computed(() => (parseFloat(props.macros?.grasa || 0) / totalGrams
 .macro-bar-container {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--space-2);
   width: 100%;
 }
 
 .bar-visual {
   height: 6px;
-  border-radius: 3px;
+  border-radius: var(--radius-sm);
   background: rgba(138, 129, 120, 0.15);
   display: flex;
   overflow: hidden;
@@ -322,20 +322,20 @@ const fatPct = computed(() => (parseFloat(props.macros?.grasa || 0) / totalGrams
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.75rem;
-  font-size: 0.75rem;
+  gap: var(--space-3);
+  font-size: var(--fs-xs);
 }
 
 .stat-item {
   display: flex;
   align-items: center;
-  gap: 0.25rem;
+  gap: var(--space-1);
 }
 
 .dot {
   width: 6px;
   height: 6px;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
 }
 
 .dot--protein { background-color: var(--color-protein); }

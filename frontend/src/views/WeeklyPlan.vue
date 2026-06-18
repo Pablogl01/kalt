@@ -257,7 +257,7 @@ function formatTime(timeStr) {
 .weekly-plan-page {
   max-width: 800px;
   margin: 0 auto;
-  padding: 2rem 1.25rem 4rem;
+  padding: var(--space-6) var(--space-5) var(--space-7);
 }
 
 /* ── Empty State / CTA Cards ──────────────────────── */
@@ -266,46 +266,46 @@ function formatTime(timeStr) {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: 3.5rem 2rem;
+  padding: var(--space-7) var(--space-6);
   background: var(--color-surface);
-  border-radius: 16px;
-  box-shadow: 0 4px 16px rgba(31, 27, 22, 0.05);
-  border: 1px solid rgba(138, 129, 120, 0.1);
-  margin-top: 2rem;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-subtle);
+  margin-top: var(--space-6);
 }
 
 .empty-icon {
   display: flex;
   justify-content: center;
   color: var(--color-text-muted);
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--space-5);
 }
 
 .empty-title {
-  font-size: 1.5rem;
+  font-size: var(--fs-xl);
   font-weight: 700;
   color: var(--color-text);
-  margin: 0 0 0.75rem;
+  margin: 0 0 var(--space-3);
 }
 
 .empty-desc {
-  font-size: 1rem;
+  font-size: var(--fs-base);
   color: var(--color-text-muted);
   line-height: 1.6;
   max-width: 460px;
-  margin: 0 0 2rem;
+  margin: 0 0 var(--space-6);
 }
 
 .btn-cta {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.875rem 2rem;
+  padding: var(--space-3) var(--space-6);
   background: var(--color-accent);
   color: var(--color-text);
   font-weight: 700;
   border: none;
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   text-decoration: none;
   cursor: pointer;
   transition: background 0.15s, transform 0.1s;
@@ -323,38 +323,38 @@ function formatTime(timeStr) {
 .plan-content {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: var(--space-5);
 }
 
 .plan-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 1rem;
+  gap: var(--space-4);
   flex-wrap: wrap;
 }
 
 .plan-title {
-  font-size: 2rem;
+  font-size: var(--fs-2xl);
   font-weight: 700;
   color: var(--color-text);
-  margin: 0 0 0.25rem;
+  margin: 0 0 var(--space-1);
 }
 
 .plan-subtitle {
-  font-size: 1rem;
+  font-size: var(--fs-base);
   color: var(--color-text-muted);
   margin: 0;
 }
 
 .btn-regenerate {
-  padding: 0.625rem 1.25rem;
+  padding: var(--space-3) var(--space-5);
   background: transparent;
   color: var(--color-text);
   border: 1.5px solid var(--color-border);
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   font-weight: 600;
-  font-size: 0.875rem;
+  font-size: var(--fs-sm);
   cursor: pointer;
   transition: all 0.15s;
 }
@@ -367,9 +367,9 @@ function formatTime(timeStr) {
 /* ── Days Navigation Tabs ─────────────────────────── */
 .days-nav {
   display: flex;
-  gap: 0.375rem;
+  gap: var(--space-2);
   overflow-x: auto;
-  padding-bottom: 0.25rem;
+  padding-bottom: var(--space-1);
   scrollbar-width: none; /* Firefox */
 }
 
@@ -380,10 +380,10 @@ function formatTime(timeStr) {
 .day-tab {
   flex: 1;
   min-width: 80px;
-  padding: 0.75rem 0.5rem;
+  padding: var(--space-3) var(--space-2);
   background: var(--color-surface);
-  border: 1px solid rgba(138, 129, 120, 0.1);
-  border-radius: 10px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
   cursor: pointer;
   text-align: center;
   transition: all 0.15s;
@@ -400,7 +400,7 @@ function formatTime(timeStr) {
 }
 
 .day-name {
-  font-size: 0.875rem;
+  font-size: var(--fs-sm);
   font-weight: 500;
   color: var(--color-text);
 }
@@ -409,30 +409,30 @@ function formatTime(timeStr) {
 .day-details {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: var(--space-5);
 }
 
 .day-summary-card {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.25rem 1.5rem;
+  padding: var(--space-5) var(--space-5);
   background: var(--color-surface);
-  border-radius: 14px;
-  border: 1px solid rgba(138, 129, 120, 0.1);
-  box-shadow: 0 2px 8px rgba(31, 27, 22, 0.04);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-md);
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 .summary-info {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: var(--space-1);
 }
 
 .summary-date {
-  font-size: 0.8125rem;
+  font-size: var(--fs-sm);
   color: var(--color-text-muted);
   font-weight: 500;
 }
@@ -440,10 +440,10 @@ function formatTime(timeStr) {
 .badge {
   display: inline-flex;
   align-items: center;
-  gap: 0.375rem;
-  padding: 0.25rem 0.625rem;
-  border-radius: 20px;
-  font-size: 0.75rem;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-lg);
+  font-size: var(--fs-xs);
   font-weight: 600;
 }
 
@@ -459,7 +459,7 @@ function formatTime(timeStr) {
 
 .day-macros-grid {
   display: flex;
-  gap: 1.5rem;
+  gap: var(--space-5);
 }
 
 .day-macro-stat {
@@ -469,14 +469,14 @@ function formatTime(timeStr) {
 }
 
 .stat-num {
-  font-size: 1.5rem;
+  font-size: var(--fs-xl);
   font-weight: 700;
   color: var(--color-text);
   line-height: 1.1;
 }
 
 .stat-unit {
-  font-size: 0.75rem;
+  font-size: var(--fs-xs);
   color: var(--color-text-muted);
   font-weight: 500;
 }
@@ -485,14 +485,14 @@ function formatTime(timeStr) {
 .meals-list {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: var(--space-5);
 }
 
 .meal-card {
   background: var(--color-surface);
-  border-radius: 14px;
-  border: 1px solid rgba(138, 129, 120, 0.1);
-  box-shadow: 0 2px 8px rgba(31, 27, 22, 0.04);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-md);
   overflow: hidden;
 }
 
@@ -500,21 +500,21 @@ function formatTime(timeStr) {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.25rem 1.5rem;
-  border-bottom: 1px solid rgba(138, 129, 120, 0.1);
+  padding: var(--space-5) var(--space-5);
+  border-bottom: 1px solid var(--border-subtle);
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 .meal-name {
-  font-size: 1.125rem;
+  font-size: var(--fs-lg);
   font-weight: 700;
   color: var(--color-text);
-  margin: 0 0 0.125rem;
+  margin: 0 0 var(--space-1);
 }
 
 .meal-time {
-  font-size: 0.8125rem;
+  font-size: var(--fs-sm);
   color: var(--color-text-muted);
   font-weight: 500;
 }
@@ -539,10 +539,10 @@ function formatTime(timeStr) {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 1.5rem;
-  border-bottom: 1px solid rgba(138, 129, 120, 0.06);
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--border-subtle);
   flex-wrap: wrap;
-  gap: 0.75rem;
+  gap: var(--space-3);
 }
 
 .meal-item:last-child {
@@ -552,25 +552,25 @@ function formatTime(timeStr) {
 .item-info {
   display: flex;
   flex-direction: column;
-  gap: 0.125rem;
+  gap: var(--space-1);
   min-width: 150px;
 }
 
 .item-name {
-  font-size: 0.9375rem;
+  font-size: var(--fs-base);
   font-weight: 600;
   color: var(--color-text);
 }
 
 .item-qty {
-  font-size: 0.8125rem;
+  font-size: var(--fs-sm);
   color: var(--color-text-muted);
 }
 
 .item-macros {
   display: flex;
-  gap: 0.75rem;
-  font-size: 0.8125rem;
+  gap: var(--space-3);
+  font-size: var(--fs-sm);
 }
 
 .item-macro {
@@ -578,13 +578,13 @@ function formatTime(timeStr) {
 }
 
 .btn-substitute {
-  padding: 0.375rem 0.75rem;
+  padding: var(--space-2) var(--space-3);
   background: var(--color-bg);
-  border: 1px solid rgba(138, 129, 120, 0.15);
+  border: 1px solid var(--border-default);
   color: var(--color-system);
-  font-size: 0.75rem;
+  font-size: var(--fs-xs);
   font-weight: 600;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   transition: all 0.2s ease;
 }

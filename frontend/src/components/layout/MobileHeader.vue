@@ -39,7 +39,7 @@ const nav = useNavStore()
 }
 
 .mh-logo {
-  font-size: 1.25rem;
+  font-size: var(--fs-lg);
   font-weight: 700;
   color: var(--color-accent);
   letter-spacing: -0.02em;
@@ -53,7 +53,7 @@ const nav = useNavStore()
   width: 40px;
   height: 40px;
   border: none;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   background: transparent;
   color: var(--color-text-muted);
   cursor: pointer;

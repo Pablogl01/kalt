@@ -70,11 +70,11 @@ function handleRetry() {
   align-items: center;
   text-align: center;
   max-width: 420px;
-  padding: 2.5rem 2rem;
+  padding: var(--space-6) var(--space-6);
   background: var(--color-surface);
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(31, 27, 22, 0.08);
-  border: 1px solid rgba(138, 129, 120, 0.1);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-subtle);
 }
 
 .spinner {
@@ -82,9 +82,9 @@ function handleRetry() {
   height: 48px;
   border: 4px solid rgba(168, 224, 99, 0.2);
   border-top-color: var(--color-accent);
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   animation: spin 1s linear infinite;
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--space-5);
 }
 
 @keyframes spin {
@@ -95,30 +95,30 @@ function handleRetry() {
   display: flex;
   justify-content: center;
   color: var(--color-negative-badge);
-  margin-bottom: 1rem;
+  margin-bottom: var(--space-4);
 }
 
 .poller-title {
-  font-size: 1.25rem;
+  font-size: var(--fs-lg);
   font-weight: 700;
   color: var(--color-text);
-  margin: 0 0 0.75rem;
+  margin: 0 0 var(--space-3);
 }
 
 .poller-desc {
-  font-size: 0.9375rem;
+  font-size: var(--fs-base);
   color: var(--color-text-muted);
   line-height: 1.5;
-  margin: 0 0 1.5rem;
+  margin: 0 0 var(--space-5);
 }
 
 .btn-retry {
-  padding: 0.75rem 1.5rem;
+  padding: var(--space-3) var(--space-5);
   background: var(--color-accent);
   color: var(--color-text);
   font-weight: 700;
   border: none;
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   cursor: pointer;
   transition: background 0.15s, transform 0.1s;
 }

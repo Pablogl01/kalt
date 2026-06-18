@@ -347,31 +347,31 @@ async function handleLogout() {
 .profile-page {
   max-width: 680px;
   margin: 0 auto;
-  padding: 2rem 1.25rem 4rem;
+  padding: var(--space-6) var(--space-5) var(--space-7);
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: var(--space-6);
 }
 
 .section-title {
-  font-size: 1.125rem;
+  font-size: var(--fs-lg);
   font-weight: 700;
   color: var(--color-text);
-  margin: 0 0 1.25rem;
+  margin: 0 0 var(--space-5);
 }
 
 /* ── Macros section ─────────────────────────────────────── */
 .macros-section {
   background: var(--color-surface);
-  border-radius: 16px;
-  padding: 1.5rem;
-  box-shadow: 0 2px 8px rgba(31, 27, 22, 0.06);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-md);
 }
 
 .macros-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 0.75rem;
+  gap: var(--space-3);
 }
 
 @media (max-width: 480px) {
@@ -384,11 +384,11 @@ async function handleLogout() {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1rem 0.5rem;
-  border-radius: 12px;
+  padding: var(--space-4) var(--space-2);
+  border-radius: var(--radius-md);
   background: var(--color-bg);
   border-top: 3px solid transparent;
-  gap: 0.125rem;
+  gap: var(--space-1);
 }
 
 .macro-card--calories { border-top-color: var(--color-calories); }
@@ -397,7 +397,7 @@ async function handleLogout() {
 .macro-card--fat      { border-top-color: var(--color-fat);      }
 
 .macro-value {
-  font-size: 1.875rem;
+  font-size: var(--fs-2xl);
   font-weight: 700;
   color: var(--color-text);
   line-height: 1;
@@ -406,17 +406,17 @@ async function handleLogout() {
 .macro-value--calories { color: var(--color-calories); }
 
 .macro-unit {
-  font-size: 0.75rem;
+  font-size: var(--fs-xs);
   font-weight: 500;
   color: var(--color-text-muted);
-  margin-top: 0.125rem;
+  margin-top: var(--space-1);
 }
 
 .macro-label {
-  font-size: 0.75rem;
+  font-size: var(--fs-xs);
   font-weight: 600;
   color: var(--color-text-muted);
-  margin-top: 0.375rem;
+  margin-top: var(--space-2);
   text-align: center;
 }
 
@@ -425,10 +425,10 @@ async function handleLogout() {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.75rem;
-  padding: 1.5rem 1rem;
+  gap: var(--space-3);
+  padding: var(--space-5) var(--space-4);
   background: var(--color-bg);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   border: 1.5px dashed var(--color-border);
   text-align: center;
 }
@@ -440,7 +440,7 @@ async function handleLogout() {
 }
 
 .macros-cta__text {
-  font-size: 0.9375rem;
+  font-size: var(--fs-base);
   color: var(--color-text-muted);
   margin: 0;
   max-width: 320px;
@@ -450,19 +450,19 @@ async function handleLogout() {
 /* ── Form section ───────────────────────────────────────── */
 .form-section {
   background: var(--color-surface);
-  border-radius: 16px;
-  padding: 1.5rem;
-  box-shadow: 0 2px 8px rgba(31, 27, 22, 0.06);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-md);
 }
 
 .save-banner {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  border-radius: 10px;
-  padding: 0.75rem 1rem;
-  font-size: 0.875rem;
-  margin-bottom: 1.25rem;
+  gap: var(--space-2);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--fs-sm);
+  margin-bottom: var(--space-5);
   font-weight: 500;
 }
 
@@ -481,30 +481,30 @@ async function handleLogout() {
 .form-divider {
   border: none;
   border-top: 1px solid var(--color-border);
-  margin: 1.5rem 0 1rem;
+  margin: var(--space-5) 0 var(--space-4);
 }
 
 .form-section-label {
-  font-size: 0.75rem;
+  font-size: var(--fs-xs);
   font-weight: 700;
   color: var(--color-text-muted);
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  margin: 0 0 1rem;
+  margin: 0 0 var(--space-4);
 }
 
 /* ── Fields ─────────────────────────────────────────────── */
 .field {
   display: flex;
   flex-direction: column;
-  gap: 0.375rem;
-  margin-bottom: 1.125rem;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
 }
 
 .field-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.75rem;
+  gap: var(--space-3);
 }
 
 @media (max-width: 400px) {
@@ -512,29 +512,29 @@ async function handleLogout() {
 }
 
 .field-label {
-  font-size: 0.875rem;
+  font-size: var(--fs-sm);
   font-weight: 600;
   color: var(--color-text);
   display: flex;
   align-items: center;
-  gap: 0.375rem;
+  gap: var(--space-2);
 }
 
 .field-label-optional {
-  font-size: 0.75rem;
+  font-size: var(--fs-xs);
   font-weight: 400;
   color: var(--color-text-muted);
 }
 
 .field-input {
   width: 100%;
-  padding: 0.75rem 1rem;
+  padding: var(--space-3) var(--space-4);
   border: 1.5px solid var(--color-border);
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   background: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-sans);
-  font-size: 0.9375rem;
+  font-size: var(--fs-base);
   outline: none;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
   box-sizing: border-box;
@@ -559,7 +559,7 @@ async function handleLogout() {
 }
 
 .field-error {
-  font-size: 0.8125rem;
+  font-size: var(--fs-sm);
   color: #dc2626;
   margin: 0;
 }
@@ -569,7 +569,7 @@ async function handleLogout() {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238A8178' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 0.875rem center;
-  padding-right: 2.5rem;
+  padding-right: var(--space-6);
 }
 
 /* Unit input wrapper */
@@ -580,13 +580,13 @@ async function handleLogout() {
 }
 
 .field-unit-wrap .field-input {
-  padding-right: 3rem;
+  padding-right: var(--space-7);
 }
 
 .field-unit {
   position: absolute;
   right: 1rem;
-  font-size: 0.875rem;
+  font-size: var(--fs-sm);
   font-weight: 600;
   color: var(--color-text-muted);
   pointer-events: none;
@@ -596,7 +596,7 @@ async function handleLogout() {
 .radio-group {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 0.625rem;
+  gap: var(--space-3);
 }
 
 @media (max-width: 400px) {
@@ -607,9 +607,9 @@ async function handleLogout() {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.25rem;
-  padding: 0.875rem 0.5rem;
-  border-radius: 12px;
+  gap: var(--space-1);
+  padding: var(--space-3) var(--space-2);
+  border-radius: var(--radius-md);
   background: var(--color-bg);
   border: 1.5px solid var(--color-border);
   cursor: pointer;
@@ -636,26 +636,26 @@ async function handleLogout() {
 
 .radio-icon  { display: inline-flex; color: var(--color-text-muted); }
 .radio-card--active .radio-icon { color: var(--color-accent-dark); }
-.radio-label { font-size: 0.875rem; font-weight: 700; color: var(--color-text); }
-.radio-desc  { font-size: 0.75rem;  font-weight: 500; color: var(--color-text-muted); }
+.radio-label { font-size: var(--fs-sm); font-weight: 700; color: var(--color-text); }
+.radio-desc  { font-size: var(--fs-xs);  font-weight: 500; color: var(--color-text-muted); }
 
 /* ── Submit button ──────────────────────────────────────── */
 .btn-primary {
   width: 100%;
-  padding: 0.8125rem 1.5rem;
+  padding: var(--space-3) var(--space-5);
   background: var(--color-accent);
   color: var(--color-text);
   font-family: var(--font-sans);
-  font-size: 0.9375rem;
+  font-size: var(--fs-base);
   font-weight: 700;
   border: none;
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   cursor: pointer;
-  margin-top: 0.75rem;
+  margin-top: var(--space-3);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  gap: var(--space-2);
   transition: background 0.15s ease, transform 0.1s ease;
 }
 
@@ -677,7 +677,7 @@ async function handleLogout() {
   height: 16px;
   border: 2px solid rgba(31, 27, 22, 0.3);
   border-top-color: var(--color-text);
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   animation: spin 0.7s linear infinite;
 }
 
@@ -692,14 +692,14 @@ async function handleLogout() {
 }
 
 .btn-secondary {
-  padding: 0.75rem 1.5rem;
+  padding: var(--space-3) var(--space-5);
   background: transparent;
   color: var(--color-text-muted);
   font-family: var(--font-sans);
-  font-size: 0.9375rem;
+  font-size: var(--fs-base);
   font-weight: 600;
   border: 1.5px solid var(--color-border);
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   cursor: pointer;
   transition: all 0.15s ease;
   display: inline-flex;

@@ -311,7 +311,7 @@ function formatDate(dateStr) {
 .shopping-container {
   max-width: 680px;
   margin: 0 auto;
-  padding: 1.5rem 1rem 4rem;
+  padding: var(--space-5) var(--space-4) var(--space-7);
   display: flex;
   flex-direction: column;
   min-height: calc(100vh - var(--bottom-bar-height, 64px));
@@ -319,7 +319,7 @@ function formatDate(dateStr) {
 
 @media (min-width: 1024px) {
   .shopping-container {
-    padding: 2.5rem 2rem;
+    padding: var(--space-6) var(--space-6);
     min-height: 100vh;
   }
 }
@@ -327,15 +327,15 @@ function formatDate(dateStr) {
 .shopping-content {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: var(--space-5);
 }
 
 .shopping-header {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  padding-bottom: 1.25rem;
-  border-bottom: 1px solid rgba(138, 129, 120, 0.12);
+  gap: var(--space-4);
+  padding-bottom: var(--space-5);
+  border-bottom: 1px solid var(--border-default);
 }
 
 @media (min-width: 640px) {
@@ -347,14 +347,14 @@ function formatDate(dateStr) {
 }
 
 .page-title {
-  font-size: 2rem;
+  font-size: var(--fs-2xl);
   font-weight: 700;
   color: var(--color-text, #1C1A17);
-  margin: 0 0 0.25rem;
+  margin: 0 0 var(--space-1);
 }
 
 .generation-date {
-  font-size: 0.875rem;
+  font-size: var(--fs-sm);
   color: var(--color-text-muted, #8A8178);
   margin: 0;
 }
@@ -362,18 +362,18 @@ function formatDate(dateStr) {
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 .pending-badge {
   display: flex;
   align-items: center;
-  gap: 0.375rem;
+  gap: var(--space-2);
   background-color: var(--color-surface, #FFFFFF);
-  border: 1px solid rgba(138, 129, 120, 0.15);
-  border-radius: 9999px;
-  padding: 0.25rem 0.75rem;
-  font-size: 0.8125rem;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-pill);
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--fs-sm);
 }
 
 .pending-number {
@@ -390,9 +390,9 @@ function formatDate(dateStr) {
   align-items: center;
   justify-content: center;
   font-weight: 600;
-  font-size: 0.875rem;
-  border-radius: 12px;
-  padding: 0.625rem 1.25rem;
+  font-size: var(--fs-sm);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-5);
   cursor: pointer;
   transition: all 0.2s ease;
   border: none;
@@ -410,7 +410,7 @@ function formatDate(dateStr) {
 
 .btn--secondary {
   background-color: var(--color-surface, #FFFFFF);
-  border: 1px solid rgba(138, 129, 120, 0.2);
+  border: 1px solid var(--border-strong);
   color: var(--color-text, #1C1A17);
 }
 
@@ -427,15 +427,15 @@ function formatDate(dateStr) {
 .categories-list {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 .category-card {
   background-color: var(--color-surface, #FFFFFF);
-  border: 1px solid rgba(138, 129, 120, 0.15);
-  border-radius: 16px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+  box-shadow: var(--shadow-md);
 }
 
 .category-header-btn {
@@ -443,7 +443,7 @@ function formatDate(dateStr) {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 1.25rem;
+  padding: var(--space-4) var(--space-5);
   background: none;
   border: none;
   cursor: pointer;
@@ -453,20 +453,20 @@ function formatDate(dateStr) {
 .category-title {
   font-weight: 700;
   color: var(--color-text, #1C1A17);
-  font-size: 1rem;
+  font-size: var(--fs-base);
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--space-2);
 }
 
 .category-count {
   font-weight: 500;
-  font-size: 0.8125rem;
+  font-size: var(--fs-sm);
   color: var(--color-text-muted, #8A8178);
 }
 
 .collapse-icon {
-  font-size: 1.25rem;
+  font-size: var(--fs-lg);
   color: var(--color-text-muted, #8A8178);
   transition: transform 0.2s ease;
 }
@@ -476,8 +476,8 @@ function formatDate(dateStr) {
 }
 
 .category-body {
-  border-top: 1px solid rgba(138, 129, 120, 0.08);
-  padding: 0.5rem 1.25rem 1rem;
+  border-top: 1px solid var(--border-subtle);
+  padding: var(--space-2) var(--space-5) var(--space-4);
   display: flex;
   flex-direction: column;
 }
@@ -486,8 +486,8 @@ function formatDate(dateStr) {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.75rem 0;
-  border-bottom: 1px solid rgba(138, 129, 120, 0.06);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 .shopping-item-row:last-child {
@@ -497,7 +497,7 @@ function formatDate(dateStr) {
 .item-info {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: var(--space-3);
   flex-wrap: wrap;
 }
 
@@ -507,23 +507,23 @@ function formatDate(dateStr) {
 }
 
 .item-amount {
-  font-size: 0.8125rem;
+  font-size: var(--fs-sm);
   background-color: #FAF8F5;
-  border: 1px solid rgba(138, 129, 120, 0.1);
-  border-radius: 6px;
-  padding: 0.125rem 0.375rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: var(--space-1) var(--space-2);
   color: var(--color-text-muted, #8A8178);
   font-weight: 600;
 }
 
 .substitute-badge {
-  font-size: 0.6875rem;
+  font-size: var(--fs-xs);
   font-weight: 600;
   background-color: rgba(37, 99, 235, 0.06);
   color: var(--color-system);
   border: 1px solid rgba(37, 99, 235, 0.12);
-  padding: 0.125rem 0.375rem;
-  border-radius: 4px;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
 }
 
 .shopping-item-row--owned .item-name {
@@ -538,19 +538,19 @@ function formatDate(dateStr) {
 .item-actions {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--space-2);
 }
 
 .action-btn {
   width: 28px;
   height: 28px;
-  border-radius: 50%;
-  border: 1px solid rgba(138, 129, 120, 0.2);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-strong);
   background-color: var(--color-surface, #FFFFFF);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.875rem;
+  font-size: var(--fs-sm);
   cursor: pointer;
   transition: all 0.2s ease;
   color: var(--color-text-muted, #8A8178);
@@ -569,12 +569,12 @@ function formatDate(dateStr) {
 }
 
 .owned-indicator {
-  font-size: 0.75rem;
+  font-size: var(--fs-xs);
   font-weight: 600;
   color: var(--color-accent-dark);
   background-color: rgba(168, 224, 99, 0.1);
-  padding: 0.125rem 0.5rem;
-  border-radius: 9999px;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-pill);
 }
 
 /* State container layouts */
@@ -585,28 +585,28 @@ function formatDate(dateStr) {
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 3rem 1.5rem;
+  padding: var(--space-7) var(--space-5);
 }
 
 .empty-icon {
   display: flex;
   justify-content: center;
   color: var(--color-text-muted);
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--space-5);
 }
 
 .empty-title {
-  font-size: 1.5rem;
+  font-size: var(--fs-xl);
   font-weight: 700;
   color: var(--color-text, #1C1A17);
-  margin: 0 0 0.5rem;
+  margin: 0 0 var(--space-2);
 }
 
 .empty-desc {
   color: var(--color-text-muted, #8A8178);
   max-width: 320px;
-  margin: 0 0 1.5rem;
-  font-size: 0.9375rem;
+  margin: 0 0 var(--space-5);
+  font-size: var(--fs-base);
   line-height: 1.5;
 }
 
@@ -615,8 +615,8 @@ function formatDate(dateStr) {
   height: 40px;
   border: 3px solid rgba(168, 224, 99, 0.1);
   border-top-color: var(--color-accent, #A8E063);
-  border-radius: 50%;
-  margin-bottom: 1.25rem;
+  border-radius: var(--radius-full);
+  margin-bottom: var(--space-5);
   animation: spin 0.8s linear infinite;
 }
 
@@ -628,7 +628,7 @@ function formatDate(dateStr) {
 .error-text {
   color: #DC2626;
   font-weight: 600;
-  margin-bottom: 1rem;
+  margin-bottom: var(--space-4);
 }
 
 @keyframes spin {

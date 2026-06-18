@@ -276,22 +276,22 @@ const periodSummary = computed(() => {
 .heatmap-card {
   background-color: var(--color-surface-dark);
   color: #FFFFFF;
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   padding: 24px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--shadow-lg);
   display: flex;
   flex-direction: column;
 }
 
 .heatmap-title {
-  font-size: 1.25rem;
+  font-size: var(--fs-lg);
   font-weight: 600;
   margin: 0 0 4px;
   color: #FFFFFF;
 }
 
 .heatmap-subtitle {
-  font-size: 0.875rem;
+  font-size: var(--fs-sm);
   color: var(--color-text-muted);
   margin: 0 0 20px;
 }
@@ -315,7 +315,7 @@ const periodSummary = computed(() => {
 }
 
 .header-text {
-  font-size: 0.75rem;
+  font-size: var(--fs-xs);
   font-weight: 600;
   fill: var(--color-text-muted);
 }
@@ -333,9 +333,9 @@ const periodSummary = computed(() => {
   background-color: #000000;
   color: #FFFFFF;
   padding: 10px 12px;
-  border-radius: 8px;
-  font-size: 0.75rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-xs);
+  box-shadow: var(--shadow-lg);
   pointer-events: none;
   z-index: 10;
   transform: translateX(-50%);
@@ -385,7 +385,7 @@ const periodSummary = computed(() => {
   align-items: center;
   gap: 8px;
   margin-top: 16px;
-  font-size: 0.75rem;
+  font-size: var(--fs-xs);
 }
 
 .legend-text {
@@ -400,7 +400,7 @@ const periodSummary = computed(() => {
 .scale-box {
   width: 12px;
   height: 12px;
-  border-radius: 2px;
+  border-radius: var(--radius-sm);
   display: inline-block;
 }
 </style>

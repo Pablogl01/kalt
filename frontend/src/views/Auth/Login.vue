@@ -125,15 +125,15 @@ async function handleLogin() {
   align-items: center;
   justify-content: center;
   background: var(--color-bg);
-  padding: 1.5rem;
+  padding: var(--space-5);
 }
 
 .auth-card {
   width: 100%;
   max-width: 420px;
   background: var(--color-surface);
-  border-radius: 20px;
-  padding: 2.5rem 2rem;
+  border-radius: var(--radius-lg);
+  padding: var(--space-6) var(--space-6);
   box-shadow:
     0 4px 6px -1px rgba(31, 27, 22, 0.06),
     0 12px 40px -8px rgba(31, 27, 22, 0.12);
@@ -144,12 +144,12 @@ async function handleLogin() {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.125rem;
-  margin-bottom: 2rem;
+  gap: var(--space-1);
+  margin-bottom: var(--space-6);
 }
 
 .logo-text {
-  font-size: 2rem;
+  font-size: var(--fs-2xl);
   font-weight: 700;
   color: var(--color-accent-dark);
   letter-spacing: -0.03em;
@@ -157,7 +157,7 @@ async function handleLogin() {
 }
 
 .logo-sub {
-  font-size: 0.75rem;
+  font-size: var(--fs-xs);
   font-weight: 500;
   color: var(--color-text-muted);
   text-transform: uppercase;
@@ -166,18 +166,18 @@ async function handleLogin() {
 
 /* ── Headings ───────────────────────────────────────────── */
 .auth-title {
-  font-size: 1.375rem;
+  font-size: var(--fs-xl);
   font-weight: 700;
   color: var(--color-text);
-  margin: 0 0 0.25rem;
+  margin: 0 0 var(--space-1);
   text-align: center;
 }
 
 .auth-subtitle {
-  font-size: 0.875rem;
+  font-size: var(--fs-sm);
   color: var(--color-text-muted);
   text-align: center;
-  margin: 0 0 1.75rem;
+  margin: 0 0 var(--space-6);
 }
 
 /* ── Error banner ───────────────────────────────────────── */
@@ -185,10 +185,10 @@ async function handleLogin() {
   background: #fef2f2;
   border: 1px solid #fecaca;
   color: #dc2626;
-  border-radius: 10px;
-  padding: 0.75rem 1rem;
-  font-size: 0.875rem;
-  margin-bottom: 1.25rem;
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--fs-sm);
+  margin-bottom: var(--space-5);
   text-align: center;
 }
 
@@ -196,25 +196,25 @@ async function handleLogin() {
 .field {
   display: flex;
   flex-direction: column;
-  gap: 0.375rem;
-  margin-bottom: 1.125rem;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
 }
 
 .field-label {
-  font-size: 0.875rem;
+  font-size: var(--fs-sm);
   font-weight: 600;
   color: var(--color-text);
 }
 
 .field-input {
   width: 100%;
-  padding: 0.75rem 1rem;
+  padding: var(--space-3) var(--space-4);
   border: 1.5px solid var(--color-border);
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   background: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-sans);
-  font-size: 0.9375rem;
+  font-size: var(--fs-base);
   outline: none;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
   box-sizing: border-box;
@@ -238,7 +238,7 @@ async function handleLogin() {
 }
 
 .field-error {
-  font-size: 0.8125rem;
+  font-size: var(--fs-sm);
   color: #dc2626;
   margin: 0;
 }
@@ -246,20 +246,20 @@ async function handleLogin() {
 /* ── Button ─────────────────────────────────────────────── */
 .btn-primary {
   width: 100%;
-  padding: 0.8125rem 1.5rem;
+  padding: var(--space-3) var(--space-5);
   background: var(--color-accent);
   color: var(--color-text);
   font-family: var(--font-sans);
-  font-size: 0.9375rem;
+  font-size: var(--fs-base);
   font-weight: 700;
   border: none;
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   cursor: pointer;
-  margin-top: 0.5rem;
+  margin-top: var(--space-2);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  gap: var(--space-2);
   transition: background 0.15s ease, transform 0.1s ease;
 }
 
@@ -281,7 +281,7 @@ async function handleLogin() {
   height: 16px;
   border: 2px solid rgba(31, 27, 22, 0.3);
   border-top-color: var(--color-text);
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   animation: spin 0.7s linear infinite;
   flex-shrink: 0;
 }
@@ -293,9 +293,9 @@ async function handleLogin() {
 /* ── Footer ─────────────────────────────────────────────── */
 .auth-footer {
   text-align: center;
-  font-size: 0.875rem;
+  font-size: var(--fs-sm);
   color: var(--color-text-muted);
-  margin: 1.5rem 0 0;
+  margin: var(--space-5) 0 0;
 }
 
 .auth-link {

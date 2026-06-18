@@ -35,12 +35,12 @@ const emit = defineEmits(['close', 'undo'])
 .recalc-notice {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: var(--space-3);
   background-color: rgba(37, 99, 235, 0.08); /* --color-system at 8% opacity */
   border: 1px solid rgba(37, 99, 235, 0.2);
-  border-radius: 12px;
-  padding: 0.75rem 1rem;
-  margin: 1rem 0;
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  margin: var(--space-4) 0;
   animation: slideIn 0.3s ease-out;
   position: relative;
 }
@@ -56,7 +56,7 @@ const emit = defineEmits(['close', 'undo'])
 }
 
 .notice-text {
-  font-size: 0.8125rem;
+  font-size: var(--fs-sm);
   font-weight: 500;
   color: var(--color-text);
   margin: 0;
@@ -69,10 +69,10 @@ const emit = defineEmits(['close', 'undo'])
   border: 1px solid var(--color-system);
   color: var(--color-system);
   font-family: inherit;
-  font-size: 0.75rem;
+  font-size: var(--fs-xs);
   font-weight: 600;
-  padding: 0.25rem 0.625rem;
-  border-radius: 8px;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-sm);
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
@@ -84,11 +84,11 @@ const emit = defineEmits(['close', 'undo'])
 .close-btn {
   background: none;
   border: none;
-  font-size: 1.25rem;
+  font-size: var(--fs-lg);
   font-weight: bold;
   color: var(--color-text-muted);
   cursor: pointer;
-  padding: 0 0.25rem;
+  padding: 0 var(--space-1);
   line-height: 1;
   display: flex;
   align-items: center;

@@ -214,28 +214,29 @@ const formatTime = (timeStr) => {
 .dashboard-page {
   max-width: 800px;
   margin: 0 auto;
-  padding: 2rem 1.25rem 4rem;
+  padding: var(--space-6) var(--space-5) var(--space-7);
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: var(--space-6);
 }
 
 .dashboard-header {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: var(--space-1);
 }
 
 .welcome-title {
-  font-size: 1.75rem;
-  font-weight: 700;
+  font-size: var(--fs-2xl);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-tight);
   color: var(--color-text);
   margin: 0;
 }
 
 .welcome-subtitle {
   color: var(--color-text-muted);
-  font-size: 0.9375rem;
+  font-size: var(--fs-base);
   margin: 0;
 }
 
@@ -245,16 +246,16 @@ const formatTime = (timeStr) => {
   align-items: center;
   justify-content: center;
   min-height: 250px;
-  gap: 1rem;
+  gap: var(--space-4);
   color: var(--color-text-muted);
 }
 
 .spinner {
   width: 36px;
   height: 36px;
-  border: 3px solid rgba(138, 129, 120, 0.15);
+  border: 3px solid var(--border-subtle);
   border-top-color: var(--color-accent);
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   animation: spin 1s linear infinite;
 }
 
@@ -265,10 +266,10 @@ const formatTime = (timeStr) => {
 /* Onboarding CTAs */
 .dashboard-card {
   background: var(--color-surface);
-  border-radius: 20px;
-  padding: 3rem 2rem;
-  box-shadow: 0 4px 20px rgba(31, 27, 22, 0.05);
-  border: 1px solid rgba(138, 129, 120, 0.12);
+  border-radius: var(--radius-lg);
+  padding: var(--space-7) var(--space-6);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-default);
   text-align: center;
 }
 
@@ -276,41 +277,42 @@ const formatTime = (timeStr) => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 .card-icon-big {
   display: flex;
   justify-content: center;
   color: var(--color-text-muted);
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--space-2);
 }
 
 .card-title {
-  font-size: 1.375rem;
-  font-weight: 700;
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-snug);
   color: var(--color-text);
   margin: 0;
 }
 
 .card-desc {
-  font-size: 0.9375rem;
+  font-size: var(--fs-base);
   color: var(--color-text-muted);
-  line-height: 1.5;
+  line-height: var(--lh-normal);
   max-width: 400px;
-  margin: 0 0 1rem;
+  margin: 0 0 var(--space-4);
 }
 
 .btn-cta {
-  padding: 0.875rem 2rem;
+  padding: var(--space-3) var(--space-6);
   background-color: var(--color-accent);
   color: var(--color-text);
   border: none;
-  font-weight: 700;
-  border-radius: 12px;
+  font-weight: var(--fw-bold);
+  border-radius: var(--radius-md);
   cursor: pointer;
   text-decoration: none;
-  font-size: 0.9375rem;
+  font-size: var(--fs-base);
   transition: background 0.2s;
   display: inline-block;
 }
@@ -327,14 +329,14 @@ const formatTime = (timeStr) => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 /* Grid Dashboard */
 .dashboard-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1.5rem;
+  gap: var(--space-5);
 }
 
 @media (min-width: 768px) {
@@ -348,30 +350,31 @@ const formatTime = (timeStr) => {
 
 .widget-card {
   background: var(--color-surface);
-  border: 1px solid rgba(138, 129, 120, 0.12);
-  border-radius: 16px;
-  padding: 1.5rem;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: var(--space-5);
 }
 
 .widget-title {
-  font-size: 1rem;
-  font-weight: 700;
+  font-size: var(--fs-base);
+  font-weight: var(--fw-bold);
   color: var(--color-text);
-  margin: 0 0 1.25rem;
-  border-bottom: 1px solid rgba(138, 129, 120, 0.08);
-  padding-bottom: 0.75rem;
+  margin: 0 0 var(--space-5);
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: var(--space-3);
 }
 
 /* Macros widget specific */
 .tracking-link-wrap {
-  margin-top: 1.5rem;
+  margin-top: var(--space-5);
   display: flex;
   justify-content: flex-end;
 }
 
 .btn-link-tracking {
-  font-size: 0.875rem;
-  font-weight: 600;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
   color: var(--color-accent-dark);
   text-decoration: none;
 }
@@ -384,22 +387,22 @@ const formatTime = (timeStr) => {
 .training-summary {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 .t-icon {
-  font-size: 2rem;
+  color: var(--color-text-muted);
 }
 
 .t-status {
-  font-size: 0.9375rem;
-  font-weight: 600;
+  font-size: var(--fs-base);
+  font-weight: var(--fw-semibold);
   color: var(--color-text);
-  margin: 0 0 0.25rem;
+  margin: 0 0 var(--space-1);
 }
 
 .t-detail {
-  font-size: 0.8125rem;
+  font-size: var(--fs-sm);
   color: var(--color-text-muted);
   margin: 0;
 }
@@ -408,17 +411,17 @@ const formatTime = (timeStr) => {
 .meals-list-preview {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: var(--space-3);
 }
 
 .meal-preview-item {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: var(--space-3);
   background-color: var(--color-bg);
-  padding: 0.625rem 0.875rem;
-  border-radius: 10px;
-  border: 1px solid rgba(138, 129, 120, 0.08);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
 }
 
 .meal-preview-item--completed {
@@ -429,13 +432,11 @@ const formatTime = (timeStr) => {
 .check-circle {
   width: 20px;
   height: 20px;
-  border-radius: 50%;
-  border: 1.5px solid rgba(138, 129, 120, 0.3);
+  border-radius: var(--radius-full);
+  border: 1.5px solid var(--border-strong);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.75rem;
-  font-weight: 700;
   color: var(--color-protein);
 }
 
@@ -453,21 +454,21 @@ const formatTime = (timeStr) => {
 }
 
 .mp-name {
-  font-size: 0.875rem;
-  font-weight: 600;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
   color: var(--color-text);
   margin: 0;
 }
 
 .mp-time {
-  font-size: 0.75rem;
+  font-size: var(--fs-xs);
   color: var(--color-text-muted);
 }
 
 .empty-preview {
   text-align: center;
-  padding: 1rem;
+  padding: var(--space-4);
   color: var(--color-text-muted);
-  font-size: 0.8125rem;
+  font-size: var(--fs-sm);
 }
 </style>

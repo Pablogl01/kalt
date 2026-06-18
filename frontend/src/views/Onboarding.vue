@@ -468,11 +468,11 @@ function toggleTrainingDay(day) {
 <style scoped>
 .onboarding-container {
   max-width: 600px;
-  margin: 2rem auto 4rem;
-  padding: 0 1rem;
+  margin: var(--space-6) auto var(--space-7);
+  padding: 0 var(--space-4);
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: var(--space-6);
 }
 
 /* Progress bar indicators */
@@ -482,15 +482,15 @@ function toggleTrainingDay(day) {
   align-items: center;
   position: relative;
   background: var(--color-surface);
-  border-radius: 12px;
-  padding: 1rem;
-  border: 1px solid rgba(138, 129, 120, 0.12);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  border: 1px solid var(--border-default);
 }
 
 .step-indicator {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--space-2);
   opacity: 0.5;
   transition: opacity 0.3s;
 }
@@ -507,13 +507,13 @@ function toggleTrainingDay(day) {
 .step-num {
   width: 24px;
   height: 24px;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   background: var(--color-text-muted);
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.75rem;
+  font-size: var(--fs-xs);
   font-weight: 700;
 }
 
@@ -528,30 +528,30 @@ function toggleTrainingDay(day) {
 }
 
 .step-name {
-  font-size: 0.875rem;
+  font-size: var(--fs-sm);
   color: var(--color-text);
 }
 
 /* Card layout */
 .onboarding-card {
   background: var(--color-surface);
-  border-radius: 20px;
-  padding: 2rem;
-  box-shadow: 0 4px 24px rgba(31, 27, 22, 0.05);
-  border: 1px solid rgba(138, 129, 120, 0.12);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-default);
 }
 
 .step-title {
-  font-size: 1.5rem;
+  font-size: var(--fs-xl);
   font-weight: 700;
   color: var(--color-text);
-  margin: 0 0 0.5rem;
+  margin: 0 0 var(--space-2);
 }
 
 .step-subtitle {
   color: var(--color-text-muted);
-  font-size: 0.9375rem;
-  margin: 0 0 2rem;
+  font-size: var(--fs-base);
+  margin: 0 0 var(--space-6);
   line-height: 1.5;
 }
 
@@ -559,34 +559,34 @@ function toggleTrainingDay(day) {
 .onboarding-form {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: var(--space-5);
 }
 
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--space-2);
 }
 
 .form-group label {
-  font-size: 0.875rem;
+  font-size: var(--fs-sm);
   font-weight: 600;
   color: var(--color-text);
 }
 
 .form-input, .form-select {
-  padding: 0.75rem 1rem;
-  border-radius: 10px;
-  border: 1px solid rgba(138, 129, 120, 0.25);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-strong);
   background: var(--color-surface);
   font-family: inherit;
-  font-size: 0.9375rem;
+  font-size: var(--fs-base);
   color: var(--color-text);
   outline: none;
   transition: border-color 0.2s;
@@ -601,7 +601,7 @@ function toggleTrainingDay(day) {
 .goal-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 0.75rem;
+  gap: var(--space-3);
 }
 
 @media (min-width: 480px) {
@@ -611,9 +611,9 @@ function toggleTrainingDay(day) {
 }
 
 .goal-card {
-  border: 1px solid rgba(138, 129, 120, 0.2);
-  border-radius: 12px;
-  padding: 1rem 0.75rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  padding: var(--space-4) var(--space-3);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -641,7 +641,7 @@ function toggleTrainingDay(day) {
 .goal-icon {
   display: inline-flex;
   color: var(--color-text-muted);
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--space-2);
 }
 
 .goal-card--active .goal-icon {
@@ -650,58 +650,58 @@ function toggleTrainingDay(day) {
 
 .goal-title {
   font-weight: 700;
-  font-size: 0.875rem;
+  font-size: var(--fs-sm);
   color: var(--color-text);
-  margin-bottom: 0.25rem;
+  margin-bottom: var(--space-1);
 }
 
 .goal-desc {
-  font-size: 0.75rem;
+  font-size: var(--fs-xs);
   color: var(--color-text-muted);
 }
 
 /* Real-time calculated macros preview */
 .macros-preview {
   background: var(--color-bg);
-  border-radius: 14px;
-  padding: 1.25rem;
-  border: 1px solid rgba(138, 129, 120, 0.12);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  border: 1px solid var(--border-default);
 }
 
 .preview-title {
-  font-size: 0.8125rem;
+  font-size: var(--fs-sm);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--color-text-muted);
   font-weight: 700;
-  margin: 0 0 1rem;
+  margin: 0 0 var(--space-4);
 }
 
 .preview-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 0.75rem;
+  gap: var(--space-3);
 }
 
 .p-macro {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0.75rem 0.25rem;
+  padding: var(--space-3) var(--space-1);
   background: var(--color-surface);
-  border-radius: 10px;
-  border: 1px solid rgba(138, 129, 120, 0.08);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
 }
 
 .p-val {
-  font-size: 1.25rem;
+  font-size: var(--fs-lg);
   font-weight: 700;
 }
 
 .p-lbl {
-  font-size: 0.6875rem;
+  font-size: var(--fs-xs);
   color: var(--color-text-muted);
-  margin-top: 0.125rem;
+  margin-top: var(--space-1);
   font-weight: 500;
 }
 
@@ -713,15 +713,15 @@ function toggleTrainingDay(day) {
 /* Day Selector Buttons */
 .days-selector {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--space-2);
   flex-wrap: wrap;
 }
 
 .day-btn {
   width: 40px;
   height: 40px;
-  border-radius: 50%;
-  border: 1px solid rgba(138, 129, 120, 0.25);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-strong);
   background: var(--color-surface);
   color: var(--color-text);
   font-weight: 600;
@@ -747,8 +747,8 @@ function toggleTrainingDay(day) {
 .restriction-box {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
 }
 
 .search-wrap {
@@ -761,17 +761,17 @@ function toggleTrainingDay(day) {
   left: 0;
   right: 0;
   background: var(--color-surface);
-  border: 1px solid rgba(138, 129, 120, 0.2);
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
   z-index: 10;
   overflow: hidden;
 }
 
 .dropdown-item {
-  padding: 0.75rem 1rem;
+  padding: var(--space-3) var(--space-4);
   cursor: pointer;
-  font-size: 0.875rem;
+  font-size: var(--fs-sm);
 }
 
 .dropdown-item:hover {
@@ -780,16 +780,16 @@ function toggleTrainingDay(day) {
 
 .restriction-type-select {
   display: flex;
-  gap: 0.75rem;
+  gap: var(--space-3);
 }
 
 .btn-add-restriction {
-  padding: 0.75rem 1.25rem;
+  padding: var(--space-3) var(--space-5);
   background: var(--color-text);
   color: white;
   border: none;
   font-weight: 600;
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   cursor: pointer;
 }
 
@@ -800,17 +800,17 @@ function toggleTrainingDay(day) {
 
 .added-restrictions {
   background: var(--color-bg);
-  border-radius: 12px;
-  padding: 1rem;
-  margin-bottom: 2rem;
-  border: 1px solid rgba(138, 129, 120, 0.08);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  margin-bottom: var(--space-6);
+  border: 1px solid var(--border-subtle);
 }
 
 .list-title {
-  font-size: 0.8125rem;
+  font-size: var(--fs-sm);
   font-weight: 700;
   color: var(--color-text-muted);
-  margin: 0 0 0.75rem;
+  margin: 0 0 var(--space-3);
 }
 
 .restrictions-list {
@@ -819,26 +819,26 @@ function toggleTrainingDay(day) {
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--space-2);
 }
 
 .restriction-item {
   display: flex;
   align-items: center;
   background: var(--color-surface);
-  padding: 0.5rem 0.75rem;
-  border-radius: 8px;
-  border: 1px solid rgba(138, 129, 120, 0.1);
-  font-size: 0.875rem;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+  font-size: var(--fs-sm);
 }
 
 .rest-type-tag {
-  font-size: 0.6875rem;
+  font-size: var(--fs-xs);
   font-weight: 600;
-  padding: 0.125rem 0.375rem;
-  border-radius: 4px;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
   margin-left: auto;
-  margin-right: 1rem;
+  margin-right: var(--space-4);
   text-transform: uppercase;
 }
 
@@ -850,7 +850,7 @@ function toggleTrainingDay(day) {
   background: none;
   border: none;
   color: var(--color-text-muted);
-  font-size: 1.25rem;
+  font-size: var(--fs-lg);
   line-height: 1;
   cursor: pointer;
 }
@@ -862,15 +862,15 @@ function toggleTrainingDay(day) {
 .step3-actions {
   display: flex;
   justify-content: space-between;
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 .btn-skip {
   background: transparent;
-  border: 1px solid rgba(138, 129, 120, 0.3);
+  border: 1px solid var(--border-strong);
   color: var(--color-text-muted);
-  padding: 0.75rem 1.25rem;
-  border-radius: 10px;
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-md);
   font-weight: 600;
   cursor: pointer;
 }
@@ -883,12 +883,12 @@ function toggleTrainingDay(day) {
 /* Submit button */
 .btn-submit {
   width: 100%;
-  padding: 0.875rem;
+  padding: var(--space-3);
   background: var(--color-accent);
   color: var(--color-text);
   border: none;
-  border-radius: 10px;
-  font-size: 0.9375rem;
+  border-radius: var(--radius-md);
+  font-size: var(--fs-base);
   font-weight: 700;
   cursor: pointer;
   transition: background 0.2s;
@@ -907,10 +907,10 @@ function toggleTrainingDay(day) {
 .error-banner {
   background-color: rgba(239, 68, 68, 0.1);
   color: #EF4444;
-  padding: 0.75rem 1rem;
-  border-radius: 10px;
-  font-size: 0.875rem;
-  margin-bottom: 1.5rem;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  font-size: var(--fs-sm);
+  margin-bottom: var(--space-5);
   border: 1px solid rgba(239, 68, 68, 0.2);
 }
 </style>

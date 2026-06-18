@@ -67,7 +67,7 @@ const nav = useNavStore()
 }
 
 .logo-text {
-  font-size: 1.5rem;
+  font-size: var(--fs-xl);
   font-weight: 700;
   color: var(--color-accent);
   letter-spacing: -0.02em;
@@ -75,7 +75,7 @@ const nav = useNavStore()
 }
 
 .logo-tag {
-  font-size: 0.65rem;
+  font-size: var(--fs-xs);
   font-weight: 500;
   color: var(--color-text-muted);
   text-transform: uppercase;
@@ -105,11 +105,11 @@ const nav = useNavStore()
   width: 100%;
   padding: 10px 12px;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   background: transparent;
   color: var(--color-text-muted);
   font-family: var(--font-sans);
-  font-size: 0.875rem;
+  font-size: var(--fs-sm);
   font-weight: 500;
   cursor: pointer;
   text-align: left;

@@ -457,10 +457,10 @@ async function saveExtraMeal() {
 .daily-log-page {
   max-width: 600px;
   margin: 0 auto;
-  padding: 1.5rem 1rem 4rem;
+  padding: var(--space-5) var(--space-4) var(--space-7);
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: var(--space-5);
 }
 
 /* Date Navigator styling */
@@ -469,22 +469,23 @@ async function saveExtraMeal() {
   justify-content: space-between;
   align-items: center;
   background: var(--color-surface);
-  border: 1px solid rgba(138, 129, 120, 0.12);
-  border-radius: 16px;
-  padding: 0.875rem 1.25rem;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-3) var(--space-4);
 }
 
 .btn-nav {
   background: transparent;
   border: none;
-  font-size: 1.25rem;
+  font-size: var(--fs-lg);
   cursor: pointer;
   width: 36px;
   height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   color: var(--color-text);
   transition: background 0.2s;
 }
@@ -501,12 +502,12 @@ async function saveExtraMeal() {
 .date-info {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--space-2);
 }
 
 .date-title {
-  font-size: 1.125rem;
-  font-weight: 700;
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-bold);
   color: var(--color-text);
   margin: 0;
 }
@@ -514,32 +515,33 @@ async function saveExtraMeal() {
 .badge-today {
   background-color: var(--color-accent);
   color: var(--color-text);
-  font-size: 0.6875rem;
-  font-weight: 700;
-  padding: 0.125rem 0.5rem;
-  border-radius: 9999px;
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-pill);
   text-transform: uppercase;
 }
 
 .log-content-wrap {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: var(--space-5);
 }
 
 /* Generic Card Layout */
 .section-card {
   background: var(--color-surface);
-  border: 1px solid rgba(138, 129, 120, 0.12);
-  border-radius: 16px;
-  padding: 1.25rem;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: var(--space-5);
 }
 
 .section-subtitle {
-  font-size: 1rem;
-  font-weight: 700;
+  font-size: var(--fs-base);
+  font-weight: var(--fw-bold);
   color: var(--color-text);
-  margin: 0 0 1rem;
+  margin: 0 0 var(--space-4);
 }
 
 /* Training card */
@@ -548,13 +550,13 @@ async function saveExtraMeal() {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 .training-info {
   display: flex;
   align-items: center;
-  gap: 0.875rem;
+  gap: var(--space-3);
 }
 
 .card-icon {
@@ -564,14 +566,14 @@ async function saveExtraMeal() {
 }
 
 .training-title {
-  font-size: 0.9375rem;
-  font-weight: 600;
+  font-size: var(--fs-base);
+  font-weight: var(--fw-semibold);
   color: var(--color-text);
   margin: 0;
 }
 
 .training-desc {
-  font-size: 0.8125rem;
+  font-size: var(--fs-sm);
   color: var(--color-text-muted);
   margin: 0;
 }
@@ -579,9 +581,9 @@ async function saveExtraMeal() {
 .checkbox-container {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 0.875rem;
-  font-weight: 600;
+  gap: var(--space-2);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
   cursor: pointer;
 }
 
@@ -589,12 +591,12 @@ async function saveExtraMeal() {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.375rem;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  padding: 0.5rem 1rem;
-  border-radius: 10px;
-  border: 1px solid rgba(138, 129, 120, 0.25);
+  gap: var(--space-2);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-strong);
   background: transparent;
   color: var(--color-text);
   cursor: pointer;
@@ -611,36 +613,36 @@ async function saveExtraMeal() {
 .meals-section {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 .meals-list {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 .empty-meals {
   text-align: center;
-  padding: 2.5rem 1rem;
+  padding: var(--space-6) var(--space-4);
   color: var(--color-text-muted);
-  font-size: 0.875rem;
+  font-size: var(--fs-sm);
   background: var(--color-surface);
-  border: 1px dashed rgba(138, 129, 120, 0.3);
-  border-radius: 16px;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-lg);
 }
 
 .btn-add-extra-meal {
   width: 100%;
-  padding: 0.875rem;
+  padding: var(--space-3);
   background: transparent;
-  border: 1px dashed rgba(138, 129, 120, 0.3);
+  border: 1px dashed var(--border-strong);
   color: var(--color-text);
-  font-weight: 600;
-  border-radius: 16px;
+  font-weight: var(--fw-semibold);
+  border-radius: var(--radius-lg);
   cursor: pointer;
   transition: all 0.2s;
-  font-size: 0.9375rem;
+  font-size: var(--fs-base);
 }
 
 .btn-add-extra-meal:hover {
@@ -651,13 +653,13 @@ async function saveExtraMeal() {
 /* Extra meal card editor */
 .extra-meal-form-card {
   background: var(--color-surface);
-  border: 1px solid rgba(37, 99, 235, 0.25);
-  border-radius: 16px;
-  padding: 1.25rem;
+  border: 1px solid rgba(37, 99, 235, 0.25); /* semantic: extra meal = system blue */
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.04);
+  gap: var(--space-4);
+  box-shadow: var(--shadow-md);
 }
 
 .form-header {
@@ -668,15 +670,15 @@ async function saveExtraMeal() {
 
 .form-header h4 {
   margin: 0;
-  font-size: 0.9375rem;
-  font-weight: 700;
+  font-size: var(--fs-base);
+  font-weight: var(--fw-bold);
   color: var(--color-text);
 }
 
 .btn-close {
   background: none;
   border: none;
-  font-size: 1.25rem;
+  font-size: var(--fs-lg);
   color: var(--color-text-muted);
   cursor: pointer;
 }
@@ -684,7 +686,7 @@ async function saveExtraMeal() {
 .extra-items-inputs {
   display: grid;
   grid-template-columns: 1fr 90px 70px;
-  gap: 0.5rem;
+  gap: var(--space-2);
   align-items: center;
 }
 
@@ -698,18 +700,18 @@ async function saveExtraMeal() {
   left: 0;
   right: 0;
   background: white;
-  border: 1px solid rgba(138, 129, 120, 0.25);
-  border-radius: 8px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
   z-index: 10;
   max-height: 150px;
   overflow-y: auto;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  box-shadow: var(--shadow-lg);
 }
 
 .dropdown-item {
-  padding: 0.5rem 0.75rem;
+  padding: var(--space-2) var(--space-3);
   cursor: pointer;
-  font-size: 0.8125rem;
+  font-size: var(--fs-sm);
 }
 
 .dropdown-item:hover {
@@ -719,11 +721,11 @@ async function saveExtraMeal() {
 .weight-input-wrap {
   display: flex;
   align-items: center;
-  gap: 0.25rem;
+  gap: var(--space-1);
 }
 
 .unit {
-  font-size: 0.8125rem;
+  font-size: var(--fs-sm);
   color: var(--color-text-muted);
 }
 
@@ -732,10 +734,10 @@ async function saveExtraMeal() {
 }
 
 .form-input {
-  padding: 0.5rem 0.75rem;
-  border-radius: 8px;
-  border: 1px solid rgba(138, 129, 120, 0.25);
-  font-size: 0.875rem;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-strong);
+  font-size: var(--fs-sm);
   outline: none;
   width: 100%;
 }
@@ -745,13 +747,13 @@ async function saveExtraMeal() {
 }
 
 .btn-add {
-  padding: 0.5rem;
+  padding: var(--space-2);
   background: var(--color-text);
   color: white;
   border: none;
-  font-weight: 600;
-  border-radius: 8px;
-  font-size: 0.8125rem;
+  font-weight: var(--fw-semibold);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-sm);
   cursor: pointer;
 }
 
@@ -761,11 +763,11 @@ async function saveExtraMeal() {
 }
 
 .added-extra-items {
-  border-top: 1px solid rgba(138, 129, 120, 0.1);
-  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: var(--space-3);
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: var(--space-3);
 }
 
 .extra-items-list {
@@ -774,29 +776,29 @@ async function saveExtraMeal() {
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.375rem;
+  gap: var(--space-2);
 }
 
 .extra-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 0.8125rem;
+  font-size: var(--fs-sm);
   background-color: var(--color-bg);
-  padding: 0.375rem 0.75rem;
-  border-radius: 6px;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
 }
 
 .extra-item-right {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--space-2);
 }
 
 .btn-remove-item {
   background: none;
   border: none;
-  font-size: 1.125rem;
+  font-size: var(--fs-lg);
   color: var(--color-text-muted);
   cursor: pointer;
   line-height: 1;
@@ -808,13 +810,13 @@ async function saveExtraMeal() {
 
 .btn-save-extra {
   width: 100%;
-  padding: 0.625rem;
+  padding: var(--space-3);
   background: var(--color-accent);
   color: var(--color-text);
   border: none;
-  border-radius: 8px;
-  font-weight: 700;
-  font-size: 0.875rem;
+  border-radius: var(--radius-sm);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-sm);
   cursor: pointer;
 }
 
