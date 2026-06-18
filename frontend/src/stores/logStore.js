@@ -58,17 +58,28 @@ export const useLogStore = defineStore('log', () => {
   async function skipMeal(mealLogId) {
     try {
       const { data } = await api.patch(`/meal-logs/${mealLogId}/skip`)
-      const index = mealLogs.value.findIndex(l => l.id === mealLogId)
-      if (index !== -1) {
-        mealLogs.value[index] = data
+      const mensaje = data.mensaje_recalculo
+      // A skip rescales the remaining meals, so refresh the whole day to pick up
+      // their new quantities and the persistent "ajustado" marks.
+      if (dailyLog.value?.fecha) {
+        await fetchDailyLog(dailyLog.value.fecha)
       }
-      // Since skipMeal updates daily_log.recalculo_motivo, let's refresh the daily log if needed or update it:
-      if (dailyLog.value) {
-        dailyLog.value.recalculo_motivo = 'comida_saltada'
-      }
-      return data
+      return { ...data, mensaje_recalculo: mensaje }
     } catch (err) {
       console.error('Error skipping meal:', err)
+      throw err
+    }
+  }
+
+  async function undoRecalc(dailyLogId) {
+    try {
+      // Reverts the last automatic recalculation; returns the refreshed day.
+      const { data } = await api.post(`/daily-logs/${dailyLogId}/recalc/undo`)
+      setDailyLog(data)
+      setMealLogs(data.meal_logs || [])
+      return data
+    } catch (err) {
+      console.error('Error undoing recalculation:', err)
       throw err
     }
   }
@@ -111,6 +122,7 @@ export const useLogStore = defineStore('log', () => {
     completeMeal,
     skipMeal,
     resetMeal,
+    undoRecalc,
     addExtraMeal
   }
 })

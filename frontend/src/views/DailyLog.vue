@@ -179,6 +179,16 @@ async function handleReset(mealLogId) {
   activeNoticeMessage.value = null
 }
 
+async function handleUndoRecalc() {
+  if (!logStore.dailyLog?.id) return
+  try {
+    await logStore.undoRecalc(logStore.dailyLog.id)
+  } catch (err) {
+    // Nothing to revert (no snapshot) — just dismiss the notice gracefully.
+  }
+  activeNoticeMessage.value = ''
+}
+
 function triggerSubstitute(item) {
   selectedMealItem.value = item
   showSubstituteSelector.value = true
@@ -287,9 +297,10 @@ async function saveExtraMeal() {
     <div v-if="logStore.dailyLog" class="log-content-wrap">
       
       <!-- ── Recalculation Notice ─────────────────────────── -->
-      <RecalcNotice 
-        v-if="recalcMessage" 
-        :message="recalcMessage" 
+      <RecalcNotice
+        v-if="recalcMessage"
+        :message="recalcMessage"
+        @undo="handleUndoRecalc"
         @close="activeNoticeMessage = ''; if (logStore.dailyLog) { logStore.dailyLog.recalculo_motivo = null; }"
       />
 

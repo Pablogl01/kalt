@@ -95,6 +95,9 @@ const formatTime = (timeStr) => {
         </h3>
         <span v-if="mealLog.meal?.meal_slot?.es_pre_entreno" class="badge-pre">Pre-entreno</span>
         <span v-if="mealLog.meal?.meal_slot?.es_post_entreno" class="badge-post">Post-entreno</span>
+        <span v-if="mealLog.ajuste_kcal" class="badge-ajuste" title="Ajuste automático por un evento del día">
+          Ajustado {{ mealLog.ajuste_kcal > 0 ? '+' : '−' }}{{ Math.abs(mealLog.ajuste_kcal) }} kcal
+        </span>
       </div>
 
       <div class="meal-time">
@@ -273,6 +276,15 @@ const formatTime = (timeStr) => {
 .badge-post {
   background-color: rgba(22, 163, 74, 0.1);
   color: var(--color-protein);
+}
+
+.badge-ajuste {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  padding: 0.125rem 0.5rem;
+  border-radius: 9999px;
+  background-color: rgba(37, 99, 235, 0.1);
+  color: var(--color-system);
 }
 
 .meal-time {

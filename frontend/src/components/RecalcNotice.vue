@@ -1,31 +1,23 @@
-<!-- RecalcNotice.vue — Phase 4
-     Non-intrusive contextual notice explaining why macros were recalculated. -->
+<!-- RecalcNotice.vue
+     Persistent contextual notice explaining why macros were recalculated.
+     It stays until the user undoes the change, closes it, or another action
+     replaces it (no auto-dismiss). -->
 <script setup>
-import { onMounted, onUnmounted } from 'vue'
 import { RefreshCw } from 'lucide-vue-next'
 
 const props = defineProps({
   message: {
     type: String,
     required: true
+  },
+  // Whether the recalculation can be reverted (a snapshot exists).
+  undoable: {
+    type: Boolean,
+    default: true
   }
 })
 
-const emit = defineEmits(['close'])
-
-let timeoutId = null
-
-onMounted(() => {
-  timeoutId = setTimeout(() => {
-    emit('close')
-  }, 6000)
-})
-
-onUnmounted(() => {
-  if (timeoutId) {
-    clearTimeout(timeoutId)
-  }
-})
+const emit = defineEmits(['close', 'undo'])
 </script>
 
 <template>
@@ -34,7 +26,8 @@ onUnmounted(() => {
     <div class="notice-content">
       <p class="notice-text">{{ message }}</p>
     </div>
-    <button class="close-btn" @click="emit('close')" aria-label="Cerrar notice">&times;</button>
+    <button v-if="undoable" class="undo-btn" @click="emit('undo')">Deshacer</button>
+    <button class="close-btn" @click="emit('close')" aria-label="Cerrar aviso">&times;</button>
   </div>
 </template>
 
@@ -68,6 +61,24 @@ onUnmounted(() => {
   color: var(--color-text);
   margin: 0;
   line-height: 1.4;
+}
+
+.undo-btn {
+  flex-shrink: 0;
+  background: none;
+  border: 1px solid var(--color-system);
+  color: var(--color-system);
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.625rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.undo-btn:hover {
+  background-color: rgba(37, 99, 235, 0.08);
 }
 
 .close-btn {
