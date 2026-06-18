@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from 'vue'
+import { RefreshCw, CircleCheck } from 'lucide-vue-next'
 import { useUserStore } from '@/stores/userStore'
 
 const props = defineProps({
@@ -130,7 +131,8 @@ const formatTime = (timeStr) => {
             @click="emit('substitute', item)" 
             class="btn-substitute"
           >
-            🔄 Sustituir
+            <RefreshCw :size="14" :stroke-width="2" aria-hidden="true" />
+            Sustituir
           </button>
         </li>
       </ul>
@@ -166,7 +168,7 @@ const formatTime = (timeStr) => {
           Marcar como realizada
         </button>
         <div v-else class="completed-actions-wrap">
-          <span class="completed-indicator">✓ Realizada</span>
+          <span class="completed-indicator"><CircleCheck :size="14" :stroke-width="2" aria-hidden="true" /> Realizada</span>
           <button 
             @click="emit('skip', mealLog.id)" 
             class="btn-action btn-action--skip"
@@ -343,6 +345,9 @@ const formatTime = (timeStr) => {
 }
 
 .completed-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
   font-size: 0.8125rem;
   font-weight: 600;
   color: var(--color-protein);

@@ -2,6 +2,7 @@
      Non-intrusive contextual notice explaining why macros were recalculated. -->
 <script setup>
 import { onMounted, onUnmounted } from 'vue'
+import { RefreshCw } from 'lucide-vue-next'
 
 const props = defineProps({
   message: {
@@ -29,7 +30,7 @@ onUnmounted(() => {
 
 <template>
   <div class="recalc-notice">
-    <div class="notice-icon">⚙️</div>
+    <div class="notice-icon"><RefreshCw :size="18" :stroke-width="2" aria-hidden="true" /></div>
     <div class="notice-content">
       <p class="notice-text">{{ message }}</p>
     </div>
@@ -52,7 +53,8 @@ onUnmounted(() => {
 }
 
 .notice-icon {
-  font-size: 1.125rem;
+  display: inline-flex;
+  align-items: center;
   color: var(--color-system);
 }
 

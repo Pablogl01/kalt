@@ -31,7 +31,7 @@
 
       <!-- If profile is incomplete: CTA -->
       <div v-else class="macros-cta">
-        <div class="macros-cta__icon" aria-hidden="true">📊</div>
+        <div class="macros-cta__icon" aria-hidden="true"><BarChart3 :size="32" :stroke-width="2" /></div>
         <p class="macros-cta__text">
           Completa los campos de tu perfil para ver tus macros diarios calculados.
         </p>
@@ -44,7 +44,7 @@
 
       <!-- Save feedback -->
       <div v-if="saveSuccess" class="save-banner save-banner--success" role="status" aria-live="polite">
-        ✓ Perfil actualizado correctamente
+        <Check :size="16" :stroke-width="2.5" aria-hidden="true" /> Perfil actualizado correctamente
       </div>
       <div v-if="saveError" class="save-banner save-banner--error" role="alert" aria-live="polite">
         {{ saveError }}
@@ -201,7 +201,7 @@
                 class="radio-hidden"
                 :id="`objetivo-${opt.value}`"
               />
-              <span class="radio-icon" aria-hidden="true">{{ opt.icon }}</span>
+              <span class="radio-icon" aria-hidden="true"><component :is="opt.icon" :size="24" :stroke-width="2" /></span>
               <span class="radio-label">{{ opt.label }}</span>
               <span class="radio-desc">{{ opt.desc }}</span>
             </label>
@@ -258,6 +258,7 @@
 
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
+import { BarChart3, Check, TrendingUp, Scale, TrendingDown } from 'lucide-vue-next'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/userStore'
 
@@ -285,9 +286,9 @@ const form = reactive({
 })
 
 const objetivoOptions = [
-  { value: 'volumen',       icon: '💪', label: 'Volumen',       desc: '+300 kcal' },
-  { value: 'mantenimiento', icon: '⚖️',  label: 'Mantenimiento', desc: 'TDEE' },
-  { value: 'definicion',    icon: '🔥', label: 'Definición',    desc: '−300 kcal' },
+  { value: 'volumen',       icon: TrendingUp,   label: 'Volumen',       desc: '+300 kcal' },
+  { value: 'mantenimiento', icon: Scale,        label: 'Mantenimiento', desc: 'TDEE' },
+  { value: 'definicion',    icon: TrendingDown, label: 'Definición',    desc: '−300 kcal' },
 ]
 
 // Initialise form from store on mount
@@ -433,7 +434,9 @@ async function handleLogout() {
 }
 
 .macros-cta__icon {
-  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  color: var(--color-text-muted);
 }
 
 .macros-cta__text {
@@ -453,6 +456,9 @@ async function handleLogout() {
 }
 
 .save-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   border-radius: 10px;
   padding: 0.75rem 1rem;
   font-size: 0.875rem;
@@ -628,7 +634,8 @@ async function handleLogout() {
   pointer-events: none;
 }
 
-.radio-icon  { font-size: 1.375rem; }
+.radio-icon  { display: inline-flex; color: var(--color-text-muted); }
+.radio-card--active .radio-icon { color: var(--color-accent-dark); }
 .radio-label { font-size: 0.875rem; font-weight: 700; color: var(--color-text); }
 .radio-desc  { font-size: 0.75rem;  font-weight: 500; color: var(--color-text-muted); }
 

@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
+import { BarChart3, Apple, Activity, Sofa } from 'lucide-vue-next'
 import { useUserStore } from '@/stores/userStore'
 import { useDietStore } from '@/stores/dietStore'
 import MacroBar from '@/components/MacroBar.vue'
@@ -93,7 +94,7 @@ function formatTime(timeStr) {
     
     <!-- ── Profile Incomplete State ─────────────────────── -->
     <div v-if="!userStore.hasCompleteProfile" class="card-empty-state">
-      <div class="empty-icon">📊</div>
+      <div class="empty-icon"><BarChart3 :size="56" :stroke-width="1.75" aria-hidden="true" /></div>
       <h2 class="empty-title">Completa tu perfil</h2>
       <p class="empty-desc">
         Necesitamos conocer tus datos físicos y tus objetivos deportivos para poder generar un plan de alimentación adecuado para ti.
@@ -103,7 +104,7 @@ function formatTime(timeStr) {
 
     <!-- ── No Active Plan State ────────────────────────── -->
     <div v-else-if="!dietStore.activePlan && dietStore.planStatus !== 'pending' && !dietStore.isGenerating" class="card-empty-state">
-      <div class="empty-icon">🍏</div>
+      <div class="empty-icon"><Apple :size="56" :stroke-width="1.75" aria-hidden="true" /></div>
       <h2 class="empty-title">Genera tu primer plan semanal</h2>
       <p class="empty-desc">
         ¡Tu perfil está listo! Haz clic a continuación para generar tu plan de alimentación determinista completamente personalizado para 7 días.
@@ -156,10 +157,10 @@ function formatTime(timeStr) {
             <span class="summary-date">{{ currentDayPlan.fecha }}</span>
             <div class="training-badge-wrap">
               <span v-if="isTrainingDay(currentDayPlan.fecha)" class="badge badge--training">
-                💪 Día de entreno
+                <Activity :size="14" :stroke-width="2" aria-hidden="true" /> Día de entreno
               </span>
               <span v-else class="badge badge--rest">
-                🛋️ Día de descanso
+                <Sofa :size="14" :stroke-width="2" aria-hidden="true" /> Día de descanso
               </span>
             </div>
           </div>
@@ -274,7 +275,9 @@ function formatTime(timeStr) {
 }
 
 .empty-icon {
-  font-size: 3.5rem;
+  display: flex;
+  justify-content: center;
+  color: var(--color-text-muted);
   margin-bottom: 1.5rem;
 }
 
@@ -436,6 +439,8 @@ function formatTime(timeStr) {
 
 .badge {
   display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
   padding: 0.25rem 0.625rem;
   border-radius: 20px;
   font-size: 0.75rem;

@@ -1,5 +1,6 @@
 <script setup>
 import { ref, reactive, computed, watch, onMounted } from 'vue'
+import { TrendingUp, Scale, TrendingDown } from 'lucide-vue-next'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/userStore'
 import { useDietStore } from '@/stores/dietStore'
@@ -57,9 +58,9 @@ const activityOptions = [
 ]
 
 const goalOptions = [
-  { value: 'volumen', icon: '💪', label: 'Volumen', desc: 'Ganar masa muscular (+300 kcal)' },
-  { value: 'mantenimiento', icon: '⚖️', label: 'Mantenimiento', desc: 'Mantener peso (TDEE)' },
-  { value: 'definicion', icon: '🔥', label: 'Definición', desc: 'Perder grasa (−300 kcal)' },
+  { value: 'volumen', icon: TrendingUp, label: 'Volumen', desc: 'Ganar masa muscular (+300 kcal)' },
+  { value: 'mantenimiento', icon: Scale, label: 'Mantenimiento', desc: 'Mantener peso (TDEE)' },
+  { value: 'definicion', icon: TrendingDown, label: 'Definición', desc: 'Perder grasa (−300 kcal)' },
 ]
 
 // Fetch foods for step 3
@@ -308,7 +309,7 @@ function toggleTrainingDay(day) {
                 :class="{ 'goal-card--active': formStep1.objetivo === opt.value }"
               >
                 <input type="radio" :value="opt.value" v-model="formStep1.objetivo" class="goal-radio-hidden" />
-                <span class="goal-icon">{{ opt.icon }}</span>
+                <span class="goal-icon"><component :is="opt.icon" :size="28" :stroke-width="2" aria-hidden="true" /></span>
                 <span class="goal-title">{{ opt.label }}</span>
                 <span class="goal-desc">{{ opt.desc }}</span>
               </label>
@@ -638,8 +639,13 @@ function toggleTrainingDay(day) {
 }
 
 .goal-icon {
-  font-size: 1.5rem;
+  display: inline-flex;
+  color: var(--color-text-muted);
   margin-bottom: 0.5rem;
+}
+
+.goal-card--active .goal-icon {
+  color: var(--color-accent-dark);
 }
 
 .goal-title {

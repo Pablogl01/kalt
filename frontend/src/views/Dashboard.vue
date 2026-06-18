@@ -1,5 +1,6 @@
 <script setup>
 import { onMounted, computed, ref } from 'vue'
+import { BarChart3, Utensils, Activity, Check } from 'lucide-vue-next'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/userStore'
 import { useDietStore } from '@/stores/dietStore'
@@ -120,7 +121,7 @@ const formatTime = (timeStr) => {
       
       <!-- ── CASE 1: Incomplete Profile ────────────────────── -->
       <div v-if="!userStore.hasCompleteProfile" class="dashboard-card cta-card">
-        <div class="card-icon-big">📊</div>
+        <div class="card-icon-big"><BarChart3 :size="48" :stroke-width="2" aria-hidden="true" /></div>
         <h2 class="card-title">Completa tu perfil</h2>
         <p class="card-desc">Necesitamos algunos datos físicos mínimos para calcular tus macros objetivo y generar tu plan personalizado.</p>
         <router-link :to="{ name: 'onboarding' }" class="btn-cta">
@@ -138,7 +139,7 @@ const formatTime = (timeStr) => {
           />
         </div>
         <div v-else class="generate-plan-prompt">
-          <div class="card-icon-big">🍽️</div>
+          <div class="card-icon-big"><Utensils :size="48" :stroke-width="2" aria-hidden="true" /></div>
           <h2 class="card-title">Genera tu plan semanal</h2>
           <p class="card-desc">Tu perfil está listo, pero aún no tienes un plan de alimentación generado para esta semana.</p>
           <button @click="triggerGenerate" class="btn-cta" :disabled="dietStore.isGenerating">
@@ -165,7 +166,7 @@ const formatTime = (timeStr) => {
         <section class="widget-card training-widget">
           <h2 class="widget-title">Entrenamiento</h2>
           <div class="training-summary">
-            <div class="t-icon">🏃</div>
+            <div class="t-icon"><Activity :size="32" :stroke-width="2" aria-hidden="true" /></div>
             <div class="t-info">
               <h3 class="t-status">
                 {{ logStore.dailyLog?.ha_entrenado ? 'Entrenado' : 'Día de descanso / No entrenado' }}
@@ -188,7 +189,7 @@ const formatTime = (timeStr) => {
               :class="{ 'meal-preview-item--completed': ml.realizada }"
             >
               <div class="mp-check">
-                <span class="check-circle">{{ ml.realizada ? '✓' : '' }}</span>
+                <span class="check-circle"><Check v-if="ml.realizada" :size="13" :stroke-width="3" aria-hidden="true" /></span>
               </div>
               <div class="mp-info">
                 <h4 class="mp-name">{{ ml.meal?.nombre || 'Comida Extra' }}</h4>
@@ -279,7 +280,9 @@ const formatTime = (timeStr) => {
 }
 
 .card-icon-big {
-  font-size: 3.5rem;
+  display: flex;
+  justify-content: center;
+  color: var(--color-text-muted);
   margin-bottom: 0.5rem;
 }
 

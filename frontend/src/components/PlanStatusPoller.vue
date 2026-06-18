@@ -1,5 +1,6 @@
 <script setup>
 import { onMounted, onUnmounted, watch } from 'vue'
+import { TriangleAlert } from 'lucide-vue-next'
 import { useDietStore } from '@/stores/dietStore'
 
 const props = defineProps({
@@ -44,7 +45,7 @@ function handleRetry() {
     </div>
 
     <div v-else-if="dietStore.planStatus === 'failed'" class="poller-state poller-state--failed">
-      <div class="error-icon">⚠️</div>
+      <div class="error-icon"><TriangleAlert :size="48" :stroke-width="2" aria-hidden="true" /></div>
       <h3 class="poller-title">No pudimos generar tu plan</h3>
       <p class="poller-desc">{{ dietStore.errorMessage || 'Hubo un problema procesando tu dieta. Por favor, vuelve a intentarlo.' }}</p>
       <button class="btn-retry" @click="handleRetry" :disabled="dietStore.isGenerating">
@@ -91,7 +92,9 @@ function handleRetry() {
 }
 
 .error-icon {
-  font-size: 3rem;
+  display: flex;
+  justify-content: center;
+  color: var(--color-negative-badge);
   margin-bottom: 1rem;
 }
 

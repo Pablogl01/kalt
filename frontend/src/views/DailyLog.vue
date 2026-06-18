@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed, watch, onMounted } from 'vue'
+import { Activity, Check } from 'lucide-vue-next'
 import { useLogStore } from '@/stores/logStore'
 import { useUserStore } from '@/stores/userStore'
 import api from '@/api/client'
@@ -296,7 +297,7 @@ async function saveExtraMeal() {
       <section class="section-card training-card">
         <div class="training-row">
           <div class="training-info">
-            <span class="card-icon" aria-hidden="true">🏃</span>
+            <span class="card-icon" aria-hidden="true"><Activity :size="28" :stroke-width="2" /></span>
             <div>
               <h3 class="training-title">Entrenamiento</h3>
               <p class="training-desc">
@@ -321,7 +322,8 @@ async function saveExtraMeal() {
               class="btn-train"
               :class="{ 'btn-train--active': logStore.dailyLog.ha_entrenado }"
             >
-              {{ logStore.dailyLog.ha_entrenado ? '✓ Entrenado' : 'He entrenado hoy' }}
+              <Check v-if="logStore.dailyLog.ha_entrenado" :size="15" :stroke-width="2.5" aria-hidden="true" />
+              {{ logStore.dailyLog.ha_entrenado ? 'Entrenado' : 'He entrenado hoy' }}
             </button>
           </div>
         </div>
@@ -531,7 +533,9 @@ async function saveExtraMeal() {
 }
 
 .card-icon {
-  font-size: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  color: var(--color-text-muted);
 }
 
 .training-title {
@@ -557,6 +561,10 @@ async function saveExtraMeal() {
 }
 
 .btn-train {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
   font-size: 0.8125rem;
   font-weight: 600;
   padding: 0.5rem 1rem;

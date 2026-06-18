@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
+import { Check, ArrowLeftRight, ShoppingCart } from 'lucide-vue-next'
 import { useDietStore } from '@/stores/dietStore'
 import api from '@/api/client'
 import SubstituteSelector from '@/components/SubstituteSelector.vue'
@@ -229,22 +230,24 @@ function formatDate(dateStr) {
                 <!-- Check action -->
                 <button 
                   v-if="!item.tengo_en_casa" 
-                  class="action-btn action-btn--check" 
+                  class="action-btn action-btn--check"
                   @click="markAsHave(item)"
                   title="Ya lo tengo"
+                  aria-label="Ya lo tengo"
                 >
-                  ✓
+                  <Check :size="15" :stroke-width="2.5" aria-hidden="true" />
                 </button>
                 <span v-else class="owned-indicator">Disponible</span>
 
                 <!-- Substitute action -->
                 <button 
                   v-if="!item.tengo_en_casa" 
-                  class="action-btn action-btn--substitute" 
+                  class="action-btn action-btn--substitute"
                   @click="openSubstituteSelector(item)"
                   title="No lo quiero"
+                  aria-label="Sustituir este alimento"
                 >
-                  ⇄
+                  <ArrowLeftRight :size="15" :stroke-width="2" aria-hidden="true" />
                 </button>
               </div>
             </div>
@@ -255,7 +258,7 @@ function formatDate(dateStr) {
 
     <!-- Empty/No list state -->
     <div v-else class="state-container animate-fade-in">
-      <div class="empty-icon">🛒</div>
+      <div class="empty-icon"><ShoppingCart :size="56" :stroke-width="1.75" aria-hidden="true" /></div>
       <h2 class="empty-title">Sin lista de la compra</h2>
       <p class="empty-desc">Genera tu plan semanal primero para poder ver o generar la lista de la compra automática.</p>
       
@@ -570,7 +573,9 @@ function formatDate(dateStr) {
 }
 
 .empty-icon {
-  font-size: 4rem;
+  display: flex;
+  justify-content: center;
+  color: var(--color-text-muted);
   margin-bottom: 1.5rem;
 }
 
