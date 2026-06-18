@@ -506,8 +506,8 @@ const adherencePercentage = computed(() => {
 }
 
 .range-btn.active {
-  background-color: var(--color-primary);
-  color: #FFFFFF;
+  background-color: var(--color-accent);
+  color: var(--color-text);
 }
 
 /* KPI Dashboard Cards */
@@ -701,7 +701,7 @@ const adherencePercentage = computed(() => {
 }
 
 .form-control:focus {
-  border-color: var(--color-primary);
+  border-color: var(--color-accent);
   outline: none;
 }
 
@@ -730,11 +730,11 @@ const adherencePercentage = computed(() => {
 }
 
 .btn-primary {
-  background-color: var(--color-primary);
-  color: #FFFFFF;
+  background-color: var(--color-accent);
+  color: var(--color-text);
 }
 .btn-primary:hover:not(:disabled) {
-  background-color: var(--color-primary-hover);
+  background-color: var(--color-accent-dark);
 }
 
 .btn-secondary {

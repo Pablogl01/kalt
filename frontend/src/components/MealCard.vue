@@ -384,7 +384,7 @@ const formatTime = (timeStr) => {
   border: none;
   font-size: 0.75rem;
   font-weight: 600;
-  color: var(--color-system, #3B82F6);
+  color: var(--color-system);
   cursor: pointer;
   padding: 0.25rem 0.5rem;
   border-radius: 6px;
@@ -395,6 +395,6 @@ const formatTime = (timeStr) => {
 }
 
 .btn-substitute:hover {
-  background-color: rgba(59, 130, 246, 0.08);
+  background-color: rgba(37, 99, 235, 0.08);
 }
 </style>

@@ -42,8 +42,8 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  background-color: rgba(59, 130, 246, 0.08); /* --color-system at 8% opacity */
-  border: 1px solid rgba(59, 130, 246, 0.2);
+  background-color: rgba(37, 99, 235, 0.08); /* --color-system at 8% opacity */
+  border: 1px solid rgba(37, 99, 235, 0.2);
   border-radius: 12px;
   padding: 0.75rem 1rem;
   margin: 1rem 0;
@@ -53,7 +53,7 @@ onUnmounted(() => {
 
 .notice-icon {
   font-size: 1.125rem;
-  color: var(--color-system, #3B82F6);
+  color: var(--color-system);
 }
 
 .notice-content {
@@ -73,7 +73,7 @@ onUnmounted(() => {
   border: none;
   font-size: 1.25rem;
   font-weight: bold;
-  color: var(--color-text-muted, #8A8178);
+  color: var(--color-text-muted);
   cursor: pointer;
   padding: 0 0.25rem;
   line-height: 1;
@@ -84,7 +84,7 @@ onUnmounted(() => {
 }
 
 .close-btn:hover {
-  color: var(--color-text, #1C1A17);
+  color: var(--color-text);
 }
 
 @keyframes slideIn {

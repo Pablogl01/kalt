@@ -226,8 +226,8 @@ async function selectSubstitute(substituteId) {
 .spinner {
   width: 32px;
   height: 32px;
-  border: 3px solid rgba(59, 130, 246, 0.1);
-  border-top-color: var(--color-system, #3B82F6);
+  border: 3px solid rgba(37, 99, 235, 0.1);
+  border-top-color: var(--color-system);
   border-radius: 50%;
   margin: 0 auto 1rem;
   animation: spin 0.8s linear infinite;
@@ -278,11 +278,11 @@ async function selectSubstitute(substituteId) {
 .similarity-badge {
   font-size: 0.6875rem;
   font-weight: 600;
-  background-color: rgba(59, 130, 246, 0.08);
-  color: var(--color-system, #3B82F6);
+  background-color: rgba(37, 99, 235, 0.08);
+  color: var(--color-system);
   padding: 0.125rem 0.5rem;
   border-radius: 9999px;
-  border: 1px solid rgba(59, 130, 246, 0.15);
+  border: 1px solid rgba(37, 99, 235, 0.15);
 }
 
 .macros-grid {
@@ -342,7 +342,7 @@ async function selectSubstitute(substituteId) {
 .substitute-card:hover .card-action-indicator {
   opacity: 1;
   transform: translateX(0);
-  color: var(--color-accent-hover, #6BA63D);
+  color: var(--color-accent-dark);
 }
 
 @keyframes spin {

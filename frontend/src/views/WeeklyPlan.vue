@@ -576,7 +576,7 @@ function formatTime(timeStr) {
   padding: 0.375rem 0.75rem;
   background: var(--color-bg);
   border: 1px solid rgba(138, 129, 120, 0.15);
-  color: var(--color-system, #3B82F6);
+  color: var(--color-system);
   font-size: 0.75rem;
   font-weight: 600;
   border-radius: 6px;
@@ -585,8 +585,8 @@ function formatTime(timeStr) {
 }
 
 .btn-substitute:hover {
-  background-color: rgba(59, 130, 246, 0.08);
-  border-color: var(--color-system, #3B82F6);
+  background-color: rgba(37, 99, 235, 0.08);
+  border-color: var(--color-system);
 }
 
 /* ── Typography modifications ─────────────────────── */

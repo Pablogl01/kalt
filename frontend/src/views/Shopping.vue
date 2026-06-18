@@ -385,7 +385,7 @@ function formatDate(dateStr) {
 }
 
 .btn--primary:hover {
-  background-color: var(--color-primary-hover, #6BA63D);
+  background-color: var(--color-accent-dark);
   transform: translateY(-1px);
 }
 
@@ -500,9 +500,9 @@ function formatDate(dateStr) {
 .substitute-badge {
   font-size: 0.6875rem;
   font-weight: 600;
-  background-color: rgba(59, 130, 246, 0.06);
-  color: var(--color-system, #3B82F6);
-  border: 1px solid rgba(59, 130, 246, 0.12);
+  background-color: rgba(37, 99, 235, 0.06);
+  color: var(--color-system);
+  border: 1px solid rgba(37, 99, 235, 0.12);
   padding: 0.125rem 0.375rem;
   border-radius: 4px;
 }
@@ -552,7 +552,7 @@ function formatDate(dateStr) {
 .owned-indicator {
   font-size: 0.75rem;
   font-weight: 600;
-  color: var(--color-accent-hover, #6BA63D);
+  color: var(--color-accent-dark);
   background-color: rgba(168, 224, 99, 0.1);
   padding: 0.125rem 0.5rem;
   border-radius: 9999px;
