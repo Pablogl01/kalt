@@ -1,0 +1,3 @@
+# Normalize line endings: store and check out with LF.
+# Avoids the "LF will be replaced by CRLF" churn/warnings on Windows.
+* text=auto eol=lf
