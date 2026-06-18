@@ -24,6 +24,11 @@ class DailyLog extends Model
         'recalculo_snapshot',
     ];
 
+    // Internal undo data — never exposed in API responses.
+    protected $hidden = [
+        'recalculo_snapshot',
+    ];
+
     protected function casts(): array
     {
         return [

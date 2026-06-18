@@ -155,6 +155,21 @@ class DailyLogController extends Controller
         return response()->json($data);
     }
 
+    public function undoRecalc(DailyLog $dailyLog): JsonResponse
+    {
+        $this->authorize('update', $dailyLog);
+
+        $recalculator = new \App\Services\DayRecalculator();
+
+        if (!$recalculator->restoreLastSnapshot($dailyLog)) {
+            return response()->json([
+                'message' => 'No hay ningún recálculo reciente que deshacer.',
+            ], 422);
+        }
+
+        return $this->formatLogResponse($dailyLog->fresh());
+    }
+
     private function formatLogResponse(DailyLog $log): JsonResponse
     {
         $log->load([
@@ -176,6 +191,23 @@ class DailyLogController extends Controller
 
         $data = $log->toArray();
         $data['day_plan'] = $dayPlan ? $dayPlan->toArray() : null;
+
+        // Persistent "ajustado" mark: while a recalculation is active, annotate
+        // each affected meal with the kcal delta vs. its pre-recalc total.
+        $originals = $log->recalculo_snapshot['meal_originals'] ?? [];
+        if ($log->recalculo_motivo && !empty($originals) && !empty($data['meal_logs'])) {
+            foreach ($data['meal_logs'] as &$ml) {
+                $mealId = $ml['meal_id'] ?? null;
+                if ($mealId && isset($originals[$mealId]) && !empty($ml['meal']['meal_items'])) {
+                    $currentCal = array_sum(array_column($ml['meal']['meal_items'], 'calorias'));
+                    $delta = round($currentCal - $originals[$mealId]);
+                    if (abs($delta) >= 1) {
+                        $ml['ajuste_kcal'] = $delta;
+                    }
+                }
+            }
+            unset($ml);
+        }
 
         return response()->json($data);
     }

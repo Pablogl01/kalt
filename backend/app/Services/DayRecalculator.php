@@ -6,6 +6,7 @@ use App\Models\DailyLog;
 use App\Models\MealLog;
 use App\Models\MealItem;
 use App\Models\Meal;
+use App\Models\DayPlan;
 use Carbon\Carbon;
 
 /**
@@ -109,6 +110,9 @@ class DayRecalculator
             return;
         }
 
+        // Snapshot meals and day plan before reducing, so the change can be undone.
+        $this->captureSnapshot($log, $remainingLogs, $dayPlan);
+
         $totalCarbs = 0;
         $totalFat = 0;
         $totalProtein = 0;
@@ -196,8 +200,11 @@ class DayRecalculator
             return;
         }
 
+        // Snapshot meals and day plan before adding macros, so the change can be undone.
+        $this->captureSnapshot($log, $remainingLogs, $dayPlan);
+
         $gymTime = Carbon::parse($log->hora_gimnasio);
-        
+
         $preMealLog = null;
         $postMealLog = null;
         $minPreDiff = null;
@@ -290,6 +297,9 @@ class DayRecalculator
             return;
         }
 
+        // Snapshot remaining meals before reducing, so the change can be undone.
+        $this->captureSnapshot($log, $remainingLogs);
+
         $totalOriginalRemainingCal = 0;
         foreach ($remainingLogs as $rLog) {
             if ($rLog->meal) {
@@ -325,14 +335,18 @@ class DayRecalculator
      * rescaled, so the recalculation can be reverted. Only the latest
      * recalculation is kept (single-step undo).
      */
-    private function captureSnapshot(DailyLog $log, $affectedLogs): void
+    private function captureSnapshot(DailyLog $log, $affectedLogs, ?DayPlan $dayPlan = null): void
     {
         $items = [];
+        $mealOriginals = [];
 
         foreach ($affectedLogs as $rLog) {
             if (!$rLog->meal) {
                 continue;
             }
+            // Per-meal original total, used for the persistent "ajustado" mark.
+            $mealOriginals[$rLog->meal->id] = round($rLog->meal->mealItems->sum('calorias'), 2);
+
             foreach ($rLog->meal->mealItems as $item) {
                 $items[] = [
                     'id'              => $item->id,
@@ -345,7 +359,22 @@ class DayRecalculator
             }
         }
 
-        $log->update(['recalculo_snapshot' => ['meal_items' => $items]]);
+        $snapshot = [
+            'meal_items'     => $items,
+            'meal_originals' => $mealOriginals,
+        ];
+
+        if ($dayPlan) {
+            $snapshot['day_plan'] = [
+                'id'                => $dayPlan->id,
+                'calorias_objetivo' => $dayPlan->calorias_objetivo,
+                'proteina_obj'      => $dayPlan->proteina_obj,
+                'carbos_obj'        => $dayPlan->carbos_obj,
+                'grasa_obj'         => $dayPlan->grasa_obj,
+            ];
+        }
+
+        $log->update(['recalculo_snapshot' => $snapshot]);
     }
 
     /**
@@ -374,8 +403,21 @@ class DayRecalculator
             ]);
         }
 
+        if (!empty($snapshot['day_plan'])) {
+            $dayPlan = DayPlan::find($snapshot['day_plan']['id']);
+            if ($dayPlan) {
+                $dayPlan->update([
+                    'calorias_objetivo' => $snapshot['day_plan']['calorias_objetivo'],
+                    'proteina_obj'      => $snapshot['day_plan']['proteina_obj'],
+                    'carbos_obj'        => $snapshot['day_plan']['carbos_obj'],
+                    'grasa_obj'         => $snapshot['day_plan']['grasa_obj'],
+                ]);
+            }
+        }
+
         $log->update([
             'recalculo_motivo'   => null,
+            'nota_exceso'        => null,
             'recalculo_snapshot' => null,
         ]);
 

@@ -45,6 +45,7 @@ Route::middleware(['auth:sanctum', 'throttle:api'])->group(function () {
     // Daily Logs
     Route::get('/daily-logs/{fecha}', [\App\Http\Controllers\DailyLogController::class, 'show']);
     Route::patch('/daily-logs/{dailyLog}/training', [\App\Http\Controllers\DailyLogController::class, 'updateTraining']);
+    Route::post('/daily-logs/{dailyLog}/recalc/undo', [\App\Http\Controllers\DailyLogController::class, 'undoRecalc']);
 
     // Diet plans — generation throttled separately
     Route::middleware('throttle:plan-generation')->group(function () {
