@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router'
 import { useNavStore } from '@/stores/navStore'
 import SidebarNav from '@/components/layout/SidebarNav.vue'
 import BottomTabBar from '@/components/layout/BottomTabBar.vue'
+import MobileHeader from '@/components/layout/MobileHeader.vue'
 
 const route    = useRoute()
 const navStore = useNavStore()
@@ -27,6 +28,9 @@ watch(
 
     <!-- Desktop sidebar — visible ≥1024px, auth routes only -->
     <SidebarNav v-if="showNav" class="kalt-sidebar" />
+
+    <!-- Mobile top header — visible <1024px, auth routes only (Profile access) -->
+    <MobileHeader v-if="showNav" class="kalt-mobile-header" />
 
     <!-- Main content area -->
     <main class="kalt-main">
@@ -63,17 +67,19 @@ watch(
     width: var(--sidebar-width);
     flex-shrink: 0;
   }
-
-  .kalt-main {
-    padding-bottom: 0;
-  }
 }
 
 .kalt-main {
   flex: 1;
   overflow-y: auto;
-  /* Reserve space for bottom bar on mobile (only when nav is shown) */
+  /* Reserve space for the mobile top header and bottom bar (only when nav is shown) */
+  padding-top: v-bind("showNav ? 'var(--top-bar-height)' : '0'");
   padding-bottom: v-bind("showNav ? 'var(--bottom-bar-height)' : '0'");
+}
+
+/* Mobile top header: mobile only */
+.kalt-mobile-header {
+  display: flex;
 }
 
 /* Bottom bar: mobile only */
@@ -82,8 +88,18 @@ watch(
 }
 
 @media (min-width: 1024px) {
+  .kalt-mobile-header {
+    display: none;
+  }
+
   .kalt-bottom-bar {
     display: none;
+  }
+
+  /* Sidebar covers nav on desktop; no fixed bars to reserve space for */
+  .kalt-main {
+    padding-top: 0;
+    padding-bottom: 0;
   }
 }
 </style>

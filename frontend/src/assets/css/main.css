@@ -44,6 +44,7 @@
   /* ── Layout ──────────────────────────────────────────────── */
   --sidebar-width: 240px;
   --bottom-bar-height: 64px;
+  --top-bar-height: 56px;   /* Mobile-only app header (Profile access) */
 }
 
 /* ── Global reset & base ─────────────────────────────────── */
