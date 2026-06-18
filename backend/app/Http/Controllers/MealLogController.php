@@ -59,6 +59,7 @@ class MealLogController extends Controller
 
         $mealLog->update([
             'realizada' => true,
+            'saltada'   => false,
             'hora_real' => now()->format('H:i:s'),
         ]);
 
@@ -84,6 +85,7 @@ class MealLogController extends Controller
 
         $mealLog->update([
             'realizada' => false,
+            'saltada'   => true,
             'hora_real' => null,
         ]);
 
@@ -96,7 +98,7 @@ class MealLogController extends Controller
         }
         $time = $mealLog->meal ? substr($mealLog->meal->hora_objetivo, 0, 5) : '';
 
-        $remainingCount = $mealLog->dailyLog->mealLogs()->where('realizada', false)->where('es_extra', false)->count();
+        $remainingCount = $mealLog->dailyLog->mealLogs()->where('realizada', false)->where('saltada', false)->where('es_extra', false)->count();
         $msg = $remainingCount > 0 
             ? "Tu comida de las {$time} fue saltada. Hemos redistribuido {$skippedCal} kcal entre tus comidas restantes."
             : "No quedan comidas para ajustar hoy.";
@@ -106,6 +108,42 @@ class MealLogController extends Controller
         $data['mensaje_recalculo'] = $msg;
 
         return response()->json($data);
+    }
+
+    /**
+     * Revert a meal back to pending. For a completed meal it removes the
+     * auto-created items; for a skipped meal it also undoes the macro
+     * redistribution that the skip triggered. Returns the refreshed DailyLog.
+     */
+    public function reset(MealLog $mealLog): JsonResponse
+    {
+        $this->authorize('update', $mealLog);
+
+        $wasSkipped = $mealLog->saltada;
+
+        if ($mealLog->realizada && !$mealLog->es_extra) {
+            $mealLog->mealLogItems()->delete();
+        }
+
+        $mealLog->update([
+            'realizada' => false,
+            'saltada'   => false,
+            'hora_real' => null,
+        ]);
+
+        if ($wasSkipped && $mealLog->dailyLog) {
+            $recalculator = new \App\Services\DayRecalculator();
+            $recalculator->restoreLastSnapshot($mealLog->dailyLog);
+            $mealLog->dailyLog->update(['recalculo_motivo' => null]);
+        }
+
+        $dailyLog = $mealLog->dailyLog->fresh()->load([
+            'mealLogs.mealLogItems.food',
+            'mealLogs.meal.mealSlot',
+            'mealLogs.meal.mealItems.food',
+        ]);
+
+        return response()->json($dailyLog);
     }
 
     public function extra(DailyLog $dailyLog, Request $request): JsonResponse

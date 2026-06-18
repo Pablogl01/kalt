@@ -21,6 +21,7 @@ class DailyLog extends Model
         'tipo_sesion',
         'recalculo_motivo',
         'nota_exceso',
+        'recalculo_snapshot',
     ];
 
     protected function casts(): array
@@ -29,6 +30,7 @@ class DailyLog extends Model
             'fecha'               => 'date',
             'entreno_planificado' => 'boolean',
             'ha_entrenado'        => 'boolean',
+            'recalculo_snapshot'  => 'array',
         ];
     }
 

@@ -57,6 +57,7 @@ Route::middleware(['auth:sanctum', 'throttle:api'])->group(function () {
     // Meal logs
     Route::patch('/meal-logs/{mealLog}/complete', [MealLogController::class, 'complete']);
     Route::patch('/meal-logs/{mealLog}/skip', [MealLogController::class, 'skip']);
+    Route::patch('/meal-logs/{mealLog}/reset', [MealLogController::class, 'reset']);
     Route::post('/meal-logs/{dailyLog}/extra', [MealLogController::class, 'extra']);
     Route::apiResource('meal-logs', MealLogController::class);
 

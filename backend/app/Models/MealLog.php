@@ -17,6 +17,7 @@ class MealLog extends Model
         'meal_id',
         'es_extra',
         'realizada',
+        'saltada',
         'hora_real',
     ];
 
@@ -25,6 +26,7 @@ class MealLog extends Model
         return [
             'es_extra'  => 'boolean',
             'realizada' => 'boolean',
+            'saltada'   => 'boolean',
         ];
     }
 

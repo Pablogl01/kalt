@@ -33,6 +33,7 @@ class DayRecalculator
 
         $remainingLogs = $log->mealLogs()
             ->where('realizada', false)
+            ->where('saltada', false)
             ->where('es_extra', false)
             ->where('id', '!=', $skippedMeal->id)
             ->with(['meal.mealItems.food'])
@@ -44,6 +45,9 @@ class DayRecalculator
             ]);
             return;
         }
+
+        // Snapshot the meals we are about to rescale so the skip can be undone.
+        $this->captureSnapshot($log, $remainingLogs);
 
         $totalOriginalCal = 0;
         foreach ($remainingLogs as $rLog) {
@@ -95,6 +99,7 @@ class DayRecalculator
 
         $remainingLogs = $log->mealLogs()
             ->where('realizada', false)
+            ->where('saltada', false)
             ->where('es_extra', false)
             ->with(['meal.mealItems'])
             ->get();
@@ -178,6 +183,7 @@ class DayRecalculator
 
         $remainingLogs = $log->mealLogs()
             ->where('realizada', false)
+            ->where('saltada', false)
             ->where('es_extra', false)
             ->with(['meal.mealSlot'])
             ->get();
@@ -274,6 +280,7 @@ class DayRecalculator
 
         $remainingLogs = $log->mealLogs()
             ->where('realizada', false)
+            ->where('saltada', false)
             ->where('es_extra', false)
             ->with(['meal.mealItems'])
             ->get();
@@ -311,6 +318,68 @@ class DayRecalculator
         }
 
         $log->update(['recalculo_motivo' => 'comida_extra']);
+    }
+
+    /**
+     * Store the previous quantities/macros of the meal items about to be
+     * rescaled, so the recalculation can be reverted. Only the latest
+     * recalculation is kept (single-step undo).
+     */
+    private function captureSnapshot(DailyLog $log, $affectedLogs): void
+    {
+        $items = [];
+
+        foreach ($affectedLogs as $rLog) {
+            if (!$rLog->meal) {
+                continue;
+            }
+            foreach ($rLog->meal->mealItems as $item) {
+                $items[] = [
+                    'id'              => $item->id,
+                    'cantidad_gramos' => $item->cantidad_gramos,
+                    'calorias'        => $item->calorias,
+                    'proteina'        => $item->proteina,
+                    'carbos'          => $item->carbos,
+                    'grasa'           => $item->grasa,
+                ];
+            }
+        }
+
+        $log->update(['recalculo_snapshot' => ['meal_items' => $items]]);
+    }
+
+    /**
+     * Revert the last recalculation by restoring the snapshot quantities and
+     * clearing the recalculation state. Returns false if there is no snapshot.
+     */
+    public function restoreLastSnapshot(DailyLog $log): bool
+    {
+        $snapshot = $log->recalculo_snapshot;
+
+        if (empty($snapshot) || empty($snapshot['meal_items'])) {
+            return false;
+        }
+
+        foreach ($snapshot['meal_items'] as $row) {
+            $item = MealItem::find($row['id']);
+            if (!$item) {
+                continue;
+            }
+            $item->update([
+                'cantidad_gramos' => $row['cantidad_gramos'],
+                'calorias'        => $row['calorias'],
+                'proteina'        => $row['proteina'],
+                'carbos'          => $row['carbos'],
+                'grasa'           => $row['grasa'],
+            ]);
+        }
+
+        $log->update([
+            'recalculo_motivo'   => null,
+            'recalculo_snapshot' => null,
+        ]);
+
+        return true;
     }
 
     private function getDayPlan(DailyLog $log)
