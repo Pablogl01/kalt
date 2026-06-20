@@ -124,6 +124,9 @@ class FoodSeeder extends Seeder
             ['nombre' => 'Queso batido 0% grasa', 'categoria' => 'lacteos', 'calorias' => 46, 'proteina' => 8.0, 'carbos' => 3.5, 'grasa' => 0.1],
             ['nombre' => 'Queso de cabra semicurado', 'categoria' => 'lacteos', 'calorias' => 364, 'proteina' => 22.0, 'carbos' => 1.0, 'grasa' => 30.0],
             ['nombre' => 'Leche entera', 'categoria' => 'lacteos', 'calorias' => 61, 'proteina' => 3.2, 'carbos' => 4.7, 'grasa' => 3.2],
+
+            // --- SUPLEMENTOS (sin macros: recordatorio + compra) ---
+            ['nombre' => 'Creatina monohidrato', 'categoria' => 'suplemento', 'calorias' => 0, 'proteina' => 0.0, 'carbos' => 0.0, 'grasa' => 0.0],
         ];
 
         // Seed foods and collect them grouped by category

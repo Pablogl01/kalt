@@ -39,35 +39,13 @@ class DailyLogController extends Controller
                 'entreno_planificado' => $isTraining,
                 'ha_entrenado'        => $isTraining,
             ]);
+        }
 
-            $template = $user->mealTemplates()->first();
-            if ($template) {
-                $weeklyPlan = $user->weeklyPlans()
-                    ->where('status', 'ready')
-                    ->where('semana_inicio', '<=', $fecha)
-                    ->orderBy('semana_inicio', 'desc')
-                    ->first();
-
-                $dayPlan = null;
-                if ($weeklyPlan) {
-                    $dayPlan = $weeklyPlan->dayPlans()->whereDate('fecha', $fecha)->first();
-                }
-
-                $slots = $template->mealSlots()->orderBy('orden')->get();
-                foreach ($slots as $slot) {
-                    $meal = null;
-                    if ($dayPlan) {
-                        $meal = $dayPlan->meals()->where('meal_slot_id', $slot->id)->first();
-                    }
-
-                    MealLog::create([
-                        'daily_log_id' => $log->id,
-                        'meal_id'      => $meal?->id,
-                        'es_extra'     => false,
-                        'realizada'    => false,
-                    ]);
-                }
-            }
+        // Populate the day's meal logs if missing. The plan job creates the
+        // DailyLog (for training tracking) without meal logs, so this also runs
+        // for pre-existing empty logs — not only freshly created ones.
+        if ($log->mealLogs()->count() === 0) {
+            $this->createMealLogsForDay($user, $log, $fecha);
         }
 
         return $this->formatLogResponse($log);
@@ -212,8 +190,48 @@ class DailyLogController extends Controller
         return response()->json($data);
     }
 
+    /**
+     * Create one MealLog per template slot for the given day, linking each to the
+     * plan's meal for that slot when a matching day plan exists.
+     */
+    private function createMealLogsForDay($user, DailyLog $log, string $fecha): void
+    {
+        $template = $user->mealTemplates()->first();
+        if (!$template) {
+            return;
+        }
+
+        $weeklyPlan = $user->weeklyPlans()
+            ->where('status', 'ready')
+            ->where('semana_inicio', '<=', $fecha)
+            ->orderBy('semana_inicio', 'desc')
+            ->first();
+
+        $dayPlan = $weeklyPlan
+            ? $weeklyPlan->dayPlans()->whereDate('fecha', $fecha)->first()
+            : null;
+
+        foreach ($template->mealSlots()->orderBy('orden')->get() as $slot) {
+            $meal = $dayPlan
+                ? $dayPlan->meals()->where('meal_slot_id', $slot->id)->first()
+                : null;
+
+            MealLog::create([
+                'daily_log_id' => $log->id,
+                'meal_id'      => $meal?->id,
+                'es_extra'     => false,
+                'realizada'    => false,
+            ]);
+        }
+    }
+
     private function isTrainingDay($user, int $dayOfWeek): bool
     {
+        // Prefer the user's explicit training days; fall back to the activity preset.
+        if (is_array($user->dias_entreno)) {
+            return in_array($dayOfWeek, $user->dias_entreno);
+        }
+
         $level = $user->nivel_actividad ?? 'moderado';
         return match ($level) {
             'alto'     => in_array($dayOfWeek, [1, 2, 3, 5, 6]),

@@ -40,14 +40,11 @@ class SubstituteController extends Controller
                 $request->user()->id
             );
 
+            // Keep the shopping list in sync off the request thread so the
+            // substitution responds immediately.
             $plan = $mealItem->meal?->dayPlan?->weeklyPlan;
             if ($plan) {
-                $generator = app(\App\Services\ShoppingGenerator::class);
-                if (\App\Models\ShoppingList::where('weekly_plan_id', $plan->id)->exists()) {
-                    $generator->regenerate($plan);
-                } else {
-                    $generator->generate($plan);
-                }
+                \App\Jobs\RegenerateShoppingListJob::dispatch($plan);
             }
 
             return response()->json($updatedItem->load('food'));

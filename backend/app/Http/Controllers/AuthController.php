@@ -52,7 +52,7 @@ class AuthController extends Controller
 
         $request->session()->regenerate();
 
-        $user = $request->user();
+        $user = $request->user()->load('foodRestrictions', 'supplements.food');
         $macros = $this->calculator->userHasCompleteProfile($user)
             ? $this->calculator->calculate($user)
             : null;

@@ -62,6 +62,14 @@ Route::middleware(['auth:sanctum', 'throttle:api'])->group(function () {
     Route::post('/meal-logs/{dailyLog}/extra', [MealLogController::class, 'extra']);
     Route::apiResource('meal-logs', MealLogController::class);
 
+    // Meals
+    Route::post('/meals/{meal}/regenerate', [\App\Http\Controllers\MealController::class, 'regenerate']);
+
+    // Supplements
+    Route::get('/supplements', [\App\Http\Controllers\SupplementController::class, 'index']);
+    Route::get('/supplements/catalog', [\App\Http\Controllers\SupplementController::class, 'catalog']);
+    Route::put('/supplements', [\App\Http\Controllers\SupplementController::class, 'update']);
+
     // Substitutes
     Route::get('/meal-items/{mealItem}/substitutes', [\App\Http\Controllers\SubstituteController::class, 'substitutes']);
     Route::patch('/meal-items/{mealItem}/substitute', [\App\Http\Controllers\SubstituteController::class, 'substitute']);

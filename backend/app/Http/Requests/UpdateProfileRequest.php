@@ -24,6 +24,8 @@ class UpdateProfileRequest extends FormRequest
             'grasa_corporal'    => ['sometimes', 'nullable', 'numeric', 'min:1', 'max:60'],
             'objetivo'          => ['sometimes', 'required', Rule::in(['volumen', 'mantenimiento', 'definicion'])],
             'nivel_actividad'   => ['sometimes', 'required', Rule::in(['sedentario', 'ligero', 'moderado', 'alto'])],
+            'dias_entreno'      => ['sometimes', 'array'],
+            'dias_entreno.*'    => ['integer', 'min:1', 'max:7'],
         ];
     }
 }
