@@ -112,7 +112,7 @@ const monthLabels = computed(() => {
 const getCellColor = (level) => {
   if (level === 'completa') return '#15803D' // --color-success-adherence
   if (level === 'parcial') return '#86EFAC'  // --color-partial-adherence
-  return '#374151' // sin_datos / future
+  return '#E8DDD4' // sin_datos / future (light empty cell)
 }
 
 const handleMouseEnter = (event, cell) => {
@@ -223,7 +223,7 @@ const periodSummary = computed(() => {
               :height="CELL_SIZE"
               rx="2"
               :fill="getCellColor(cell.nivel)"
-              :stroke="cell.isToday ? '#A8E063' : 'none'"
+              :stroke="cell.isToday ? '#FFD400' : 'none'"
               :stroke-width="cell.isToday ? 2 : 0"
               class="heatmap-cell"
               tabindex="0"
@@ -263,7 +263,7 @@ const periodSummary = computed(() => {
     <div class="heatmap-legend">
       <span class="legend-text">Menos adherencia</span>
       <div class="legend-scale">
-        <span class="scale-box" style="background-color: #374151" role="img" aria-label="Sin datos"></span>
+        <span class="scale-box" style="background-color: #E8DDD4" role="img" aria-label="Sin datos"></span>
         <span class="scale-box" style="background-color: #86EFAC" role="img" aria-label="Adherencia parcial"></span>
         <span class="scale-box" style="background-color: #15803D" role="img" aria-label="Adherencia completa"></span>
       </div>
@@ -274,11 +274,12 @@ const periodSummary = computed(() => {
 
 <style scoped>
 .heatmap-card {
-  background-color: var(--color-surface-dark);
-  color: #FFFFFF;
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-lg);
   padding: 24px;
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-md);
   display: flex;
   flex-direction: column;
 }
@@ -287,7 +288,7 @@ const periodSummary = computed(() => {
   font-size: var(--fs-lg);
   font-weight: 600;
   margin: 0 0 4px;
-  color: #FFFFFF;
+  color: var(--color-text);
 }
 
 .heatmap-subtitle {

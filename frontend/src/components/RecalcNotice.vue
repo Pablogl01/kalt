@@ -3,7 +3,9 @@
      It stays until the user undoes the change, closes it, or another action
      replaces it (no auto-dismiss). -->
 <script setup>
+import { motion } from 'motion-v'
 import { RefreshCw } from 'lucide-vue-next'
+import { spring, tween, tapSubtle } from '@/lib/motion'
 
 const props = defineProps({
   message: {
@@ -21,14 +23,25 @@ const emit = defineEmits(['close', 'undo'])
 </script>
 
 <template>
-  <div class="recalc-notice" role="status" aria-live="polite">
-    <div class="notice-icon"><RefreshCw :size="18" :stroke-width="2" aria-hidden="true" /></div>
+  <motion.div
+    class="recalc-notice"
+    role="status"
+    aria-live="polite"
+    :initial="{ opacity: 0, height: 0, y: -8 }"
+    :animate="{ opacity: 1, height: 'auto', y: 0, transition: spring.gentle }"
+    :exit="{ opacity: 0, height: 0, y: -8, transition: tween.fast }"
+  >
+    <motion.div
+      class="notice-icon"
+      :initial="{ rotate: -90, scale: 0.6 }"
+      :animate="{ rotate: 0, scale: 1, transition: spring.snappy }"
+    ><RefreshCw :size="18" :stroke-width="2" aria-hidden="true" /></motion.div>
     <div class="notice-content">
       <p class="notice-text">{{ message }}</p>
     </div>
-    <button v-if="undoable" class="undo-btn" @click="emit('undo')">Deshacer</button>
-    <button class="close-btn" @click="emit('close')" aria-label="Cerrar aviso">&times;</button>
-  </div>
+    <motion.button v-if="undoable" :while-press="tapSubtle" class="undo-btn" @click="emit('undo')">Deshacer</motion.button>
+    <motion.button :while-press="tapSubtle" class="close-btn" @click="emit('close')" aria-label="Cerrar aviso">&times;</motion.button>
+  </motion.div>
 </template>
 
 <style scoped>

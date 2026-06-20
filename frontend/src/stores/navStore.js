@@ -7,9 +7,9 @@ export const useNavStore = defineStore('nav', () => {
 
   // Navigation items — shared between SidebarNav and BottomTabBar
   const navItems = [
-    { name: 'dashboard',    label: 'Dashboard',       icon: 'home',          path: '/' },
     { name: 'weekly-plan',  label: 'Plan Semanal',    icon: 'calendar',      path: '/plan' },
     { name: 'daily-log',    label: 'Seguimiento',     icon: 'check-circle',  path: '/log' },
+    { name: 'dashboard',    label: 'Dashboard',       icon: 'home',          path: '/' },
     { name: 'shopping',     label: 'Compra',          icon: 'shopping-cart', path: '/shopping' },
     { name: 'stats',        label: 'Estadísticas',    icon: 'bar-chart',     path: '/stats' },
   ]

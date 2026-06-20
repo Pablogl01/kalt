@@ -1,6 +1,11 @@
 <template>
   <div class="auth-page">
-    <div class="auth-card">
+    <motion.div
+      class="auth-card"
+      :initial="{ opacity: 0, y: 16, scale: 0.98 }"
+      :animate="{ opacity: 1, y: 0, scale: 1 }"
+      :transition="spring.gentle"
+    >
       <!-- Logo -->
       <div class="auth-logo">
         <span class="logo-text">KALT</span>
@@ -12,9 +17,20 @@
       <p class="auth-subtitle">Empieza a calcular tus macros</p>
 
       <!-- Error banner -->
-      <div v-if="errorMessage" class="auth-error" role="alert" aria-live="polite">
-        {{ errorMessage }}
-      </div>
+      <AnimatePresence>
+        <motion.div
+          v-if="errorMessage"
+          class="auth-error"
+          role="alert"
+          aria-live="polite"
+          :initial="{ opacity: 0, height: 0, y: -8 }"
+          :animate="{ opacity: 1, height: 'auto', y: 0 }"
+          :exit="{ opacity: 0, height: 0 }"
+          :transition="tween.base"
+        >
+          {{ errorMessage }}
+        </motion.div>
+      </AnimatePresence>
 
       <!-- Form -->
       <form id="register-form" @submit.prevent="handleRegister" novalidate>
@@ -85,15 +101,16 @@
         </div>
 
         <!-- Submit -->
-        <button
+        <motion.button
           id="register-submit"
           type="submit"
           class="btn-primary"
           :disabled="loading"
+          :while-press="!loading ? tap : undefined"
         >
           <span v-if="loading" class="btn-spinner" aria-hidden="true"></span>
           {{ loading ? 'Creando cuenta…' : 'Crear cuenta' }}
-        </button>
+        </motion.button>
       </form>
 
       <!-- Footer link -->
@@ -101,13 +118,15 @@
         ¿Ya tienes cuenta?
         <RouterLink id="link-to-login" to="/login" class="auth-link">Iniciar sesión</RouterLink>
       </p>
-    </div>
+    </motion.div>
   </div>
 </template>
 
 <script setup>
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
+import { motion, AnimatePresence } from 'motion-v'
+import { spring, tween, tap } from '@/lib/motion'
 import { useUserStore } from '@/stores/userStore'
 
 const router    = useRouter()
@@ -264,7 +283,7 @@ async function handleRegister() {
 
 .field-input:focus {
   border-color: var(--color-accent-dark);
-  box-shadow: 0 0 0 3px rgba(168, 224, 99, 0.25);
+  box-shadow: 0 0 0 3px rgba(255, 212, 0, 0.25);
 }
 
 .field-input--error {

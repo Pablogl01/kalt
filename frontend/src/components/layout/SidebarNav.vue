@@ -1,8 +1,18 @@
 <script setup>
+import { computed } from 'vue'
+import { motion } from 'motion-v'
 import { useNavStore } from '@/stores/navStore'
+import { spring, tapSubtle } from '@/lib/motion'
 import { navIcons } from './navIcons'
 
 const nav = useNavStore()
+
+// The bottom bar wants Dashboard centred; in the sidebar it goes first.
+const sidebarItems = computed(() => {
+  const dashboard = nav.navItems.find(i => i.name === 'dashboard')
+  const rest = nav.navItems.filter(i => i.name !== 'dashboard')
+  return dashboard ? [dashboard, ...rest] : rest
+})
 </script>
 
 <template>
@@ -15,37 +25,68 @@ const nav = useNavStore()
 
     <!-- Nav items -->
     <ul class="sidebar-nav" role="list">
-      <li v-for="item in nav.navItems" :key="item.name">
-        <button
+      <li v-for="item in sidebarItems" :key="item.name">
+        <motion.button
           :id="`nav-${item.name}`"
           class="nav-item"
           :class="{ 'nav-item--active': nav.isActive(item.name) }"
           :aria-current="nav.isActive(item.name) ? 'page' : undefined"
+          :while-press="tapSubtle"
           @click="nav.setRoute(item.name)"
         >
-          <component :is="navIcons[item.icon]" class="nav-icon" :size="20" :stroke-width="2" aria-hidden="true" />
+          <!-- Sliding active pill (shared layoutId animates between items) -->
+          <motion.span
+            v-if="nav.isActive(item.name)"
+            class="nav-active-pill"
+            layout-id="sidebar-active-pill"
+            :transition="spring.snappy"
+            aria-hidden="true"
+          />
+          <motion.span
+            class="nav-icon-wrap"
+            :animate="{ scale: nav.isActive(item.name) ? 1.08 : 1 }"
+            :transition="spring.snappy"
+          >
+            <component :is="navIcons[item.icon]" class="nav-icon" :size="20" :stroke-width="2" aria-hidden="true" />
+          </motion.span>
           <span class="nav-label">{{ item.label }}</span>
-        </button>
+        </motion.button>
       </li>
     </ul>
 
     <!-- Profile at bottom -->
     <div class="sidebar-profile">
-      <button
+      <motion.button
         id="nav-profile"
         class="nav-item"
         :class="{ 'nav-item--active': nav.isActive('profile') }"
+        :aria-current="nav.isActive('profile') ? 'page' : undefined"
+        :while-press="tapSubtle"
         @click="nav.setRoute('profile')"
       >
-        <component :is="navIcons[nav.profileItem.icon]" class="nav-icon" :size="20" :stroke-width="2" aria-hidden="true" />
+        <motion.span
+          v-if="nav.isActive('profile')"
+          class="nav-active-pill"
+          layout-id="sidebar-active-pill"
+          :transition="spring.snappy"
+          aria-hidden="true"
+        />
+        <motion.span
+          class="nav-icon-wrap"
+          :animate="{ scale: nav.isActive('profile') ? 1.08 : 1 }"
+          :transition="spring.snappy"
+        >
+          <component :is="navIcons[nav.profileItem.icon]" class="nav-icon" :size="20" :stroke-width="2" aria-hidden="true" />
+        </motion.span>
         <span class="nav-label">{{ nav.profileItem.label }}</span>
-      </button>
+      </motion.button>
     </div>
   </nav>
 </template>
 
 <style scoped>
 .sidebar {
+  --notch: 22px;
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -55,7 +96,34 @@ const nav = useNavStore()
   color: #fff;
   padding: 0;
   border-right: 1px solid var(--color-border-dark);
-  overflow: hidden;
+  overflow: visible;
+  z-index: 10;
+}
+
+/* Inverted (concave) corners on the right edge: the sidebar colour extends
+   past the top-right and bottom-right corners with a quarter-circle cut, so
+   the content seems to curve into it. */
+.sidebar::before,
+.sidebar::after {
+  content: "";
+  position: absolute;
+  left: 100%;
+  width: var(--notch);
+  height: var(--notch);
+  background-color: var(--color-surface-dark);
+  pointer-events: none;
+}
+
+.sidebar::before {
+  top: 0;
+  -webkit-mask: radial-gradient(circle at 100% 100%, transparent var(--notch), #000 calc(var(--notch) + 0.5px));
+          mask: radial-gradient(circle at 100% 100%, transparent var(--notch), #000 calc(var(--notch) + 0.5px));
+}
+
+.sidebar::after {
+  bottom: 0;
+  -webkit-mask: radial-gradient(circle at 100% 0%, transparent var(--notch), #000 calc(var(--notch) + 0.5px));
+          mask: radial-gradient(circle at 100% 0%, transparent var(--notch), #000 calc(var(--notch) + 0.5px));
 }
 
 .sidebar-logo {
@@ -99,6 +167,7 @@ const nav = useNavStore()
 }
 
 .nav-item {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -113,22 +182,48 @@ const nav = useNavStore()
   font-weight: 500;
   cursor: pointer;
   text-align: left;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition: color 0.15s ease;
 }
 
 .nav-item:hover {
-  background-color: rgba(255, 255, 255, 0.06);
   color: #fff;
 }
 
+/* Hover wash sits below content, above the active pill's resting state. */
+.nav-item:hover::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-sm);
+  background-color: rgba(255, 255, 255, 0.06);
+  z-index: 0;
+}
+
 /* Active state: accent green — NOT orange */
-.nav-item--active {
-  background-color: rgba(168, 224, 99, 0.12);
+.nav-item--active,
+.nav-item--active:hover {
   color: var(--color-accent);
 }
 
-.nav-item--active:hover {
-  background-color: rgba(168, 224, 99, 0.16);
+.nav-item--active:hover::after {
+  background-color: transparent;
+}
+
+/* Animated background that slides between items via shared layoutId */
+.nav-active-pill {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-sm);
+  background-color: rgba(255, 212, 0, 0.14);
+  z-index: 0;
+}
+
+.nav-icon-wrap {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .nav-icon {
@@ -136,6 +231,8 @@ const nav = useNavStore()
 }
 
 .nav-label {
+  position: relative;
+  z-index: 1;
   font-weight: 500;
 }
 </style>

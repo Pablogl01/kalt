@@ -37,12 +37,12 @@ const initChart = () => {
       datasets: [{
         label: 'Evolución de Peso (kg)',
         data: dataPoints,
-        borderColor: '#A8E063', // --color-accent
-        backgroundColor: 'rgba(168, 224, 99, 0.1)',
+        borderColor: '#FFD400', // --color-accent
+        backgroundColor: 'rgba(255, 212, 0, 0.1)',
         borderWidth: 2,
         tension: 0.3,
         fill: true,
-        pointBackgroundColor: '#A8E063',
+        pointBackgroundColor: '#FFD400',
         pointRadius: 4,
         pointHoverRadius: 6
       }]
