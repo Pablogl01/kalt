@@ -1,8 +1,11 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
+import { motion } from 'motion-v'
 import { Check, ArrowLeftRight, ShoppingCart } from 'lucide-vue-next'
 import { useDietStore } from '@/stores/dietStore'
 import api from '@/api/client'
+import { spring, tap, tapSubtle, listContainer, listItem } from '@/lib/motion'
+import AnimatedNumber from '@/components/AnimatedNumber.vue'
 import SubstituteSelector from '@/components/SubstituteSelector.vue'
 import ConfirmDialog from '@/components/ConfirmDialog.vue'
 
@@ -18,7 +21,7 @@ const showSubstituteSelector = ref(false)
 const selectedShoppingItem = ref(null)
 
 // Categories configuration
-const categories = ['proteina', 'carbos', 'verduras', 'frutas', 'lacteos', 'grasas', 'otros']
+const categories = ['proteina', 'carbos', 'verduras', 'frutas', 'lacteos', 'grasas', 'suplemento', 'otros']
 
 const categoryLabels = {
   proteina: 'Proteínas',
@@ -27,6 +30,7 @@ const categoryLabels = {
   frutas: 'Frutas',
   lacteos: 'Lácteos',
   grasas: 'Grasas',
+  suplemento: 'Suplementos',
   otros: 'Otros'
 }
 
@@ -38,6 +42,7 @@ const collapsedCategories = ref({
   frutas: false,
   lacteos: false,
   grasas: false,
+  suplemento: false,
   otros: false
 })
 
@@ -87,15 +92,19 @@ async function confirmRegenerate() {
 }
 
 async function markAsHave(item) {
+  const idx = shoppingList.value.shopping_items.findIndex(i => i.id === item.id)
+  if (idx === -1) return
+
+  // Optimistic: flip it locally now so the row re-sorts/animates instantly,
+  // then sync with the backend in the background and revert if it fails.
+  const previous = shoppingList.value.shopping_items[idx]
+  shoppingList.value.shopping_items[idx] = { ...previous, tengo_en_casa: true }
+
   try {
-    const { data } = await api.patch(`/shopping-items/${item.id}/have`)
-    // Update local item
-    const idx = shoppingList.value.shopping_items.findIndex(i => i.id === item.id)
-    if (idx !== -1) {
-      shoppingList.value.shopping_items[idx] = data
-    }
+    await api.patch(`/shopping-items/${item.id}/have`)
   } catch (err) {
     console.error('Error marking item as owned:', err)
+    shoppingList.value.shopping_items[idx] = previous
   }
 }
 
@@ -152,17 +161,6 @@ const pendingCount = computed(() => {
 function toggleCategory(cat) {
   collapsedCategories.value[cat] = !collapsedCategories.value[cat]
 }
-
-function formatDate(dateStr) {
-  if (!dateStr) return ''
-  const date = new Date(dateStr)
-  return date.toLocaleDateString('es-ES', {
-    day: 'numeric',
-    month: 'long',
-    hour: '2-digit',
-    minute: '2-digit'
-  })
-}
 </script>
 
 <template>
@@ -176,25 +174,22 @@ function formatDate(dateStr) {
     <!-- Error state -->
     <div v-else-if="errorMessage" class="state-container">
       <p class="error-text">{{ errorMessage }}</p>
-      <button class="btn btn--primary" @click="fetchShoppingList">Reintentar</button>
+      <motion.button :while-press="tap" class="btn btn--primary" @click="fetchShoppingList">Reintentar</motion.button>
     </div>
 
     <!-- Active List View -->
     <div v-else-if="shoppingList" class="shopping-content animate-fade-in">
       <header class="shopping-header">
-        <div>
-          <h1 class="page-title">Compra</h1>
-          <p class="generation-date">Generada el {{ formatDate(shoppingList.generada_en) }}</p>
-        </div>
+        <h1 class="page-title">Compra</h1>
         
         <div class="header-actions">
           <div class="pending-badge">
-            <span class="pending-number">{{ pendingCount }}</span>
+            <span class="pending-number"><AnimatedNumber :value="pendingCount" /></span>
             <span class="pending-label">pendientes</span>
           </div>
-          <button class="btn btn--secondary" @click="regenerateList" :disabled="isGenerating">
+          <motion.button :while-press="isGenerating ? undefined : tap" class="btn btn--secondary" @click="regenerateList" :disabled="isGenerating">
             {{ isGenerating ? 'Regenerando...' : 'Regenerar lista' }}
-          </button>
+          </motion.button>
         </div>
       </header>
 
@@ -206,18 +201,23 @@ function formatDate(dateStr) {
           v-show="groupedItems[cat] && groupedItems[cat].length > 0"
           class="category-card"
         >
-          <button class="category-header-btn" @click="toggleCategory(cat)">
+          <motion.button :while-press="tapSubtle" class="category-header-btn" @click="toggleCategory(cat)">
             <span class="category-title">
               {{ categoryLabels[cat] }}
               <span class="category-count">({{ groupedItems[cat].length }})</span>
             </span>
             <span class="collapse-icon" :class="{ 'collapse-icon--collapsed': collapsedCategories[cat] }">▾</span>
-          </button>
+          </motion.button>
 
-          <div v-show="!collapsedCategories[cat]" class="category-body animate-slide-down">
-            <div 
-              v-for="item in groupedItems[cat]" 
-              :key="item.id" 
+          <div class="category-collapse" :class="{ 'category-collapse--collapsed': collapsedCategories[cat] }">
+          <div class="category-collapse-inner">
+          <motion.div class="category-body" :variants="listContainer" initial="hidden" animate="show">
+            <motion.div
+              v-for="item in groupedItems[cat]"
+              :key="item.id"
+              layout
+              :variants="listItem"
+              :transition="spring.gentle"
               class="shopping-item-row"
               :class="{ 'shopping-item-row--owned': item.tengo_en_casa }"
             >
@@ -233,29 +233,33 @@ function formatDate(dateStr) {
 
               <div class="item-actions">
                 <!-- Check action -->
-                <button 
-                  v-if="!item.tengo_en_casa" 
+                <motion.button
+                  v-if="!item.tengo_en_casa"
+                  :while-press="tapSubtle"
                   class="action-btn action-btn--check"
                   @click="markAsHave(item)"
                   title="Ya lo tengo"
                   aria-label="Ya lo tengo"
                 >
                   <Check :size="15" :stroke-width="2.5" aria-hidden="true" />
-                </button>
+                </motion.button>
                 <span v-else class="owned-indicator">Disponible</span>
 
                 <!-- Substitute action -->
-                <button 
-                  v-if="!item.tengo_en_casa" 
+                <motion.button
+                  v-if="!item.tengo_en_casa"
+                  :while-press="tapSubtle"
                   class="action-btn action-btn--substitute"
                   @click="openSubstituteSelector(item)"
                   title="No lo quiero"
                   aria-label="Sustituir este alimento"
                 >
                   <ArrowLeftRight :size="15" :stroke-width="2" aria-hidden="true" />
-                </button>
+                </motion.button>
               </div>
-            </div>
+            </motion.div>
+          </motion.div>
+          </div>
           </div>
         </div>
       </div>
@@ -267,21 +271,23 @@ function formatDate(dateStr) {
       <h2 class="empty-title">Sin lista de la compra</h2>
       <p class="empty-desc">Genera tu plan semanal primero para poder ver o generar la lista de la compra automática.</p>
       
-      <button 
-        v-if="!dietStore.activePlan" 
-        class="btn btn--primary" 
+      <motion.button
+        v-if="!dietStore.activePlan"
+        :while-press="tap"
+        class="btn btn--primary"
         @click="$router.push('/plan')"
       >
         Genera tu plan primero
-      </button>
-      <button 
-        v-else 
-        class="btn btn--primary" 
-        @click="generateList" 
+      </motion.button>
+      <motion.button
+        v-else
+        :while-press="isGenerating ? undefined : tap"
+        class="btn btn--primary"
+        @click="generateList"
         :disabled="isGenerating"
       >
         {{ isGenerating ? 'Generando...' : 'Generar lista de la compra' }}
-      </button>
+      </motion.button>
     </div>
 
     <!-- Unified substitute selector modal -->
@@ -309,7 +315,7 @@ function formatDate(dateStr) {
 
 <style scoped>
 .shopping-container {
-  max-width: 680px;
+  max-width: 1100px;
   margin: 0 auto;
   padding: var(--space-5) var(--space-4) var(--space-7);
   display: flex;
@@ -332,37 +338,31 @@ function formatDate(dateStr) {
 
 .shopping-header {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-  padding-bottom: var(--space-5);
-  border-bottom: 1px solid var(--border-default);
-}
-
-@media (min-width: 640px) {
-  .shopping-header {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-end;
-  }
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-3);
 }
 
 .page-title {
   font-size: var(--fs-2xl);
   font-weight: 700;
   color: var(--color-text, #1C1A17);
-  margin: 0 0 var(--space-1);
-}
-
-.generation-date {
-  font-size: var(--fs-sm);
-  color: var(--color-text-muted, #8A8178);
   margin: 0;
 }
 
 .header-actions {
   display: flex;
   align-items: center;
-  gap: var(--space-4);
+  justify-content: flex-end;
+  gap: var(--space-3);
+}
+
+/* Compact regenerate button in the header */
+.header-actions .btn {
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--fs-xs);
 }
 
 .pending-badge {
@@ -399,7 +399,7 @@ function formatDate(dateStr) {
 }
 
 .btn--primary {
-  background-color: var(--color-accent, #A8E063);
+  background-color: var(--color-accent, #FFD400);
   color: var(--color-text, #1C1A17);
 }
 
@@ -430,12 +430,26 @@ function formatDate(dateStr) {
   gap: var(--space-4);
 }
 
+/* Masonry-style two-column fill on wide screens so categories of differing
+   heights pack tightly instead of stretching down a single narrow column. */
+@media (min-width: 1024px) {
+  .categories-list {
+    display: block;
+    columns: 2;
+    column-gap: var(--space-4);
+  }
+  .category-card {
+    break-inside: avoid;
+    margin-bottom: var(--space-4);
+  }
+}
+
 .category-card {
   background-color: var(--color-surface, #FFFFFF);
   border: 1px solid var(--border-default);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.10), 0 2px 6px rgba(0, 0, 0, 0.06);
 }
 
 .category-header-btn {
@@ -473,6 +487,22 @@ function formatDate(dateStr) {
 
 .collapse-icon--collapsed {
   transform: rotate(-90deg);
+}
+
+/* Animated collapse/expand: interpolate grid row from 1fr to 0fr */
+.category-collapse {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition: grid-template-rows 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.category-collapse--collapsed {
+  grid-template-rows: 0fr;
+}
+
+.category-collapse-inner {
+  overflow: hidden;
+  min-height: 0;
 }
 
 .category-body {
@@ -557,8 +587,8 @@ function formatDate(dateStr) {
 }
 
 .action-btn--check:hover {
-  background-color: var(--color-accent, #A8E063);
-  border-color: var(--color-accent, #A8E063);
+  background-color: var(--color-accent, #FFD400);
+  border-color: var(--color-accent, #FFD400);
   color: var(--color-text, #1C1A17);
 }
 
@@ -572,7 +602,7 @@ function formatDate(dateStr) {
   font-size: var(--fs-xs);
   font-weight: 600;
   color: var(--color-accent-dark);
-  background-color: rgba(168, 224, 99, 0.1);
+  background-color: rgba(255, 212, 0, 0.1);
   padding: var(--space-1) var(--space-2);
   border-radius: var(--radius-pill);
 }
@@ -613,8 +643,8 @@ function formatDate(dateStr) {
 .spinner {
   width: 40px;
   height: 40px;
-  border: 3px solid rgba(168, 224, 99, 0.1);
-  border-top-color: var(--color-accent, #A8E063);
+  border: 3px solid rgba(255, 212, 0, 0.1);
+  border-top-color: var(--color-accent, #FFD400);
   border-radius: var(--radius-full);
   margin-bottom: var(--space-5);
   animation: spin 0.8s linear infinite;
@@ -641,23 +671,8 @@ function formatDate(dateStr) {
   animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.animate-slide-down {
-  animation: slideDown 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 </style>

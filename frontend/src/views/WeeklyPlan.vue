@@ -1,8 +1,11 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue'
-import { BarChart3, Apple, Activity, Sofa } from 'lucide-vue-next'
+import { ref, onMounted, computed, nextTick } from 'vue'
+import { motion, AnimatePresence } from 'motion-v'
+import { BarChart3, Apple, Activity, Sofa, RefreshCw } from 'lucide-vue-next'
 import { useUserStore } from '@/stores/userStore'
 import { useDietStore } from '@/stores/dietStore'
+import { spring, tap, tapSubtle, listContainer, listItem, page } from '@/lib/motion'
+import AnimatedNumber from '@/components/AnimatedNumber.vue'
 import MacroBar from '@/components/MacroBar.vue'
 import PlanStatusPoller from '@/components/PlanStatusPoller.vue'
 import SubstituteSelector from '@/components/SubstituteSelector.vue'
@@ -15,6 +18,19 @@ const currentPlanId = ref(null)
 
 const showSubstituteSelector = ref(false)
 const selectedMealItem = ref(null)
+const regeneratingMealId = ref(null)
+
+async function handleRegenerateMeal(mealId) {
+  if (regeneratingMealId.value) return
+  regeneratingMealId.value = mealId
+  try {
+    await dietStore.regenerateMeal(mealId)
+  } catch (err) {
+    console.error('Failed to regenerate meal:', err)
+  } finally {
+    regeneratingMealId.value = null
+  }
+}
 
 const isAllergic = (foodId) => {
   if (!userStore.user?.food_restrictions) return false
@@ -69,13 +85,18 @@ function handlePlanFailed() {
   // handled visually inside poller
 }
 
-function isTrainingDay(dateString) {
-  if (!dateString || !userStore.user) return false
-  const date = new Date(dateString)
-  const day = date.getDay() // 0 = Sunday, 1 = Monday
+function isTrainingDay(dateStr) {
+  if (!dateStr || !userStore.user) return false
+  // Parse the full ISO timestamp so the browser maps it back to the intended
+  // local calendar day (the backend serialises dates with a tz offset).
+  const day = new Date(dateStr).getDay() // 0 = Sunday
   const isoDay = day === 0 ? 7 : day
+
+  // Prefer the user's explicit training days; fall back to the activity preset.
+  const dias = userStore.user.dias_entreno
+  if (Array.isArray(dias)) return dias.includes(isoDay)
+
   const level = userStore.user.nivel_actividad || 'sedentario'
-  
   if (level === 'alto') return [1, 2, 3, 5, 6].includes(isoDay)
   if (level === 'moderado') return [1, 3, 5].includes(isoDay)
   if (level === 'ligero') return [2, 4].includes(isoDay)
@@ -86,6 +107,29 @@ function formatTime(timeStr) {
   if (!timeStr) return ''
   // 14:00:00 -> 14:00
   return timeStr.substring(0, 5)
+}
+
+const daysNavRef = ref(null)
+
+function selectDay(index) {
+  activeDayIndex.value = index
+  // Scroll the day strip so the selected day is centred (reveals adjacent days).
+  nextTick(() => {
+    const nav = daysNavRef.value
+    const el = nav?.children?.[index]
+    if (!nav || !el) return
+    const navRect = nav.getBoundingClientRect()
+    const elRect = el.getBoundingClientRect()
+    const delta = (elRect.left - navRect.left) - (nav.clientWidth - el.clientWidth) / 2
+    nav.scrollTo({ left: nav.scrollLeft + delta, behavior: 'smooth' })
+  })
+}
+
+function formatDate(dateStr) {
+  if (!dateStr) return ''
+  // Parse the full ISO timestamp so it maps to the intended local calendar day.
+  const formatted = new Date(dateStr).toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' })
+  return formatted.charAt(0).toUpperCase() + formatted.slice(1)
 }
 </script>
 
@@ -102,23 +146,29 @@ function formatTime(timeStr) {
       <router-link to="/profile" class="btn-cta">Completar mi perfil</router-link>
     </div>
 
+    <!-- ── Plan Generating Poller State ────────────────── -->
+    <div v-else-if="dietStore.planStatus === 'pending' || dietStore.isGenerating" class="poller-wrapper">
+      <PlanStatusPoller
+        :planId="currentPlanId || dietStore.activePlan?.id"
+        @plan-ready="handlePlanReady"
+        @plan-failed="handlePlanFailed"
+      />
+    </div>
+
+    <!-- ── Loading Active Plan State ───────────────────── -->
+    <div v-else-if="!dietStore.hasLoaded" class="card-empty-state">
+      <div class="plan-spinner" aria-hidden="true"></div>
+      <p class="empty-desc">Cargando tu plan…</p>
+    </div>
+
     <!-- ── No Active Plan State ────────────────────────── -->
-    <div v-else-if="!dietStore.activePlan && dietStore.planStatus !== 'pending' && !dietStore.isGenerating" class="card-empty-state">
+    <div v-else-if="!dietStore.activePlan" class="card-empty-state">
       <div class="empty-icon"><Apple :size="56" :stroke-width="1.75" aria-hidden="true" /></div>
       <h2 class="empty-title">Genera tu primer plan semanal</h2>
       <p class="empty-desc">
         ¡Tu perfil está listo! Haz clic a continuación para generar tu plan de alimentación determinista completamente personalizado para 7 días.
       </p>
-      <button class="btn-cta" @click="handleGenerate">Generar mi plan</button>
-    </div>
-
-    <!-- ── Plan Generating Poller State ────────────────── -->
-    <div v-else-if="dietStore.planStatus === 'pending' || dietStore.isGenerating" class="poller-wrapper">
-      <PlanStatusPoller 
-        :planId="currentPlanId || dietStore.activePlan?.id" 
-        @plan-ready="handlePlanReady"
-        @plan-failed="handlePlanFailed"
-      />
+      <motion.button :while-press="tap" class="btn-cta" @click="handleGenerate">Generar mi plan</motion.button>
     </div>
 
     <!-- ── Active Weekly Plan State ────────────────────── -->
@@ -126,35 +176,42 @@ function formatTime(timeStr) {
       
       <!-- Header / General Info -->
       <header class="plan-header">
-        <div>
-          <h1 class="plan-title">Tu semana</h1>
-          <p class="plan-subtitle">Plan de alimentación adaptado a tu objetivo de <strong>{{ userStore.user?.objetivo }}</strong></p>
-        </div>
-        <button class="btn-regenerate" @click="handleGenerate" :disabled="dietStore.isGenerating">
+        <h1 class="plan-title">Tu semana</h1>
+        <motion.button :while-press="dietStore.isGenerating ? undefined : tapSubtle" class="btn-regenerate" @click="handleGenerate" :disabled="dietStore.isGenerating">
           Regenerar plan
-        </button>
+        </motion.button>
       </header>
 
       <!-- Days Navigation Tabs -->
-      <nav class="days-nav" aria-label="Días de la semana">
-        <button
+      <nav class="days-nav" aria-label="Días de la semana" ref="daysNavRef">
+        <motion.button
           v-for="(day, index) in daysOfWeek"
           :key="day"
+          :while-press="tapSubtle"
           class="day-tab"
           :class="{ 'day-tab--active': activeDayIndex === index }"
-          @click="activeDayIndex = index"
+          @click="selectDay(index)"
         >
           <span class="day-name">{{ day }}</span>
-        </button>
+        </motion.button>
       </nav>
 
       <!-- Active Day Details -->
-      <main v-if="currentDayPlan" class="day-details">
-        
+      <AnimatePresence mode="wait">
+      <motion.main
+        v-if="currentDayPlan"
+        :key="activeDayIndex"
+        class="day-details"
+        :variants="page"
+        initial="hidden"
+        animate="show"
+        exit="exit"
+      >
+
         <!-- Day summary card -->
-        <div class="day-summary-card">
+        <motion.div layout class="day-summary-card" :transition="spring.gentle">
           <div class="summary-info">
-            <span class="summary-date">{{ currentDayPlan.fecha }}</span>
+            <span class="summary-date">{{ formatDate(currentDayPlan.fecha) }}</span>
             <div class="training-badge-wrap">
               <span v-if="isTrainingDay(currentDayPlan.fecha)" class="badge badge--training">
                 <Activity :size="14" :stroke-width="2" aria-hidden="true" /> Día de entreno
@@ -167,23 +224,23 @@ function formatTime(timeStr) {
           
           <div class="day-macros-grid">
             <div class="day-macro-stat">
-              <span class="stat-num">{{ Math.round(currentDayPlan.calorias_objetivo) }}</span>
+              <span class="stat-num"><AnimatedNumber :value="Math.round(currentDayPlan.calorias_objetivo)" /></span>
               <span class="stat-unit">kcal</span>
             </div>
             <div class="day-macro-stat font-protein">
-              <span class="stat-num">{{ Math.round(currentDayPlan.proteina_obj) }}</span>
+              <span class="stat-num"><AnimatedNumber :value="Math.round(currentDayPlan.proteina_obj)" /></span>
               <span class="stat-unit">g prot</span>
             </div>
             <div class="day-macro-stat font-carbs">
-              <span class="stat-num">{{ Math.round(currentDayPlan.carbos_obj) }}</span>
+              <span class="stat-num"><AnimatedNumber :value="Math.round(currentDayPlan.carbos_obj)" /></span>
               <span class="stat-unit">g carb</span>
             </div>
             <div class="day-macro-stat font-fat">
-              <span class="stat-num">{{ Math.round(currentDayPlan.grasa_obj) }}</span>
+              <span class="stat-num"><AnimatedNumber :value="Math.round(currentDayPlan.grasa_obj)" /></span>
               <span class="stat-unit">g grasa</span>
             </div>
           </div>
-        </div>
+        </motion.div>
 
         <!-- Meals List -->
         <section class="meals-list">
@@ -193,9 +250,20 @@ function formatTime(timeStr) {
             class="meal-card"
           >
             <div class="meal-header">
-              <div>
+              <div class="meal-title-col">
                 <h3 class="meal-name">{{ meal.nombre }}</h3>
                 <span class="meal-time">{{ formatTime(meal.hora_objetivo) }}</span>
+                <motion.button
+                  :while-press="regeneratingMealId === meal.id ? undefined : tapSubtle"
+                  class="btn-reroll"
+                  :class="{ 'btn-reroll--loading': regeneratingMealId === meal.id }"
+                  :disabled="regeneratingMealId === meal.id"
+                  @click="handleRegenerateMeal(meal.id)"
+                  title="Generar otra opción de plato"
+                >
+                  <RefreshCw :size="14" :stroke-width="2" aria-hidden="true" />
+                  {{ regeneratingMealId === meal.id ? 'Generando…' : 'Otra opción' }}
+                </motion.button>
               </div>
               <div class="meal-macro-bar-wrap">
                 <MacroBar :macros="meal.meal_items.reduce((acc, item) => {
@@ -219,25 +287,28 @@ function formatTime(timeStr) {
                   <span class="item-name">{{ item.food?.nombre }}</span>
                   <span class="item-qty">{{ Math.round(item.cantidad_gramos) }}g</span>
                 </div>
-                <div class="item-macros">
-                  <span class="item-macro font-protein">{{ Math.round(item.proteina) }}g P</span>
-                  <span class="item-macro font-carbs">{{ Math.round(item.carbos) }}g C</span>
-                  <span class="item-macro font-fat">{{ Math.round(item.grasa) }}g G</span>
-                  <span class="item-macro font-calories">{{ Math.round(item.calorias) }} kcal</span>
+                <div class="item-row">
+                  <div class="item-macros">
+                    <span class="item-macro font-protein">{{ Math.round(item.proteina) }}g P</span>
+                    <span class="item-macro font-carbs">{{ Math.round(item.carbos) }}g C</span>
+                    <span class="item-macro font-fat">{{ Math.round(item.grasa) }}g G</span>
+                    <span class="item-macro font-calories">{{ Math.round(item.calorias) }} kcal</span>
+                  </div>
+                  <button
+                    v-if="!isAllergic(item.food_id)"
+                    @click="triggerSubstitute(item)"
+                    class="btn-substitute"
+                    title="Sustituir alimento"
+                  >
+                    Sustituir
+                  </button>
                 </div>
-                <button 
-                  v-if="!isAllergic(item.food_id)" 
-                  @click="triggerSubstitute(item)" 
-                  class="btn-substitute" 
-                  title="Sustituir alimento"
-                >
-                  Sustituir
-                </button>
               </li>
             </ul>
           </article>
         </section>
-      </main>
+      </motion.main>
+      </AnimatePresence>
 
     </div>
 
@@ -255,7 +326,7 @@ function formatTime(timeStr) {
 
 <style scoped>
 .weekly-plan-page {
-  max-width: 800px;
+  max-width: 1100px;
   margin: 0 auto;
   padding: var(--space-6) var(--space-5) var(--space-7);
 }
@@ -279,6 +350,20 @@ function formatTime(timeStr) {
   justify-content: center;
   color: var(--color-text-muted);
   margin-bottom: var(--space-5);
+}
+
+.plan-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 212, 0, 0.2);
+  border-top-color: var(--color-accent);
+  border-radius: var(--radius-full);
+  margin: 0 auto var(--space-5);
+  animation: plan-spin 0.8s linear infinite;
+}
+
+@keyframes plan-spin {
+  to { transform: rotate(360deg); }
 }
 
 .empty-title {
@@ -338,12 +423,6 @@ function formatTime(timeStr) {
   font-size: var(--fs-2xl);
   font-weight: 700;
   color: var(--color-text);
-  margin: 0 0 var(--space-1);
-}
-
-.plan-subtitle {
-  font-size: var(--fs-base);
-  color: var(--color-text-muted);
   margin: 0;
 }
 
@@ -448,7 +527,7 @@ function formatTime(timeStr) {
 }
 
 .badge--training {
-  background: rgba(168, 224, 99, 0.15);
+  background: rgba(255, 212, 0, 0.15);
   color: var(--color-text);
 }
 
@@ -483,9 +562,17 @@ function formatTime(timeStr) {
 
 /* ── Meals list & Meal Cards ──────────────────────── */
 .meals-list {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: var(--space-5);
+  align-items: start;
+}
+
+/* On wider screens, lay the meal cards out in two columns. */
+@media (min-width: 768px) {
+  .meals-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .meal-card {
@@ -504,6 +591,39 @@ function formatTime(timeStr) {
   border-bottom: 1px solid var(--border-subtle);
   flex-wrap: wrap;
   gap: var(--space-4);
+}
+
+.meal-title-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-1);
+}
+
+.btn-reroll {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-top: var(--space-1);
+  padding: var(--space-1) var(--space-2);
+  background: var(--color-bg);
+  border: 1px solid var(--border-default);
+  color: var(--color-system);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-reroll:hover:not(:disabled) {
+  background-color: rgba(37, 99, 235, 0.08);
+  border-color: var(--color-system);
+}
+
+.btn-reroll--loading {
+  opacity: 0.6;
+  cursor: progress;
 }
 
 .meal-name {
@@ -537,12 +657,10 @@ function formatTime(timeStr) {
 
 .meal-item {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  gap: var(--space-2);
   padding: var(--space-4) var(--space-5);
   border-bottom: 1px solid var(--border-subtle);
-  flex-wrap: wrap;
-  gap: var(--space-3);
 }
 
 .meal-item:last-child {
@@ -551,9 +669,20 @@ function formatTime(timeStr) {
 
 .item-info {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
-  min-width: 150px;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+
+/* Second line: macros on the left, substitute button on the right */
+.item-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.btn-substitute {
+  flex: 0 0 auto;
 }
 
 .item-name {
@@ -568,8 +697,11 @@ function formatTime(timeStr) {
 }
 
 .item-macros {
+  flex: 1 1 auto;
+  min-width: 0;
   display: flex;
-  gap: var(--space-3);
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-3);
   font-size: var(--fs-sm);
 }
 

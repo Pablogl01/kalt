@@ -3,6 +3,8 @@
      IMPORTANT: backend always validates restrictions — this component only presents options. -->
 <script setup>
 import { ref, onMounted } from 'vue'
+import { motion } from 'motion-v'
+import { backdrop, modalCard, listContainer, listItem, tapSubtle } from '@/lib/motion'
 import api from '@/api/client'
 
 const props = defineProps({
@@ -70,11 +72,22 @@ async function selectSubstitute(substituteId) {
 </script>
 
 <template>
-  <div class="modal-overlay" @click.self="emit('close')">
-    <div class="modal-card">
+  <motion.div
+    class="modal-overlay"
+    :variants="backdrop"
+    initial="hidden"
+    animate="show"
+    @click.self="emit('close')"
+  >
+    <motion.div
+      class="modal-card"
+      :variants="modalCard"
+      initial="hidden"
+      animate="show"
+    >
       <div class="modal-header">
         <h3 class="modal-title">Sustituir Alimento</h3>
-        <button class="close-btn" @click="emit('close')" aria-label="Cerrar modal">&times;</button>
+        <motion.button :while-press="tapSubtle" class="close-btn" @click="emit('close')" aria-label="Cerrar modal">&times;</motion.button>
       </div>
 
       <div class="modal-body">
@@ -95,12 +108,14 @@ async function selectSubstitute(substituteId) {
           <p>No hay sustitutos disponibles para este alimento.</p>
         </div>
 
-        <div v-else class="substitutes-list">
-          <div 
-            v-for="sub in substitutes" 
-            :key="sub.id" 
+        <motion.div v-else class="substitutes-list" :variants="listContainer" initial="hidden" animate="show">
+          <motion.div
+            v-for="sub in substitutes"
+            :key="sub.id"
             class="substitute-card"
             :class="{ 'substitute-card--disabled': isSaving }"
+            :variants="listItem"
+            :while-press="isSaving ? undefined : tapSubtle"
             @click="!isSaving && selectSubstitute(sub.id)"
           >
             <div class="sub-card-header">
@@ -133,11 +148,11 @@ async function selectSubstitute(substituteId) {
               <span>Seleccionar</span>
               <span class="arrow">→</span>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
-    </div>
-  </div>
+    </motion.div>
+  </motion.div>
 </template>
 
 <style scoped>
@@ -239,6 +254,11 @@ async function selectSubstitute(substituteId) {
   gap: var(--space-4);
   max-height: 350px;
   overflow-y: auto;
+  scrollbar-width: none; /* Firefox */
+}
+
+.substitutes-list::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
 }
 
 .substitute-card {
@@ -253,7 +273,7 @@ async function selectSubstitute(substituteId) {
 
 .substitute-card:hover {
   background: var(--color-surface, #FFFFFF);
-  border-color: var(--color-accent, #A8E063);
+  border-color: var(--color-accent, #FFD400);
   box-shadow: var(--shadow-md);
 }
 

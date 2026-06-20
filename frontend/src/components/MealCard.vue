@@ -1,7 +1,9 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
+import { motion } from 'motion-v'
 import { RefreshCw, CircleCheck, CircleSlash } from 'lucide-vue-next'
 import { useUserStore } from '@/stores/userStore'
+import { spring, tap, tapSubtle } from '@/lib/motion'
 
 const props = defineProps({
   mealLog: {
@@ -12,7 +14,15 @@ const props = defineProps({
 
 const userStore = useUserStore()
 
-const emit = defineEmits(['complete', 'skip', 'reset', 'substitute'])
+const emit = defineEmits(['complete', 'skip', 'reset', 'substitute', 'regenerate'])
+
+const isRegenerating = ref(false)
+
+function handleRegenerate() {
+  if (isRegenerating.value) return
+  isRegenerating.value = true
+  emit('regenerate', props.mealLog.meal.id)
+}
 
 const isAllergic = (foodId) => {
   if (!userStore.user?.food_restrictions) return false
@@ -79,7 +89,9 @@ const formatTime = (timeStr) => {
 </script>
 
 <template>
-  <div 
+  <motion.div
+    layout
+    :transition="spring.gentle"
     class="meal-card"
     :class="{
       'meal-card--completed': mealLog.realizada,
@@ -129,22 +141,38 @@ const formatTime = (timeStr) => {
       </p>
 
       <!-- Pending with planned meal items: show planned items -->
-      <ul v-else-if="mealLog.meal?.meal_items" class="food-list food-list--planned">
+      <div v-else-if="mealLog.meal?.meal_items" class="planned-wrap">
+      <div class="planned-toolbar">
+        <motion.button
+          :while-press="isRegenerating ? undefined : tapSubtle"
+          :disabled="isRegenerating"
+          @click="handleRegenerate"
+          class="btn-reroll"
+          :class="{ 'btn-reroll--loading': isRegenerating }"
+          title="Generar otra opción de plato"
+        >
+          <RefreshCw :size="14" :stroke-width="2" aria-hidden="true" />
+          {{ isRegenerating ? 'Generando…' : 'Otra opción' }}
+        </motion.button>
+      </div>
+      <ul class="food-list food-list--planned">
         <li v-for="item in mealLog.meal.meal_items" :key="item.id" class="food-item">
           <span class="food-name">
             {{ item.food?.nombre }}
             <span class="food-weight">({{ Math.round(item.cantidad_gramos) }}g)</span>
           </span>
-          <button
+          <motion.button
             v-if="!isAllergic(item.food_id)"
+            :while-press="tapSubtle"
             @click="emit('substitute', item)"
             class="btn-substitute"
           >
             <RefreshCw :size="14" :stroke-width="2" aria-hidden="true" />
             Sustituir
-          </button>
+          </motion.button>
         </li>
       </ul>
+      </div>
     </div>
 
     <!-- Macros summary & Actions -->
@@ -171,38 +199,50 @@ const formatTime = (timeStr) => {
       <div class="meal-actions" v-if="!mealLog.es_extra">
         <!-- Pending: complete or skip directly -->
         <template v-if="!mealLog.realizada && !mealLog.saltada">
-          <button
+          <motion.button
+            :while-press="tap"
             @click="emit('complete', mealLog.id)"
             class="btn-action btn-action--complete"
           >
             Realizada
-          </button>
-          <button
+          </motion.button>
+          <motion.button
+            :while-press="tap"
             @click="emit('skip', mealLog.id)"
             class="btn-action btn-action--skip"
           >
             Saltar
-          </button>
+          </motion.button>
         </template>
 
         <!-- Completed: indicator + undo -->
         <div v-else-if="mealLog.realizada" class="state-actions-wrap">
-          <span class="completed-indicator"><CircleCheck :size="14" :stroke-width="2" aria-hidden="true" /> Realizada</span>
-          <button @click="emit('reset', mealLog.id)" class="btn-action btn-action--undo">
+          <motion.span
+            class="completed-indicator"
+            :initial="{ scale: 0.6, opacity: 0 }"
+            :animate="{ scale: 1, opacity: 1 }"
+            :transition="spring.bouncy"
+          ><CircleCheck :size="14" :stroke-width="2" aria-hidden="true" /> Realizada</motion.span>
+          <motion.button :while-press="tap" @click="emit('reset', mealLog.id)" class="btn-action btn-action--undo">
             Deshacer
-          </button>
+          </motion.button>
         </div>
 
         <!-- Skipped: indicator + undo -->
         <div v-else-if="mealLog.saltada" class="state-actions-wrap">
-          <span class="skipped-indicator"><CircleSlash :size="14" :stroke-width="2" aria-hidden="true" /> Saltada</span>
-          <button @click="emit('reset', mealLog.id)" class="btn-action btn-action--undo">
+          <motion.span
+            class="skipped-indicator"
+            :initial="{ scale: 0.6, opacity: 0 }"
+            :animate="{ scale: 1, opacity: 1 }"
+            :transition="spring.snappy"
+          ><CircleSlash :size="14" :stroke-width="2" aria-hidden="true" /> Saltada</motion.span>
+          <motion.button :while-press="tap" @click="emit('reset', mealLog.id)" class="btn-action btn-action--undo">
             Deshacer
-          </button>
+          </motion.button>
         </div>
       </div>
     </div>
-  </div>
+  </motion.div>
 </template>
 
 <style scoped>
@@ -311,6 +351,41 @@ const formatTime = (timeStr) => {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
+}
+
+.planned-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.planned-toolbar {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-reroll {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-2);
+  background: var(--color-bg);
+  border: 1px solid var(--border-default);
+  color: var(--color-system);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-reroll:hover:not(:disabled) {
+  background-color: rgba(37, 99, 235, 0.08);
+}
+
+.btn-reroll--loading {
+  opacity: 0.6;
+  cursor: progress;
 }
 
 .food-list--planned {
