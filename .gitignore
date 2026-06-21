@@ -7,3 +7,6 @@
 tickets/
 *.md
 !README.md
+
+# Override de Compose local para desarrollo (no compartir)
+docker-compose.override.yml

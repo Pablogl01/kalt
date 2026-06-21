@@ -49,14 +49,28 @@ async function handleSubstituteSelected(updatedItem) {
 }
 
 onMounted(async () => {
-  // Load active plan on mount if user is authenticated and has complete profile
-  if (userStore.isAuthenticated && userStore.hasCompleteProfile) {
+  // Fetch the plan only if we don't already have it (first entry).
+  if (userStore.isAuthenticated && userStore.hasCompleteProfile && !dietStore.activePlan) {
     await dietStore.loadActivePlan()
   }
+  // Always open on today: the view remounts on every navigation here, so this
+  // runs each time, snapping back to the current day even after a manual pick.
+  selectDay(todayIndex())
 })
 
 // Navigation tabs for the 7 days
 const daysOfWeek = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']
+
+// Index of today's day within the sorted week, or 0 (Monday) if the plan's
+// week doesn't include today.
+function todayIndex() {
+  const days = dietStore.activePlan?.day_plans
+  if (!days) return 0
+  const sorted = [...days].sort((a, b) => new Date(a.fecha) - new Date(b.fecha))
+  const today = new Date().toDateString()
+  const i = sorted.findIndex(d => new Date(d.fecha).toDateString() === today)
+  return i >= 0 ? i : 0
+}
 
 const currentDayPlan = computed(() => {
   if (!dietStore.activePlan || !dietStore.activePlan.day_plans) return null
@@ -78,7 +92,7 @@ async function handleGenerate() {
 
 function handlePlanReady() {
   currentPlanId.value = null
-  activeDayIndex.value = 0
+  selectDay(todayIndex())
 }
 
 function handlePlanFailed() {
