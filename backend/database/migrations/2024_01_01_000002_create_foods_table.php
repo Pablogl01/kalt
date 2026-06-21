@@ -19,6 +19,8 @@ return new class extends Migration
             $table->boolean('apto_volumen')->default(true);
             $table->boolean('apto_definicion')->default(true);
             $table->boolean('apto_mantenimiento')->default(true);
+            // ponytail: solo proteínas y carbos lo necesitan; las grasas valen para cualquier comida
+            $table->boolean('apto_desayuno')->default(false);
             $table->timestamps();
         });
     }

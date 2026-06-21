@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Models\MealItem;
 use App\Models\MealTemplate;
 use App\Models\MealSlot;
 use App\Models\User;
@@ -129,6 +130,18 @@ class GenerateDietJob implements ShouldQueue
 
                         app(MealPlateGenerator::class)->build($meal, $mealMacros, $user, $injections[$slot['id']] ?? [], $supplementFoodIds);
                     }
+
+                    // The generator hits each meal's target within a tolerance, so
+                    // the plate totals drift from the calculated target. Align the
+                    // day's displayed totals with the actual plate so the header
+                    // matches the sum of the meals.
+                    $items = MealItem::whereIn('meal_id', $dayPlan->meals()->pluck('id'))->get();
+                    $dayPlan->update([
+                        'calorias_objetivo' => round($items->sum('calorias'), 1),
+                        'proteina_obj'      => round($items->sum('proteina'), 1),
+                        'carbos_obj'        => round($items->sum('carbos'), 1),
+                        'grasa_obj'         => round($items->sum('grasa'), 1),
+                    ]);
                 }
             });
 

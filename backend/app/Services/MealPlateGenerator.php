@@ -38,13 +38,15 @@ class MealPlateGenerator
             $targetMacros['grasa']    = max(0, $targetMacros['grasa']    - ($fixed['food']->grasa    * $fixed['grams'] / 100));
         }
 
-        $this->fillRemaining($meal, $targetMacros, $user, $excludeFoodIds, $tolerance);
+        $this->fillRemaining($meal, $targetMacros, $user, $excludeFoodIds);
     }
 
     /**
-     * Run the random-mix matching loop for the (already supplement-adjusted) target.
+     * Pick three foods (protein/carb/fat) and solve for the grams that hit the
+     * (already supplement-adjusted) macro target, retrying random combos until
+     * one lands in sane portions; keeps the closest as a fallback.
      */
-    private function fillRemaining(Meal $meal, array $targetMacros, User $user, array $excludeFoodIds, float $tolerance): void
+    private function fillRemaining(Meal $meal, array $targetMacros, User $user, array $excludeFoodIds): void
     {
         // Fetch allergies or intolerances to exclude, plus any explicitly excluded
         // foods (supplement foods only belong in a meal via deliberate injection).
@@ -55,19 +57,31 @@ class MealPlateGenerator
             ->unique()
             ->toArray();
 
-        $proteins = Food::where('categoria', 'proteina')
+        // Breakfast/snack slots only draw protein & carbs from breakfast-appropriate
+        // foods, so we don't get cod + yuca for breakfast. Fats fit any meal.
+        // Breakfast protein also pulls from dairy (yogur, requesón…) for variety.
+        $isBreakfast = $this->isBreakfastSlot($meal->nombre);
+        $proteinCategories = $isBreakfast ? ['proteina', 'lacteos'] : ['proteina'];
+
+        // Main meals exclude breakfast/snack-only foods (protein powder, oats,
+        // rice cakes…); breakfast meals restrict to breakfast-appropriate foods.
+        $proteins = Food::whereIn('categoria', $proteinCategories)
             ->whereNotIn('id', $restrictedFoodIds)
+            ->when($isBreakfast, fn ($q) => $q->where('apto_desayuno', true))
+            ->when(!$isBreakfast, fn ($q) => $q->where('apto_principal', true))
             ->get();
 
         $carbs = Food::where('categoria', 'carbos')
             ->whereNotIn('id', $restrictedFoodIds)
+            ->when($isBreakfast, fn ($q) => $q->where('apto_desayuno', true))
+            ->when(!$isBreakfast, fn ($q) => $q->where('apto_principal', true))
             ->get();
 
         $fats = Food::where('categoria', 'grasas')
             ->whereNotIn('id', $restrictedFoodIds)
             ->get();
 
-        // Fallbacks
+        // Fallbacks (drop the breakfast/restriction filters as a last resort)
         if ($proteins->isEmpty()) $proteins = Food::where('categoria', 'proteina')->get();
         if ($carbs->isEmpty()) $carbs = Food::where('categoria', 'carbos')->get();
         if ($fats->isEmpty()) $fats = Food::where('categoria', 'grasas')->get();
@@ -76,8 +90,13 @@ class MealPlateGenerator
             throw new \Exception("Alimentos insuficientes en BD para generar el plan");
         }
 
+        // Sane gram bounds per food role. The protein cap doubles as a
+        // feasibility filter: combos needing >300g of a lean protein are
+        // rejected so a denser protein gets picked instead of overshooting.
+        $bounds = [[10, 300], [10, 500], [5, 200]]; // protein, carb, fat
+
         $attempts = 0;
-        $maxAttempts = 50;
+        $maxAttempts = 120;
         $bestMix = null;
         $bestDiff = 999999;
 
@@ -87,44 +106,45 @@ class MealPlateGenerator
             $cFood = $carbs->random();
             $fFood = $fats->random();
 
-            $gP = ($targetMacros['proteina'] / max(0.1, $pFood->proteina)) * 100;
-            $gC = ($targetMacros['carbos'] / max(0.1, $cFood->carbos)) * 100;
-            $gF = ($targetMacros['grasa'] / max(0.1, $fFood->grasa)) * 100;
+            // Solve for the grams that hit all three macro targets *exactly*,
+            // accounting for every food's contribution to every macro (cross
+            // terms), instead of scaling each food by its own macro alone.
+            $grams = $this->solveGrams($pFood, $cFood, $fFood, $targetMacros);
+            if ($grams === null) {
+                continue; // foods macro-collinear: no unique solution
+            }
 
-            $gP = max(10, min(500, $gP));
-            $gC = max(10, min(500, $gC));
-            $gF = max(5, min(200, $gF));
-
-            $actualProt = ($pFood->proteina * $gP / 100) + ($cFood->proteina * $gC / 100) + ($fFood->proteina * $gF / 100);
-            $actualCarb = ($pFood->carbos * $gP / 100) + ($cFood->carbos * $gC / 100) + ($fFood->carbos * $gF / 100);
-            $actualFat  = ($pFood->grasa * $gP / 100) + ($cFood->grasa * $gC / 100) + ($fFood->grasa * $gF / 100);
-
-            $errProt = abs($actualProt - $targetMacros['proteina']) / max(1, $targetMacros['proteina']);
-            $errCarb = abs($actualCarb - $targetMacros['carbos']) / max(1, $targetMacros['carbos']);
-            $errFat  = abs($actualFat - $targetMacros['grasa']) / max(1, $targetMacros['grasa']);
-
-            $maxError = max($errProt, $errCarb, $errFat);
-
-            if ($maxError <= $tolerance) {
-                $this->saveMealItem($meal, $pFood, $gP);
-                $this->saveMealItem($meal, $cFood, $gC);
-                $this->saveMealItem($meal, $fFood, $gF);
+            // Exact solution within sane portions → done, error ≈ 0.
+            $inBounds = true;
+            foreach ($grams as $i => $g) {
+                if ($g < $bounds[$i][0] || $g > $bounds[$i][1]) { $inBounds = false; break; }
+            }
+            if ($inBounds) {
+                $this->saveMealItem($meal, $pFood, $grams[0]);
+                $this->saveMealItem($meal, $cFood, $grams[1]);
+                $this->saveMealItem($meal, $fFood, $grams[2]);
                 return;
             }
 
+            // Otherwise clamp to bounds and keep the closest combo as a fallback.
+            $gP = max($bounds[0][0], min($bounds[0][1], $grams[0]));
+            $gC = max($bounds[1][0], min($bounds[1][1], $grams[1]));
+            $gF = max($bounds[2][0], min($bounds[2][1], $grams[2]));
+
+            $actualProt = ($pFood->proteina * $gP + $cFood->proteina * $gC + $fFood->proteina * $gF) / 100;
+            $actualCarb = ($pFood->carbos * $gP + $cFood->carbos * $gC + $fFood->carbos * $gF) / 100;
+            $actualFat  = ($pFood->grasa * $gP + $cFood->grasa * $gC + $fFood->grasa * $gF) / 100;
+
+            $maxError = max(
+                abs($actualProt - $targetMacros['proteina']) / max(1, $targetMacros['proteina']),
+                abs($actualCarb - $targetMacros['carbos'])   / max(1, $targetMacros['carbos']),
+                abs($actualFat - $targetMacros['grasa'])     / max(1, $targetMacros['grasa'])
+            );
+
             if ($maxError < $bestDiff) {
                 $bestDiff = $maxError;
-                $bestMix = [
-                    'foods' => [$pFood, $cFood, $fFood],
-                    'grams' => [$gP, $gC, $gF]
-                ];
+                $bestMix = ['foods' => [$pFood, $cFood, $fFood], 'grams' => [$gP, $gC, $gF]];
             }
-        }
-
-        // If tolerance is 10% and failed, retry with 15%
-        if ($tolerance < 0.15) {
-            $this->fillRemaining($meal, $targetMacros, $user, $excludeFoodIds, 0.15);
-            return;
         }
 
         if ($bestMix) {
@@ -135,6 +155,59 @@ class MealPlateGenerator
         }
 
         throw new \Exception("No se pudo cuadrar los macros de la comida.");
+    }
+
+    /**
+     * Grams of each food so the plate hits all three macro targets exactly.
+     *
+     * Solves M·g = t where M[macro][food] is that food's grams-per-100g of the
+     * macro and t is [proteina, carbos, grasa]. Returns [gP, gC, gF] in grams,
+     * or null if the foods are macro-collinear (singular matrix).
+     *
+     * @return array{0: float, 1: float, 2: float}|null
+     */
+    private function solveGrams(Food $p, Food $c, Food $f, array $t): ?array
+    {
+        // Columns = foods, rows = macros (per gram, i.e. value/100).
+        $m = [
+            [$p->proteina, $c->proteina, $f->proteina],
+            [$p->carbos,   $c->carbos,   $f->carbos],
+            [$p->grasa,    $c->grasa,    $f->grasa],
+        ];
+        $rhs = [$t['proteina'], $t['carbos'], $t['grasa']];
+
+        $det = $this->det3($m);
+        if (abs($det) < 1e-6) {
+            return null;
+        }
+
+        // Cramer's rule, then ×100 (matrix is per-100g, grams = solution×100).
+        $grams = [];
+        for ($col = 0; $col < 3; $col++) {
+            $mc = $m;
+            for ($row = 0; $row < 3; $row++) {
+                $mc[$row][$col] = $rhs[$row];
+            }
+            $grams[$col] = ($this->det3($mc) / $det) * 100;
+        }
+        return $grams;
+    }
+
+    private function det3(array $m): float
+    {
+        return $m[0][0] * ($m[1][1] * $m[2][2] - $m[1][2] * $m[2][1])
+             - $m[0][1] * ($m[1][0] * $m[2][2] - $m[1][2] * $m[2][0])
+             + $m[0][2] * ($m[1][0] * $m[2][1] - $m[1][1] * $m[2][0]);
+    }
+
+    /**
+     * A slot counts as breakfast-style (so it uses breakfast foods) when its name
+     * is Desayuno, Media mañana or Merienda.
+     */
+    private function isBreakfastSlot(?string $nombre): bool
+    {
+        $n = mb_strtolower($nombre ?? '');
+        return str_contains($n, 'desayuno') || str_contains($n, 'mañana') || str_contains($n, 'merienda');
     }
 
     private function saveMealItem(Meal $meal, Food $food, float $grams): MealItem
