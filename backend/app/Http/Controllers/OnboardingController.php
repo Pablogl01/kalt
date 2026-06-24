@@ -48,6 +48,7 @@ class OnboardingController extends Controller
         DB::transaction(function () use ($user, $validated) {
             $user->update([
                 'nivel_actividad' => $validated['nivel_actividad'],
+                'dias_entreno'    => $validated['dias_entreno'],
             ]);
 
             // Create or update meal template

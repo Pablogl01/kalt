@@ -59,12 +59,15 @@ const router = createRouter({
       path: '/onboarding',
       name: 'onboarding',
       component: () => import('@/views/Onboarding.vue'),
-      meta: { requiresAuth: false, label: 'Onboarding' },
+      meta: { requiresAuth: true, fullscreen: true, label: 'Onboarding' },
     },
   ],
 })
 
 // ── Navigation guard ──────────────────────────────────────
+// Whether the app's first navigation (cold start) has been handled yet.
+let bootHandled = false
+
 router.beforeEach(async (to) => {
   const userStore = useUserStore()
 
@@ -80,6 +83,15 @@ router.beforeEach(async (to) => {
   // Redirect authenticated users away from login/register
   if (!to.meta.requiresAuth && userStore.isAuthenticated && ['login', 'register'].includes(to.name)) {
     return { name: 'dashboard' }
+  }
+
+  // On cold start, always land on the Dashboard — even if the app was reopened
+  // on a deep-linked route. Does not affect in-app navigation afterwards.
+  if (!bootHandled && userStore.isAuthenticated) {
+    bootHandled = true
+    if (to.meta.requiresAuth && to.meta.fullscreen !== true && to.name !== 'dashboard') {
+      return { name: 'dashboard' }
+    }
   }
 })
 

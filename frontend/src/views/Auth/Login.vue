@@ -1,6 +1,11 @@
 <template>
   <div class="auth-page">
-    <div class="auth-card">
+    <motion.div
+      class="auth-card"
+      :initial="{ opacity: 0, y: 16, scale: 0.98 }"
+      :animate="{ opacity: 1, y: 0, scale: 1 }"
+      :transition="spring.gentle"
+    >
       <!-- Logo -->
       <div class="auth-logo">
         <span class="logo-text">KALT</span>
@@ -12,9 +17,20 @@
       <p class="auth-subtitle">Bienvenido de vuelta</p>
 
       <!-- Error banner -->
-      <div v-if="errorMessage" class="auth-error" role="alert" aria-live="polite">
-        {{ errorMessage }}
-      </div>
+      <AnimatePresence>
+        <motion.div
+          v-if="errorMessage"
+          class="auth-error"
+          role="alert"
+          aria-live="polite"
+          :initial="{ opacity: 0, height: 0, y: -8 }"
+          :animate="{ opacity: 1, height: 'auto', y: 0 }"
+          :exit="{ opacity: 0, height: 0 }"
+          :transition="tween.base"
+        >
+          {{ errorMessage }}
+        </motion.div>
+      </AnimatePresence>
 
       <!-- Form -->
       <form id="login-form" @submit.prevent="handleLogin" novalidate>
@@ -51,15 +67,16 @@
         </div>
 
         <!-- Submit -->
-        <button
+        <motion.button
           id="login-submit"
           type="submit"
           class="btn-primary"
           :disabled="loading"
+          :while-press="!loading ? tap : undefined"
         >
           <span v-if="loading" class="btn-spinner" aria-hidden="true"></span>
           {{ loading ? 'Entrando…' : 'Iniciar sesión' }}
-        </button>
+        </motion.button>
       </form>
 
       <!-- Footer link -->
@@ -67,17 +84,18 @@
         ¿No tienes cuenta?
         <RouterLink id="link-to-register" to="/register" class="auth-link">Crear cuenta</RouterLink>
       </p>
-    </div>
+    </motion.div>
   </div>
 </template>
 
 <script setup>
 import { ref, reactive } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
+import { motion, AnimatePresence } from 'motion-v'
+import { spring, tween, tap } from '@/lib/motion'
 import { useUserStore } from '@/stores/userStore'
 
 const router    = useRouter()
-const route     = useRoute()
 const userStore = useUserStore()
 
 const loading      = ref(false)
@@ -98,8 +116,8 @@ async function handleLogin() {
 
   try {
     await userStore.login(form.email, form.password)
-    const redirect = route.query.redirect || (userStore.hasCompleteProfile ? '/' : '/onboarding')
-    router.push(redirect)
+    // Always land on the Dashboard by default (onboarding only if profile incomplete).
+    router.push(userStore.hasCompleteProfile ? '/' : '/onboarding')
   } catch (err) {
     if (err.response?.status === 422) {
       const errors = err.response.data?.errors ?? {}
@@ -226,7 +244,7 @@ async function handleLogin() {
 
 .field-input:focus {
   border-color: var(--color-accent-dark);
-  box-shadow: 0 0 0 3px rgba(168, 224, 99, 0.25);
+  box-shadow: 0 0 0 3px rgba(255, 212, 0, 0.25);
 }
 
 .field-input--error {

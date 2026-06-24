@@ -23,6 +23,8 @@ class Food extends Model
         'apto_volumen',
         'apto_definicion',
         'apto_mantenimiento',
+        'apto_desayuno',
+        'apto_principal',
     ];
 
     protected function casts(): array
@@ -31,6 +33,8 @@ class Food extends Model
             'apto_volumen'       => 'boolean',
             'apto_definicion'    => 'boolean',
             'apto_mantenimiento' => 'boolean',
+            'apto_desayuno'      => 'boolean',
+            'apto_principal'     => 'boolean',
         ];
     }
 

@@ -204,8 +204,16 @@ class StatsService
         $this->trackCacheKey($user->id, $cacheKey);
 
         return Cache::remember($cacheKey, 3600, function () use ($user, $from, $to) {
+            // Include the remaining days of the current week so the planned count
+            // reflects the whole week's training days, not only those elapsed.
+            $upper = $to->copy()->endOfDay();
+            $weekEnd = Carbon::now()->endOfWeek();
+            if ($weekEnd->greaterThan($upper)) {
+                $upper = $weekEnd;
+            }
+
             $logs = DailyLog::where('user_id', $user->id)
-                ->whereBetween('fecha', [$from->copy()->startOfDay(), $to->copy()->endOfDay()])
+                ->whereBetween('fecha', [$from->copy()->startOfDay(), $upper])
                 ->get();
 
             $diasPlanificados = $logs->where('entreno_planificado', true)->count();

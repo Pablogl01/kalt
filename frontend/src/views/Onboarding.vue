@@ -1,10 +1,12 @@
 <script setup>
 import { ref, reactive, computed, watch, onMounted } from 'vue'
+import { motion, AnimatePresence } from 'motion-v'
 import { TrendingUp, Scale, TrendingDown } from 'lucide-vue-next'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/userStore'
 import { useDietStore } from '@/stores/dietStore'
 import api from '@/api/client'
+import { tap, tapSubtle, listContainer, listItem, slide } from '@/lib/motion'
 import PlanStatusPoller from '@/components/PlanStatusPoller.vue'
 
 const router = useRouter()
@@ -13,6 +15,9 @@ const dietStore = useDietStore()
 
 // State
 const currentStep = ref(1)
+// Direction of step travel (1 = forward/next, -1 = back) so the wizard
+// content slides the matching way when the step changes.
+const dir = ref(1)
 const step1Macros = ref(null)
 const generatingPlanId = ref(null)
 const foodsList = ref([])
@@ -120,6 +125,7 @@ async function submitStep1() {
   try {
     const { data } = await api.post('/onboarding/step1', formStep1)
     await userStore.fetchProfile() // Update global store
+    dir.value = 1
     currentStep.value = 2
   } catch (err) {
     errorMsg.value = err.response?.data?.message || 'Error al guardar los datos.'
@@ -147,6 +153,7 @@ async function submitStep2() {
 
 function handlePlanReady() {
   loading.value = false
+  dir.value = 1
   currentStep.value = 3
 }
 
@@ -261,9 +268,29 @@ function toggleTrainingDay(day) {
 
     <!-- MAIN FORM BODY -->
     <div class="onboarding-card">
-      <div v-if="errorMsg" class="error-banner" role="alert">
+      <AnimatePresence>
+      <motion.div
+        v-if="errorMsg"
+        class="error-banner"
+        role="alert"
+        :variants="listItem"
+        initial="hidden"
+        animate="show"
+        exit="hidden"
+      >
         {{ errorMsg }}
-      </div>
+      </motion.div>
+      </AnimatePresence>
+
+      <AnimatePresence :custom="dir" mode="wait">
+      <motion.div
+        :key="currentStep"
+        :custom="dir"
+        :variants="slide"
+        initial="enter"
+        animate="center"
+        exit="exit"
+      >
 
       <!-- STEP 1 -->
       <div v-if="currentStep === 1" class="step-view">
@@ -301,23 +328,33 @@ function toggleTrainingDay(day) {
 
           <div class="form-group">
             <label>Objetivo Deportivo</label>
-            <div class="goal-grid">
-              <label 
-                v-for="opt in goalOptions" 
-                :key="opt.value" 
+            <motion.div class="goal-grid" :variants="listContainer" initial="hidden" animate="show">
+              <motion.label
+                v-for="opt in goalOptions"
+                :key="opt.value"
                 class="goal-card"
                 :class="{ 'goal-card--active': formStep1.objetivo === opt.value }"
+                :variants="listItem"
+                :while-press="tapSubtle"
               >
                 <input type="radio" :value="opt.value" v-model="formStep1.objetivo" class="goal-radio-hidden" />
                 <span class="goal-icon"><component :is="opt.icon" :size="28" :stroke-width="2" aria-hidden="true" /></span>
                 <span class="goal-title">{{ opt.label }}</span>
                 <span class="goal-desc">{{ opt.desc }}</span>
-              </label>
-            </div>
+              </motion.label>
+            </motion.div>
           </div>
 
           <!-- Real-time computed macros preview -->
-          <div v-if="step1Macros" class="macros-preview">
+          <AnimatePresence>
+          <motion.div
+            v-if="step1Macros"
+            class="macros-preview"
+            :variants="listItem"
+            initial="hidden"
+            animate="show"
+            exit="hidden"
+          >
             <h4 class="preview-title">Tu objetivo diario estimado</h4>
             <div class="preview-grid">
               <div class="p-macro text-calories">
@@ -337,11 +374,12 @@ function toggleTrainingDay(day) {
                 <span class="p-lbl">Grasa</span>
               </div>
             </div>
-          </div>
+          </motion.div>
+          </AnimatePresence>
 
-          <button type="submit" class="btn-submit" :disabled="loading || !isStep1Complete">
+          <motion.button :while-press="tap" type="submit" class="btn-submit" :disabled="loading || !isStep1Complete">
             {{ loading ? 'Guardando...' : 'Continuar a personalización' }}
-          </button>
+          </motion.button>
         </form>
       </div>
 
@@ -367,18 +405,20 @@ function toggleTrainingDay(day) {
 
             <div class="form-group">
               <label>Días que entrenas</label>
-              <div class="days-selector">
-                <button 
+              <motion.div class="days-selector" :variants="listContainer" initial="hidden" animate="show">
+                <motion.button
                   type="button"
-                  v-for="day in daysOfWeek" 
-                  :key="day.value" 
+                  v-for="day in daysOfWeek"
+                  :key="day.value"
                   class="day-btn"
                   :class="{ 'day-btn--active': formStep2.dias_entreno.includes(day.value) }"
+                  :variants="listItem"
+                  :while-press="tapSubtle"
                   @click="toggleTrainingDay(day.value)"
                 >
                   {{ day.label }}
-                </button>
-              </div>
+                </motion.button>
+              </motion.div>
             </div>
 
             <div class="form-row">
@@ -395,9 +435,9 @@ function toggleTrainingDay(day) {
               </div>
             </div>
 
-            <button type="submit" class="btn-submit" :disabled="loading">
+            <motion.button :while-press="tap" type="submit" class="btn-submit" :disabled="loading">
               {{ loading ? 'Generando plan...' : 'Generar mi plan semanal' }}
-            </button>
+            </motion.button>
           </form>
         </div>
       </div>
@@ -434,33 +474,45 @@ function toggleTrainingDay(day) {
               <option value="intolerancia">Intolerancia (Evitar por defecto)</option>
               <option value="no_me_gusta">No me gusta (Sustituir)</option>
             </select>
-            <button type="button" @click="addRestriction" class="btn-add-restriction" :disabled="!selectedFoodId">
+            <motion.button :while-press="tap" type="button" @click="addRestriction" class="btn-add-restriction" :disabled="!selectedFoodId">
               Añadir
-            </button>
+            </motion.button>
           </div>
         </div>
 
         <!-- Current restrictions list -->
-        <div v-if="restrictions.length > 0" class="added-restrictions">
+        <AnimatePresence>
+        <motion.div
+          v-if="restrictions.length > 0"
+          class="added-restrictions"
+          :variants="listItem"
+          initial="hidden"
+          animate="show"
+          exit="hidden"
+        >
           <h4 class="list-title">Restricciones añadidas:</h4>
-          <ul class="restrictions-list">
-            <li v-for="(rest, index) in restrictions" :key="index" class="restriction-item">
+          <motion.ul class="restrictions-list" :variants="listContainer" initial="hidden" animate="show">
+            <motion.li v-for="(rest, index) in restrictions" :key="index" class="restriction-item" :variants="listItem">
               <span class="rest-food-name">{{ rest.name }}</span>
               <span class="rest-type-tag" :class="`rest-type-tag--${rest.tipo}`">{{ formatRestrictionType(rest.tipo) }}</span>
               <button type="button" @click="removeRestriction(index)" class="btn-remove">×</button>
-            </li>
-          </ul>
-        </div>
+            </motion.li>
+          </motion.ul>
+        </motion.div>
+        </AnimatePresence>
 
         <div class="step3-actions">
-          <button type="button" @click="skipStep3" class="btn-skip" :disabled="loading">
+          <motion.button :while-press="tap" type="button" @click="skipStep3" class="btn-skip" :disabled="loading">
             Saltar este paso
-          </button>
-          <button type="button" @click="finishOnboarding" class="btn-submit" :disabled="loading">
+          </motion.button>
+          <motion.button :while-press="tap" type="button" @click="finishOnboarding" class="btn-submit" :disabled="loading">
             {{ loading ? 'Guardando...' : 'Finalizar y guardar' }}
-          </button>
+          </motion.button>
         </div>
       </div>
+
+      </motion.div>
+      </AnimatePresence>
     </div>
   </div>
 </template>
@@ -625,12 +677,12 @@ function toggleTrainingDay(day) {
 
 .goal-card:hover {
   border-color: var(--color-accent);
-  background: rgba(168, 224, 99, 0.02);
+  background: rgba(255, 212, 0, 0.02);
 }
 
 .goal-card--active {
   border-color: var(--color-accent);
-  background: rgba(168, 224, 99, 0.05);
+  background: rgba(255, 212, 0, 0.05);
   box-shadow: 0 0 0 1px var(--color-accent);
 }
 
@@ -775,7 +827,7 @@ function toggleTrainingDay(day) {
 }
 
 .dropdown-item:hover {
-  background: rgba(168, 224, 99, 0.08);
+  background: rgba(255, 212, 0, 0.08);
 }
 
 .restriction-type-select {

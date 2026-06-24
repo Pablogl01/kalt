@@ -6,6 +6,8 @@ export const useDietStore = defineStore('diet', () => {
   const activePlan = ref(null)
   const planStatus = ref(null) // 'pending' | 'ready' | 'failed'
   const isGenerating = ref(false)
+  const isLoading = ref(false)   // fetching the active plan
+  const hasLoaded = ref(false)   // a load attempt has completed at least once
   const errorMessage = ref('')
   let pollInterval = null
 
@@ -27,6 +29,7 @@ export const useDietStore = defineStore('diet', () => {
   }
 
   async function loadActivePlan() {
+    isLoading.value = true
     try {
       const { data } = await api.get('/plans/active')
       activePlan.value = data
@@ -37,7 +40,16 @@ export const useDietStore = defineStore('diet', () => {
       } else {
         console.error('Error loading active plan:', err)
       }
+    } finally {
+      isLoading.value = false
+      hasLoaded.value = true
     }
+  }
+
+  async function regenerateMeal(mealId) {
+    const { data } = await api.post(`/meals/${mealId}/regenerate`)
+    await loadActivePlan()
+    return data
   }
 
   function startPolling(uuid) {
@@ -81,8 +93,11 @@ export const useDietStore = defineStore('diet', () => {
     activePlan,
     planStatus,
     isGenerating,
+    isLoading,
+    hasLoaded,
     errorMessage,
     generatePlan,
+    regenerateMeal,
     loadActivePlan,
     startPolling,
     stopPolling,

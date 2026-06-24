@@ -1,8 +1,11 @@
 <script setup>
 import { ref, onMounted, watch, nextTick, computed } from 'vue'
+import { motion, AnimatePresence } from 'motion-v'
 import api from '../api/client'
 import AdherenceHeatmap from '../components/AdherenceHeatmap.vue'
 import WeightChart from '../components/WeightChart.vue'
+import AnimatedNumber from '@/components/AnimatedNumber.vue'
+import { tap, tapSubtle, listContainer, listItem, backdrop, modalCard } from '@/lib/motion'
 import Chart from 'chart.js/auto'
 
 // Filter Range: 7, 30, 90 days
@@ -306,36 +309,37 @@ const adherencePercentage = computed(() => {
 
       <!-- Range Selector Buttons -->
       <div class="range-selector">
-        <button
+        <motion.button
           v-for="range in ranges"
           :key="range.value"
+          :while-press="tap"
           class="range-btn"
           :class="{ active: selectedRange === range.value }"
           @click="selectRange(range)"
         >
           {{ range.label }}
-        </button>
+        </motion.button>
       </div>
     </div>
 
     <!-- KPI Grid -->
-    <div class="kpi-grid">
-      <div class="kpi-card">
+    <motion.div class="kpi-grid" :variants="listContainer" initial="hidden" animate="show">
+      <motion.div class="kpi-card" :variants="listItem">
         <div class="kpi-label">Adherencia Completa</div>
-        <div class="kpi-value text-accent">{{ adherencePercentage }}%</div>
+        <div class="kpi-value text-accent"><AnimatedNumber :value="adherencePercentage" />%</div>
         <div class="kpi-desc">Días con dieta y entrenamiento cumplidos</div>
-      </div>
-      <div class="kpi-card">
+      </motion.div>
+      <motion.div class="kpi-card" :variants="listItem">
         <div class="kpi-label">Entrenamientos Realizados</div>
-        <div class="kpi-value">{{ trainingStats.dias_entrenados }} / {{ trainingStats.dias_planificados }}</div>
+        <div class="kpi-value"><AnimatedNumber :value="trainingStats.dias_entrenados" /> / {{ trainingStats.dias_planificados }}</div>
         <div class="kpi-desc">{{ trainingStats.dias_extra }} entrenos extra fuera de plan</div>
-      </div>
-      <div class="kpi-card">
+      </motion.div>
+      <motion.div class="kpi-card" :variants="listItem">
         <div class="kpi-label">Racha de Entrenamiento</div>
-        <div class="kpi-value">{{ trainingStats.racha_actual }} días</div>
+        <div class="kpi-value"><AnimatedNumber :value="trainingStats.racha_actual" /> días</div>
         <div class="kpi-desc">Mejor racha histórica: {{ trainingStats.mejor_racha }} días</div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
 
     <!-- Charts Layout Grid -->
     <div class="charts-layout">
@@ -487,30 +491,34 @@ const adherencePercentage = computed(() => {
   margin: 0;
 }
 
-/* Range Selector style */
+/* Range Selector — segmented control, matches Profile's .profile-tabs */
 .range-selector {
   display: flex;
-  background-color: var(--color-surface);
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius-sm);
-  padding: 4px;
+  gap: var(--space-1);
+  background: var(--color-bg);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-pill);
+  padding: var(--space-1);
 }
 
 .range-btn {
-  background: none;
+  flex: 1;
+  padding: var(--space-2) var(--space-3);
   border: none;
-  padding: 6px 16px;
-  border-radius: var(--radius-sm);
+  background: transparent;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-sans);
   font-size: var(--fs-sm);
-  font-weight: 500;
+  font-weight: 600;
   color: var(--color-text-muted);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background 0.15s ease, color 0.15s ease;
 }
 
 .range-btn.active {
-  background-color: var(--color-accent);
+  background: var(--color-surface);
   color: var(--color-text);
+  box-shadow: var(--shadow-sm);
 }
 
 /* KPI Dashboard Cards */
@@ -547,7 +555,7 @@ const adherencePercentage = computed(() => {
 }
 
 .text-accent {
-  color: var(--color-accent, #A8E063);
+  color: var(--color-accent, #FFD400);
 }
 
 /* Charts Grid Layout */

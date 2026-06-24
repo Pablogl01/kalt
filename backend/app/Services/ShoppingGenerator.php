@@ -58,6 +58,26 @@ class ShoppingGenerator
                 ]);
             }
 
+            // Suplementos que no son meal items (p.ej. creatina): se añaden con la
+            // dosis semanal. La whey ya entra arriba por ser un meal item.
+            $user = $weeklyPlan->user;
+            if ($user) {
+                foreach ($user->supplements()->with('food')->get() as $supp) {
+                    if (!$supp->food || $grouped->has($supp->food_id)) {
+                        continue;
+                    }
+                    $marks = $previousMarks[$supp->food_id] ?? null;
+                    $shoppingList->shoppingItems()->create([
+                        'food_id' => $supp->food_id,
+                        'cantidad_total' => round($supp->dosis_gramos * 7, 2),
+                        'categoria' => $supp->food->categoria ?? 'suplemento',
+                        'tengo_en_casa'          => $marks['tengo_en_casa'] ?? false,
+                        'no_lo_quiero'           => $marks['no_lo_quiero'] ?? false,
+                        'sustituido_por_food_id' => $marks['sustituido_por_food_id'] ?? null,
+                    ]);
+                }
+            }
+
             return $shoppingList;
         });
     }

@@ -24,6 +24,7 @@ const nav = useNavStore()
 
 <style scoped>
 .mobile-header {
+  --notch: 22px;
   position: fixed;
   top: 0;
   left: 0;
@@ -31,11 +32,37 @@ const nav = useNavStore()
   height: var(--top-bar-height);
   background-color: var(--color-surface-dark);
   border-bottom: 1px solid var(--color-border-dark);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.14);
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 16px;
   z-index: 100;
+}
+
+/* Inverted (concave) bottom corners: the header colour extends below each
+   corner with a quarter-circle cut, so the content seems to curve up into it. */
+.mobile-header::before,
+.mobile-header::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  width: var(--notch);
+  height: var(--notch);
+  background-color: var(--color-surface-dark);
+  pointer-events: none;
+}
+
+.mobile-header::before {
+  left: 0;
+  -webkit-mask: radial-gradient(circle at 100% 100%, transparent var(--notch), #000 calc(var(--notch) + 0.5px));
+          mask: radial-gradient(circle at 100% 100%, transparent var(--notch), #000 calc(var(--notch) + 0.5px));
+}
+
+.mobile-header::after {
+  right: 0;
+  -webkit-mask: radial-gradient(circle at 0% 100%, transparent var(--notch), #000 calc(var(--notch) + 0.5px));
+          mask: radial-gradient(circle at 0% 100%, transparent var(--notch), #000 calc(var(--notch) + 0.5px));
 }
 
 .mh-logo {
@@ -68,7 +95,7 @@ const nav = useNavStore()
 
 /* Active state: accent green — NOT orange */
 .mh-profile--active {
-  background-color: rgba(168, 224, 99, 0.12);
+  background-color: rgba(255, 212, 0, 0.12);
   color: var(--color-accent);
 }
 </style>

@@ -23,6 +23,7 @@ class User extends Authenticatable
         'grasa_corporal',
         'objetivo',
         'nivel_actividad',
+        'dias_entreno',
     ];
 
     protected $hidden = [
@@ -38,6 +39,7 @@ class User extends Authenticatable
             // Health data — encrypted at application level (RGPD/LOPD)
             'peso'              => 'encrypted',
             'grasa_corporal'    => 'encrypted',
+            'dias_entreno'      => 'array',
         ];
     }
 
@@ -64,5 +66,10 @@ class User extends Authenticatable
     public function mealTemplates(): HasMany
     {
         return $this->hasMany(MealTemplate::class);
+    }
+
+    public function supplements(): HasMany
+    {
+        return $this->hasMany(UserSupplement::class);
     }
 }

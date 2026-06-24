@@ -1,6 +1,9 @@
 <script setup>
 // Reusable confirmation dialog, styled with the KALT design system.
 // The parent controls visibility via the `open` prop and reacts to events.
+import { motion, AnimatePresence } from 'motion-v'
+import { backdrop, modalCard, tap, tapSubtle } from '@/lib/motion'
+
 defineProps({
   open: { type: Boolean, default: false },
   title: { type: String, default: 'Confirmar' },
@@ -14,25 +17,41 @@ const emit = defineEmits(['confirm', 'cancel'])
 
 <template>
   <Teleport to="body">
-    <div
-      v-if="open"
-      class="cd-overlay"
-      @click.self="emit('cancel')"
-      @keydown.esc="emit('cancel')"
-    >
-      <div class="cd-card" role="dialog" aria-modal="true" :aria-label="title">
-        <h3 class="cd-title">{{ title }}</h3>
-        <p v-if="message" class="cd-message">{{ message }}</p>
-        <div class="cd-actions">
-          <button type="button" class="cd-btn cd-btn--secondary" @click="emit('cancel')">
-            {{ cancelLabel }}
-          </button>
-          <button type="button" class="cd-btn cd-btn--primary" autofocus @click="emit('confirm')">
-            {{ confirmLabel }}
-          </button>
-        </div>
-      </div>
-    </div>
+    <AnimatePresence>
+      <motion.div
+        v-if="open"
+        key="cd-overlay"
+        class="cd-overlay"
+        :variants="backdrop"
+        initial="hidden"
+        animate="show"
+        exit="exit"
+        @click.self="emit('cancel')"
+        @keydown.esc="emit('cancel')"
+      >
+        <motion.div
+          class="cd-card"
+          role="dialog"
+          aria-modal="true"
+          :aria-label="title"
+          :variants="modalCard"
+          initial="hidden"
+          animate="show"
+          exit="exit"
+        >
+          <h3 class="cd-title">{{ title }}</h3>
+          <p v-if="message" class="cd-message">{{ message }}</p>
+          <div class="cd-actions">
+            <motion.button :while-press="tapSubtle" type="button" class="cd-btn cd-btn--secondary" @click="emit('cancel')">
+              {{ cancelLabel }}
+            </motion.button>
+            <motion.button :while-press="tap" type="button" class="cd-btn cd-btn--primary" autofocus @click="emit('confirm')">
+              {{ confirmLabel }}
+            </motion.button>
+          </div>
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
   </Teleport>
 </template>
 

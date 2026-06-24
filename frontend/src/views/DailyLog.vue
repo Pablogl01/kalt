@@ -1,13 +1,19 @@
 <script setup>
 import { ref, computed, watch, onMounted } from 'vue'
+import { motion, AnimatePresence } from 'motion-v'
 import { Activity, Check } from 'lucide-vue-next'
 import { useLogStore } from '@/stores/logStore'
 import { useUserStore } from '@/stores/userStore'
 import api from '@/api/client'
+import { spring, tap, tapSubtle, listContainer, listItem, slide, sheet } from '@/lib/motion'
 import MacroBar from '@/components/MacroBar.vue'
 import MealCard from '@/components/MealCard.vue'
 import RecalcNotice from '@/components/RecalcNotice.vue'
 import SubstituteSelector from '@/components/SubstituteSelector.vue'
+
+// Direction of date travel (1 = next/forward, -1 = previous/back) so the
+// content can slide the matching way on each change.
+const slideDir = ref(1)
 
 const logStore = useLogStore()
 const userStore = useUserStore()
@@ -61,15 +67,17 @@ watch(dateString, async (newVal) => {
 
 // Date navigation actions
 function navigatePrevious() {
+  slideDir.value = -1
   const prev = new Date(currentDate.value)
   prev.setDate(prev.getDate() - 1)
   currentDate.value = prev
 }
 
 function navigateNext() {
+  slideDir.value = 1
   const next = new Date(currentDate.value)
   next.setDate(next.getDate() + 1)
-  
+
   // Do not navigate to future dates
   const today = new Date()
   today.setHours(23, 59, 59, 999)
@@ -185,17 +193,38 @@ async function handleReset(mealLogId) {
 
 async function handleUndoRecalc() {
   if (!logStore.dailyLog?.id) return
+  // Dismiss the notice instantly; the day is reverted in the background.
+  activeNoticeMessage.value = ''
   try {
     await logStore.undoRecalc(logStore.dailyLog.id)
   } catch (err) {
-    // Nothing to revert (no snapshot) — just dismiss the notice gracefully.
+    // Nothing to revert (no snapshot) — the notice is already dismissed.
   }
-  activeNoticeMessage.value = ''
 }
 
 function triggerSubstitute(item) {
   selectedMealItem.value = item
   showSubstituteSelector.value = true
+}
+
+async function handleRegenerateMeal(mealId) {
+  try {
+    await api.post(`/meals/${mealId}/regenerate`)
+    await logStore.fetchDailyLog(dateString.value)
+  } catch (err) {
+    console.error('Failed to regenerate meal:', err)
+  }
+}
+
+// Supplements checklist (informational, ticks persisted per day in localStorage)
+const supplements = computed(() => userStore.user?.supplements || [])
+const suppChecks = ref({})
+watch(dateString, (d) => {
+  suppChecks.value = JSON.parse(localStorage.getItem(`supp-${d}`) || '{}')
+}, { immediate: true })
+function toggleSupp(id) {
+  suppChecks.value[id] = !suppChecks.value[id]
+  localStorage.setItem(`supp-${dateString.value}`, JSON.stringify(suppChecks.value))
 }
 
 async function handleSubstituteSelected(updatedItem) {
@@ -286,31 +315,46 @@ async function saveExtraMeal() {
     
     <!-- ── Date Navigation ─────────────────────────────── -->
     <header class="date-navigator">
-      <button @click="navigatePrevious" class="btn-nav">
+      <motion.button :while-press="tap" @click="navigatePrevious" class="btn-nav">
         ←
-      </button>
+      </motion.button>
       <div class="date-info">
         <h1 class="date-title">{{ formattedDateDisplay }}</h1>
         <span v-if="isToday" class="badge-today">Hoy</span>
       </div>
-      <button @click="navigateNext" :disabled="disableNext" class="btn-nav" :class="{ 'btn-nav--disabled': disableNext }">
+      <motion.button :while-press="disableNext ? undefined : tap" @click="navigateNext" :disabled="disableNext" class="btn-nav" :class="{ 'btn-nav--disabled': disableNext }">
         →
-      </button>
+      </motion.button>
     </header>
 
-    <div v-if="logStore.dailyLog" class="log-content-wrap">
+    <AnimatePresence :custom="slideDir" mode="wait">
+    <motion.div
+      v-if="logStore.dailyLog"
+      :key="dateString"
+      :custom="slideDir"
+      :variants="slide"
+      initial="enter"
+      animate="center"
+      exit="exit"
+      class="log-content-wrap"
+    >
 
       <!-- Screen-reader live announcements for meal actions -->
       <p class="sr-only" aria-live="polite">{{ liveMessage }}</p>
 
       <!-- ── Recalculation Notice ─────────────────────────── -->
-      <RecalcNotice
-        v-if="recalcMessage"
-        :message="recalcMessage"
-        @undo="handleUndoRecalc"
-        @close="activeNoticeMessage = ''; if (logStore.dailyLog) { logStore.dailyLog.recalculo_motivo = null; }"
-      />
+      <AnimatePresence>
+        <RecalcNotice
+          v-if="recalcMessage"
+          key="recalc-notice"
+          :message="recalcMessage"
+          @undo="handleUndoRecalc"
+          @close="activeNoticeMessage = ''; if (logStore.dailyLog) { logStore.dailyLog.recalculo_motivo = null; }"
+        />
+      </AnimatePresence>
 
+      <div class="log-columns">
+      <div class="log-rail">
       <!-- ── Daily Macro Progress ────────────────────────── -->
       <section class="section-card macros-summary-card">
         <h2 class="section-subtitle">Progreso de hoy</h2>
@@ -332,53 +376,84 @@ async function saveExtraMeal() {
 
           <!-- Training Checkbox or Button -->
           <div class="training-action">
-            <label v-if="logStore.dailyLog.entreno_planificado" class="checkbox-container">
-              <input 
-                type="checkbox" 
-                :checked="logStore.dailyLog.ha_entrenado" 
-                @change="handleTrainingToggle" 
+            <motion.label v-if="logStore.dailyLog.entreno_planificado" :while-press="tapSubtle" class="checkbox-container">
+              <input
+                type="checkbox"
+                :checked="logStore.dailyLog.ha_entrenado"
+                @change="handleTrainingToggle"
               />
               <span class="checkbox-label">He entrenado hoy</span>
-            </label>
-            <button 
-              v-else 
-              @click="handleTrainingBtnClick" 
+            </motion.label>
+            <motion.button
+              v-else
+              :while-press="tap"
+              @click="handleTrainingBtnClick"
               class="btn-train"
               :class="{ 'btn-train--active': logStore.dailyLog.ha_entrenado }"
             >
               <Check v-if="logStore.dailyLog.ha_entrenado" :size="15" :stroke-width="2.5" aria-hidden="true" />
               {{ logStore.dailyLog.ha_entrenado ? 'Entrenado' : 'He entrenado hoy' }}
-            </button>
+            </motion.button>
           </div>
         </div>
       </section>
+
+      <!-- ── Supplements checklist ───────────────────────── -->
+      <section v-if="supplements.length" class="section-card supplements-card">
+        <h2 class="section-subtitle">Suplementos de hoy</h2>
+        <ul class="supp-check-list">
+          <li v-for="s in supplements" :key="s.id">
+            <label class="supp-check">
+              <input type="checkbox" :checked="suppChecks[s.id]" @change="toggleSupp(s.id)" />
+              <span class="supp-check-name">
+                {{ s.food?.nombre }}
+                <span class="supp-check-dosis">{{ Math.round(s.dosis_gramos) }}g</span>
+              </span>
+            </label>
+          </li>
+        </ul>
+      </section>
+      </div><!-- /log-rail -->
 
       <!-- ── Meals list ──────────────────────────────────── -->
       <section class="meals-section">
         <h2 class="section-subtitle">Comidas del día</h2>
         
-        <div class="meals-list">
-          <MealCard 
-            v-for="ml in logStore.mealLogs" 
-            :key="ml.id" 
-            :mealLog="ml"
-            @complete="handleComplete"
-            @skip="handleSkip"
-            @reset="handleReset"
-            @substitute="triggerSubstitute"
-          />
+        <motion.div class="meals-list" :variants="listContainer" initial="hidden" animate="show">
+          <motion.div
+            v-for="ml in logStore.mealLogs"
+            :key="ml.id"
+            :variants="listItem"
+          >
+            <MealCard
+              :mealLog="ml"
+              @complete="handleComplete"
+              @skip="handleSkip"
+              @reset="handleReset"
+              @substitute="triggerSubstitute"
+              @regenerate="handleRegenerateMeal"
+            />
+          </motion.div>
 
           <!-- Empty state -->
           <div v-if="logStore.mealLogs.length === 0" class="empty-meals">
             <p>No tienes comidas planificadas para hoy.</p>
           </div>
-        </div>
+        </motion.div>
 
         <!-- Extra meal inline form -->
-        <div v-if="showExtraForm" class="extra-meal-form-card">
+        <AnimatePresence>
+        <motion.div
+          v-if="showExtraForm"
+          class="extra-meal-form-card"
+          :variants="sheet"
+          initial="hidden"
+          animate="show"
+          exit="exit"
+        >
           <div class="form-header">
             <h4>Añadir comida extra</h4>
-            <button @click="showExtraForm = false" class="btn-close">×</button>
+            <motion.button :while-press="tap" @click="showExtraForm = false" class="btn-close">×</motion.button>
           </div>
           
           <div class="extra-items-inputs">
@@ -427,19 +502,23 @@ async function saveExtraMeal() {
               Guardar comida extra
             </button>
           </div>
-        </div>
+        </motion.div>
+        </AnimatePresence>
 
         <!-- Add extra meal CTA -->
-        <button 
-          v-if="!showExtraForm" 
-          @click="showExtraForm = true" 
+        <motion.button
+          v-if="!showExtraForm"
+          :while-press="tap"
+          @click="showExtraForm = true"
           class="btn-add-extra-meal"
         >
           + Añadir comida extra
-        </button>
+        </motion.button>
       </section>
+      </div><!-- /log-columns -->
 
-    </div>
+    </motion.div>
+    </AnimatePresence>
 
     <!-- Substitute Selector Modal -->
     <SubstituteSelector
@@ -455,12 +534,45 @@ async function saveExtraMeal() {
 
 <style scoped>
 .daily-log-page {
-  max-width: 600px;
+  max-width: 1600px;
   margin: 0 auto;
   padding: var(--space-5) var(--space-4) var(--space-7);
   display: flex;
   flex-direction: column;
   gap: var(--space-5);
+}
+
+@media (min-width: 1024px) {
+  .daily-log-page {
+    padding: var(--space-6) var(--space-7) var(--space-7);
+  }
+}
+
+/* Two-column layout on wide screens: macros + training rail on the left,
+   the meals list on the right. Single column on mobile/tablet. */
+.log-columns {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.log-rail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+@media (min-width: 1024px) {
+  .log-columns {
+    display: grid;
+    grid-template-columns: minmax(320px, 360px) 1fr;
+    gap: var(--space-5);
+    align-items: start;
+  }
+  .log-rail {
+    position: sticky;
+    top: var(--space-5);
+  }
 }
 
 /* Date Navigator styling */
@@ -609,6 +721,37 @@ async function saveExtraMeal() {
   color: var(--color-text);
 }
 
+/* Supplements checklist */
+.supp-check-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.supp-check {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  cursor: pointer;
+  font-size: var(--fs-sm);
+}
+
+.supp-check-name {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-text);
+}
+
+.supp-check-dosis {
+  font-size: var(--fs-xs);
+  color: var(--color-text-muted);
+  font-weight: 600;
+}
+
 /* Meals Section Layout */
 .meals-section {
   display: flex;
@@ -620,6 +763,19 @@ async function saveExtraMeal() {
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
+}
+
+/* Fill the wide meals column with multiple cards on large screens */
+@media (min-width: 1024px) {
+  .meals-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: var(--space-4);
+    align-items: start;
+  }
+  .empty-meals {
+    grid-column: 1 / -1;
+  }
 }
 
 .empty-meals {
@@ -715,7 +871,7 @@ async function saveExtraMeal() {
 }
 
 .dropdown-item:hover {
-  background-color: rgba(168, 224, 99, 0.08);
+  background-color: rgba(255, 212, 0, 0.08);
 }
 
 .weight-input-wrap {

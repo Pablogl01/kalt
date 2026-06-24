@@ -78,6 +78,7 @@ export const useUserStore = defineStore('user', () => {
   async function updateProfile(profileData) {
     const { data } = await api.put('/profile', profileData)
     _applyProfileResponse(data)
+    return data
   }
 
   // ── Session persistence ───────────────────────────────────

@@ -2,13 +2,14 @@
 
 namespace App\Jobs;
 
-use App\Models\Food;
+use App\Models\MealItem;
 use App\Models\MealTemplate;
 use App\Models\MealSlot;
 use App\Models\User;
 use App\Models\WeeklyPlan;
 use App\Services\DietCalculator;
 use App\Services\MealDistributor;
+use App\Services\MealPlateGenerator;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -59,7 +60,16 @@ class GenerateDietJob implements ShouldQueue
 
             $startDate = $this->weeklyPlan->semana_inicio;
 
-            DB::transaction(function () use ($user, $startDate, $calculator, $numComidas, $mealSlots) {
+            // Supplements that count towards macros (e.g. whey) are injected as
+            // fixed meal items; their macros are subtracted from that meal's target.
+            $macroSupplements = $user->supplements()
+                ->where('afecta_macros', true)
+                ->with('food')
+                ->get();
+            // Supplement foods are added only via injection, never picked at random.
+            $supplementFoodIds = $macroSupplements->pluck('food_id')->all();
+
+            DB::transaction(function () use ($user, $startDate, $calculator, $numComidas, $mealSlots, $macroSupplements, $supplementFoodIds) {
                 // Delete existing day plans for this weekly plan to avoid duplicates if re-run
                 $this->weeklyPlan->dayPlans()->delete();
 
@@ -102,6 +112,9 @@ class GenerateDietJob implements ShouldQueue
 
                     $mealsMacros = $distributor->distribute($dailyMacros, $numComidas, $effectiveMealSlots);
 
+                    // Map each macro supplement to the slot where it should be injected.
+                    $injections = $this->resolveSupplementInjections($effectiveMealSlots, $macroSupplements);
+
                     // 3. Create meals and add meal items
                     foreach ($mealSlots as $slot) {
                         $mealMacros = $mealsMacros[$slot['id']] ?? null;
@@ -115,8 +128,20 @@ class GenerateDietJob implements ShouldQueue
                             'hora_objetivo' => $slot['hora_objetivo'],
                         ]);
 
-                        $this->generateMealItems($meal, $mealMacros, $user);
+                        app(MealPlateGenerator::class)->build($meal, $mealMacros, $user, $injections[$slot['id']] ?? [], $supplementFoodIds);
                     }
+
+                    // The generator hits each meal's target within a tolerance, so
+                    // the plate totals drift from the calculated target. Align the
+                    // day's displayed totals with the actual plate so the header
+                    // matches the sum of the meals.
+                    $items = MealItem::whereIn('meal_id', $dayPlan->meals()->pluck('id'))->get();
+                    $dayPlan->update([
+                        'calorias_objetivo' => round($items->sum('calorias'), 1),
+                        'proteina_obj'      => round($items->sum('proteina'), 1),
+                        'carbos_obj'        => round($items->sum('carbos'), 1),
+                        'grasa_obj'         => round($items->sum('grasa'), 1),
+                    ]);
                 }
             });
 
@@ -137,8 +162,61 @@ class GenerateDietJob implements ShouldQueue
         }
     }
 
+    /**
+     * Build a map of slotId => [['food'=>Food,'grams'=>float], ...] for the day's slots.
+     *
+     * @param array $slots  effective meal slots for the day (pre/post flags already adjusted)
+     */
+    private function resolveSupplementInjections(array $slots, $supplements): array
+    {
+        $map = [];
+        foreach ($supplements as $supp) {
+            if (!$supp->food) {
+                continue;
+            }
+            $slotId = $this->pickSlotForMomento($slots, $supp->momento);
+            if (!$slotId) {
+                continue;
+            }
+            $map[$slotId][] = ['food' => $supp->food, 'grams' => (float) $supp->dosis_gramos];
+        }
+        return $map;
+    }
+
+    /**
+     * Pick which slot a supplement belongs to, by its "momento". Falls back to
+     * the first slot when the preferred one isn't present that day (e.g. no
+     * post-workout meal on a rest day).
+     */
+    private function pickSlotForMomento(array $slots, string $momento): ?string
+    {
+        if ($momento === 'post_entreno' || $momento === 'pre_entreno') {
+            $flag = $momento === 'post_entreno' ? 'es_post_entreno' : 'es_pre_entreno';
+            foreach ($slots as $s) {
+                if (!empty($s[$flag])) {
+                    return $s['id'];
+                }
+            }
+        }
+
+        if ($momento === 'desayuno' || $momento === 'cena') {
+            foreach ($slots as $s) {
+                if (stripos($s['nombre'] ?? '', $momento) !== false) {
+                    return $s['id'];
+                }
+            }
+        }
+
+        return $slots[0]['id'] ?? null;
+    }
+
     private function isTrainingDay(User $user, int $dayOfWeek): bool
     {
+        // Prefer the user's explicit training days; fall back to the activity preset.
+        if (is_array($user->dias_entreno)) {
+            return in_array($dayOfWeek, $user->dias_entreno);
+        }
+
         $level = $user->nivel_actividad ?? 'moderado';
         return match ($level) {
             'alto'       => in_array($dayOfWeek, [1, 2, 3, 5, 6]),
@@ -189,108 +267,6 @@ class GenerateDietJob implements ShouldQueue
         }
 
         return $template;
-    }
-
-    private function generateMealItems($meal, array $targetMacros, User $user, float $tolerance = 0.10): void
-    {
-        // Fetch allergies or intolerances to exclude
-        $restrictedFoodIds = $user->foodRestrictions
-            ->filter(fn ($r) => in_array($r->tipo, ['alergia', 'intolerancia']))
-            ->pluck('food_id')
-            ->toArray();
-
-        $proteins = Food::where('categoria', 'proteina')
-            ->whereNotIn('id', $restrictedFoodIds)
-            ->get();
-
-        $carbs = Food::where('categoria', 'carbos')
-            ->whereNotIn('id', $restrictedFoodIds)
-            ->get();
-
-        $fats = Food::where('categoria', 'grasas')
-            ->whereNotIn('id', $restrictedFoodIds)
-            ->get();
-
-        // Fallbacks
-        if ($proteins->isEmpty()) $proteins = Food::where('categoria', 'proteina')->get();
-        if ($carbs->isEmpty()) $carbs = Food::where('categoria', 'carbos')->get();
-        if ($fats->isEmpty()) $fats = Food::where('categoria', 'grasas')->get();
-
-        if ($proteins->isEmpty() || $carbs->isEmpty() || $fats->isEmpty()) {
-            throw new \Exception("Alimentos insuficientes en BD para generar el plan");
-        }
-
-        $attempts = 0;
-        $maxAttempts = 50;
-        $bestMix = null;
-        $bestDiff = 999999;
-
-        while ($attempts < $maxAttempts) {
-            $attempts++;
-            $pFood = $proteins->random();
-            $cFood = $carbs->random();
-            $fFood = $fats->random();
-
-            $gP = ($targetMacros['proteina'] / max(0.1, $pFood->proteina)) * 100;
-            $gC = ($targetMacros['carbos'] / max(0.1, $cFood->carbos)) * 100;
-            $gF = ($targetMacros['grasa'] / max(0.1, $fFood->grasa)) * 100;
-
-            $gP = max(10, min(500, $gP));
-            $gC = max(10, min(500, $gC));
-            $gF = max(5, min(200, $gF));
-
-            $actualProt = ($pFood->proteina * $gP / 100) + ($cFood->proteina * $gC / 100) + ($fFood->proteina * $gF / 100);
-            $actualCarb = ($pFood->carbos * $gP / 100) + ($cFood->carbos * $gC / 100) + ($fFood->carbos * $gF / 100);
-            $actualFat  = ($pFood->grasa * $gP / 100) + ($cFood->grasa * $gC / 100) + ($fFood->grasa * $gF / 100);
-
-            $errProt = abs($actualProt - $targetMacros['proteina']) / max(1, $targetMacros['proteina']);
-            $errCarb = abs($actualCarb - $targetMacros['carbos']) / max(1, $targetMacros['carbos']);
-            $errFat  = abs($actualFat - $targetMacros['grasa']) / max(1, $targetMacros['grasa']);
-
-            $maxError = max($errProt, $errCarb, $errFat);
-
-            if ($maxError <= $tolerance) {
-                $this->saveMealItem($meal, $pFood, $gP);
-                $this->saveMealItem($meal, $cFood, $gC);
-                $this->saveMealItem($meal, $fFood, $gF);
-                return;
-            }
-
-            if ($maxError < $bestDiff) {
-                $bestDiff = $maxError;
-                $bestMix = [
-                    'foods' => [$pFood, $cFood, $fFood],
-                    'grams' => [$gP, $gC, $gF]
-                ];
-            }
-        }
-
-        // If tolerance is 10% and failed, retry with 15%
-        if ($tolerance < 0.15) {
-            $this->generateMealItems($meal, $targetMacros, $user, 0.15);
-            return;
-        }
-
-        if ($bestMix) {
-            $this->saveMealItem($meal, $bestMix['foods'][0], $bestMix['grams'][0]);
-            $this->saveMealItem($meal, $bestMix['foods'][1], $bestMix['grams'][1]);
-            $this->saveMealItem($meal, $bestMix['foods'][2], $bestMix['grams'][2]);
-            return;
-        }
-
-        throw new \Exception("No se pudo cuadrar los macros de la comida.");
-    }
-
-    private function saveMealItem($meal, $food, float $grams): void
-    {
-        $meal->mealItems()->create([
-            'food_id'         => $food->id,
-            'cantidad_gramos' => round($grams, 1),
-            'calorias'        => round($food->calorias * $grams / 100, 1),
-            'proteina'        => round($food->proteina * $grams / 100, 1),
-            'carbos'          => round($food->carbos * $grams / 100, 1),
-            'grasa'           => round($food->grasa * $grams / 100, 1),
-        ]);
     }
 
     public function failed(\Throwable $exception): void
